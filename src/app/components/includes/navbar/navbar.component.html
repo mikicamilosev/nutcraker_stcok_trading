@@ -15,7 +15,7 @@
       >
         <span class="navbar-toggler-icon"></span>
       </button>
-      <a class="navbar-brand" href="/">
+      <a class="navbar-brand" routerLink="/">
         <img
           class="navbar-brand-image"
           src="../../../assets/images/logo.png"
@@ -43,10 +43,10 @@
           </button>
         </li>
         <li class="" style="">
-          <a href="">Welcome </a>
+          <a routerLink="">Welcome </a>
         </li>
         <li data-ng-class="{'active':isActive('/dashboard')}" class="" style="">
-          <a href="/dashboard"
+          <a routerLink="/dashboard"
             ><span class="glyphicon glyphicon-globe"></span>&nbsp;Market Data</a
           >
         </li>
@@ -55,7 +55,7 @@
           class=""
           style=""
         >
-          <a href="/fixdashboard"
+          <a routerLink="/fixdashboard"
             ><span class="glyphicon glyphicon-briefcase"></span>&nbsp;Trading</a
           >
         </li>
@@ -65,7 +65,7 @@
           dropdown=""
         >
           <a
-            href="#"
+            routerLink="#"
             class="dropdown-toggle"
             data-toggle="dropdown"
             dropdown-toggle=""
@@ -78,54 +78,54 @@
           <ul class="dropdown-menu" role="menu">
             <!-- ngRepeat: oe in orderEntryTypes -->
             <li ng-repeat="oe in orderEntryTypes" class="">
-              <a href="" data-ng-click="newOrder(oe)">JSE Equity</a>
+              <a routerLink="" data-ng-click="newOrder(oe)">JSE Equity</a>
             </li>
             <!-- end ngRepeat: oe in orderEntryTypes -->
             <li ng-repeat="oe in orderEntryTypes" class="">
-              <a href="" data-ng-click="newOrder(oe)">Exchange Sim</a>
+              <a routerLink="" data-ng-click="newOrder(oe)">Exchange Sim</a>
             </li>
             <!-- end ngRepeat: oe in orderEntryTypes -->
             <li ng-repeat="oe in orderEntryTypes" class="">
-              <a href="" data-ng-click="newOrder(oe)">Manual Order Manager</a>
+              <a routerLink="" data-ng-click="newOrder(oe)">Manual Order Manager</a>
             </li>
             <!-- end ngRepeat: oe in orderEntryTypes -->
             <li ng-repeat="oe in orderEntryTypes" class="">
-              <a href="" data-ng-click="newOrder(oe)"
+              <a routerLink="" data-ng-click="newOrder(oe)"
                 >JSE SA Derivatives Market</a
               >
             </li>
             <!-- end ngRepeat: oe in orderEntryTypes -->
             <li ng-repeat="oe in orderEntryTypes" class="">
-              <a href="" data-ng-click="newOrder(oe)"
+              <a routerLink="" data-ng-click="newOrder(oe)"
                 >JSE SA Currencies Market</a
               >
             </li>
             <!-- end ngRepeat: oe in orderEntryTypes -->
             <li ng-repeat="oe in orderEntryTypes" class="">
-              <a href="" data-ng-click="newOrder(oe)"
+              <a routerLink="" data-ng-click="newOrder(oe)"
                 >Nairobi Derivatives Market</a
               >
             </li>
             <!-- end ngRepeat: oe in orderEntryTypes -->
             <li ng-repeat="oe in orderEntryTypes" class="">
-              <a href="" data-ng-click="newOrder(oe)">SA Agri Market</a>
+              <a routerLink="" data-ng-click="newOrder(oe)">SA Agri Market</a>
             </li>
             <!-- end ngRepeat: oe in orderEntryTypes -->
           </ul>
         </li>
         <li data-ng-class="{'active':isActive('/help')}" class="" style="">
-          <a href="" target="_blank"
+          <a routerLink="" target="_blank"
             ><span class="glyphicon glyphicon-question-sign"></span
             >&nbsp;Help</a
           >
         </li>
         <li data-ng-class="{'active':isActive('/about')}" class="" style="">
-          <a href="/about"
+          <a routerLink="/about"
             ><span class="glyphicon glyphicon-info-sign"></span>&nbsp;About</a
           >
         </li>
         <li class="" style="">
-          <a href="javascript::void()" (click)="logout()" class=""
+          <a routerLink="javascript::void()" (click)="logout()" class=""
             ><span class="glyphicon glyphicon-log-out"></span>&nbsp;Logout</a
           >
         </li>
@@ -134,7 +134,7 @@
           data-ng-class="{'active':isActive('/home')}"
           style=""
         >
-          <a href="/home"
+          <a routerLink="/home"
             ><span class="glyphicon glyphicon-th-large"></span>&nbsp;Home</a
           >
         </li>
@@ -143,7 +143,7 @@
           data-ng-class="{'active':isActive('/login')}"
           style=""
         >
-          <a href="/login"
+          <a routerLink="/login"
             ><span class="glyphicon glyphicon-log-in"></span>&nbsp;Login</a
           >
         </li>
