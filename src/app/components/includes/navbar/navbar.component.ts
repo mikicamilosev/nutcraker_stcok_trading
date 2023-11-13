@@ -4,19 +4,26 @@ import { Router } from '@angular/router';
 @Component({
   selector: 'app-navbar',
   templateUrl: './navbar.component.html',
-  styleUrls: ['./navbar.component.css']
+  styleUrls: ['./navbar.component.css'],
 })
-export class NavbarComponent implements OnInit{
-  sessionActive = false;
+export class NavbarComponent implements OnInit {
+  sessionActive = localStorage.getItem('isAuth') == "true" ? true : false;
 
-  constructor(private router: Router) { }
-
-  ngOnInit() {
-    this.checkSession();
+  constructor(private router: Router) {
+    const storedSession = localStorage.getItem('isAuth');
+    console.log(storedSession)
+    this.sessionActive = storedSession == "true" ? true : false;
   }
 
-  checkSession() {
-    console.log(this.router.url)
-    this.sessionActive = true;
+  ngOnInit() {
+    const storedSession = localStorage.getItem('isAuth');
+    console.log(storedSession)
+    this.sessionActive = storedSession == "true" ? true : false;
+  }
+
+  logout(){
+    this.sessionActive = false;
+    localStorage.setItem('isAuth', "false");
+    this.router.navigateByUrl('/login')
   }
 }

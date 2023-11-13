@@ -18,7 +18,7 @@
                     <input id="login-password" type="password" class="form-control" name="password" placeholder="Password" data-ng-model="loginData.password" required>
                     <span class="input-group-addon" ng-show="loginForm.password.$invalid">Required</span>
                 </div>
-                <button class="btn btn-default btn-block" type="button" [disabled]="false" (click)="toggleProgressBar()">loginText </button>
+                <button class="btn btn-default btn-block" type="button" (click)="handlelogin()" [disabled]="false">loginText </button>
             </form>
         </div>
     </div>

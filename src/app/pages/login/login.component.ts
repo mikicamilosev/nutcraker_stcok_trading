@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
 @Component({
@@ -6,19 +6,19 @@ import { Router } from '@angular/router';
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
-export class LoginComponent {
-  constructor(private router: Router) {}
-  progressValue = 0;
-  showProgressBar = false;
+export class LoginComponent implements OnInit {
+  isAuth = false;
 
-  toggleProgressBar() {
-    this.showProgressBar = !this.showProgressBar;
-    if (this.showProgressBar) {
-      this.animateProgressBar();
-    }
+  constructor(private router: Router){
+    this.isAuth = localStorage.getItem("isAuth") == "true" ? true : false;
   }
 
-  animateProgressBar() {
-    this.router.navigateByUrl('/dashboard');
+  ngOnInit() {
+    
+  }
+
+  handlelogin(){
+    localStorage.setItem('isAuth', "true");
+    this.router.navigateByUrl('/dashboard')
   }
 }
