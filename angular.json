@@ -26,6 +26,12 @@
             ],
             "styles": [
               "node_modules/bootstrap/dist/css/bootstrap.min.css",
+              "src/assets/css/angular-csp.css",
+              "src/assets/css/ui-bootstrap-csp.css",
+              "src/assets/css/loading-bar.css",
+              "src/assets/css/bootstrap-theme.css",
+              "src/assets/css/site.analytics.css",
+              "src/assets/css/generic.css",
               "src/styles.css"
             ],
             "scripts": []
