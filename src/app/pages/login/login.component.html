@@ -18,10 +18,7 @@
                     <input id="login-password" type="password" class="form-control" name="password" placeholder="Password" data-ng-model="loginData.password" required>
                     <span class="input-group-addon" ng-show="loginForm.password.$invalid">Required</span>
                 </div>
-                <button class="btn btn-default btn-block" type="submit" data-ng-click="login()" ng-disabled="loginText !== 'Login' || loginForm.$invalid">loginText </button>
-                <!-- <div data-ng-hide="message === ''" class="alert alert-danger">
-                    message
-                </div> -->
+                <button class="btn btn-default btn-block" type="button" (click)="handlelogin()" [disabled]="false">loginText </button>
             </form>
         </div>
     </div>
