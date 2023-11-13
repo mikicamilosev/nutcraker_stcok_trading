@@ -1,6 +1,15 @@
 /* You can add global styles to this file, and also import other style files */
 .body {
-    color: #EFEFEF;
+    color: #EFEFEF !important;
     background: #222222;
     font-family: 'Work Sans', sans-serif;
+}
+
+tr td,
+tr th {
+    background-color: #2B2B2B !important;
+    color: #EFEFEF !important;
+}
+tr {
+    border-bottom: 1px solid black !important;
 }
