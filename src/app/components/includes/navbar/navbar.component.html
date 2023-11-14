@@ -46,7 +46,7 @@
           <li class="" style="">
             <a routerLink="">Welcome </a>
           </li>
-          <li data-ng-class="{'active':isActive('/dashboard')}" class="" style="">
+          <li data-ng-class="" class="" style="">
             <a routerLink="/dashboard"
               ><span class="glyphicon glyphicon-globe"></span>&nbsp;Market Data</a
             >
@@ -114,13 +114,13 @@
               <!-- end ngRepeat: oe in orderEntryTypes -->
             </ul>
           </li>
-          <li data-ng-class="{'active':isActive('/help')}" class="" style="">
+          <li data-ng-class="" class="" style="">
             <a routerLink="" target="_blank"
               ><span class="glyphicon glyphicon-question-sign"></span
               >&nbsp;Help</a
             >
           </li>
-          <li data-ng-class="{'active':isActive('/about')}" class="" style="">
+          <li data-ng-class="" class="" style="">
             <a routerLink="/about"
               ><span class="glyphicon glyphicon-info-sign"></span>&nbsp;About</a
             >
@@ -134,7 +134,7 @@
         <ng-container *ngIf="someData$.username !=='admin'"> -->
           <li
             data-ng-hide="authentication.isAuth"
-            data-ng-class="{'active':isActive('/home')}"
+            data-ng-class=""
             style=""
           >
             <a routerLink="/home"
@@ -143,7 +143,7 @@
           </li>
           <li
             data-ng-hide="authentication.isAuth"
-            data-ng-class="{'active':isActive('/login')}"
+            data-ng-class=""
             style=""
           >
             <a routerLink="/login"
