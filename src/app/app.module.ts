@@ -21,6 +21,7 @@ import { OrderbookComponent } from './components/fixDashboard/orderbook/orderboo
 import { TradebookComponent } from './components/fixDashboard/tradebook/tradebook.component';
 import { PositionsComponent } from './components/fixDashboard/positions/positions.component';
 import { StockchartComponent } from './components/dashboard/stockchart/stockchart.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -46,9 +47,10 @@ import { StockchartComponent } from './components/dashboard/stockchart/stockchar
     BrowserModule,
     AppRoutingModule,
     NgbModule,
-    StoreModule.forRoot({}, {})
+    ReactiveFormsModule,
+    StoreModule.forRoot({}, {}),
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}
