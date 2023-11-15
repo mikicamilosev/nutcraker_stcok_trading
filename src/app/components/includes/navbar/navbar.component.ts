@@ -26,9 +26,9 @@ export class NavbarComponent implements OnInit {
   async getUsername() {}
 
   ngOnChanges() {
-    this.store
-      .select(fromAuthSelector.selectIsAuth)
-      .subscribe((isAuth) => (this.isAuth = isAuth));
+    // this.store
+    //   .select(fromAuthSelector.selectIsAuth)
+    //   .subscribe((isAuth) => (this.isAuth = isAuth));
   }
     
   ngOnInit() {
