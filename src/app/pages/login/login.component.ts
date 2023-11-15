@@ -25,12 +25,12 @@ export class LoginComponent implements OnInit {
     private router: Router,
     private store: Store,
     private testObj: TestDataService,
-    private notific: ToastrService
+    private toastr: ToastrService
   ) {}
 
   ngOnInit(): void {
     this.loginForm = new FormGroup({
-      username: new FormControl('', [Validators.required]),
+      username: new FormControl('', Validators.required),
       password: new FormControl('', Validators.required),
     });
   }
@@ -45,14 +45,15 @@ export class LoginComponent implements OnInit {
     try {
       const res = await this.testObj.isAuth(userInfo.username, userInfo.password);
       if (res && res.status == 200) {
-        this.notific.success(res.error)
         this.store.dispatch(fromAuth.loginSuccess({username: res.username, password: res.password}))
+        this.toastr.success('Success!', res.error);
         this.router.navigateByUrl('/dashboard')
       } else {
-        this.notific.error(res.error)
+        this.toastr.error('Warning!', res.error);
+        this.loginForm.value.username = "";
+        this.loginForm.value.password = ""
       }
     } catch (error) {
-      this.notific.error("Server is not available!")
     }
   }
 

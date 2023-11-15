@@ -25,7 +25,9 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { metaReducers, reducers } from './reducers/index.reducer';
 import { TestDataService } from './services/test-data.service';
 
-import { provideToastr } from 'ngx-toastr';
+import { CommonModule } from '@angular/common';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ToastrModule } from 'ngx-toastr';
 
 @NgModule({
   declarations: [
@@ -48,11 +50,17 @@ import { provideToastr } from 'ngx-toastr';
     StockchartComponent,
   ],
   imports: [
+    CommonModule,
+    BrowserAnimationsModule,
+    ToastrModule.forRoot({
+      timeOut: 3000,
+      positionClass: 'toast-top-center',
+      preventDuplicates: true,
+    }),
     BrowserModule,
     AppRoutingModule,
     NgbModule,
     ReactiveFormsModule,
-    // ToastrModule.forRoot(),
     StoreModule.forRoot(reducers, {
       runtimeChecks: {
         strictStateImmutability: true,
@@ -64,11 +72,6 @@ import { provideToastr } from 'ngx-toastr';
   ],
   providers: [
     TestDataService,
-    provideToastr({
-      timeOut: 10000,
-      positionClass: 'toast-bottom-right',
-      preventDuplicates: true,
-    }),
   ],
   bootstrap: [AppComponent],
 })
