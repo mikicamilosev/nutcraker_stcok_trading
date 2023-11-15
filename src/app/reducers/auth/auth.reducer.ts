@@ -1,22 +1,20 @@
 import { createReducer, on } from '@ngrx/store';
-import * as AuthActions from './auth.actions';
+import { login, loginSuccess, loginFailure } from './auth.action';
 
-export interface AuthState {
-  loggedIn: boolean;
-  username: string | null;
-  error: string | null;
+export interface State {
+  username: string;
+  password: string;
+  isAuth: Boolean;
 }
 
-export const initialState: AuthState = {
-  loggedIn: false,
-  username: null,
-  error: null,
+const initialState: State = {
+  username: '',
+  password: '',
+  isAuth: false
 };
 
-export const authReducer = createReducer(
-  initialState,
-  on(AuthActions.login, (state) => ({ ...state, error: null })),
-  on(AuthActions.loginSuccess, (state, { username }) => ({ ...state, loggedIn: true, username: username })),
-  on(AuthActions.loginFailure, (state, { error }) => ({ ...state, error })),
-  on(AuthActions.logout, () => initialState)
+export const loginReducer = createReducer(initialState,
+  on(login, state => ({ ...state, isAuth: false })),
+  on(loginSuccess, state => ({ ...state, isAuth: true })),
+  on(loginFailure, state => ({ ...state, isAuth: false }))
 );

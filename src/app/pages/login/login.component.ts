@@ -2,10 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Store, select } from '@ngrx/store';
-import { login } from 'src/app/reducers/auth/auth.actions';
-import { AppState } from '../../store';
-import { getSomeData } from '../../reducers/auth/auth.selectors';
-import { Observable } from 'rxjs';
+import * as fromAuth from '../../reducers/auth/auth.action';
+import { TestDataService } from 'src/app/services/test-data.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-login',
@@ -13,46 +12,61 @@ import { Observable } from 'rxjs';
   styleUrls: ['./login.component.css'],
 })
 export class LoginComponent implements OnInit {
+  token = '';
+  error = '';
+  isLoading = false;
   loginForm: any;
   val_username_req = true;
   val_password_req = true;
-  inputValue1= "1";
-  inputValue2= "1";
+  inputValue1 = '1';
+  inputValue2 = '1';
 
-  constructor(private router: Router, private store: Store){
-  }
-  
+  constructor(
+    private router: Router,
+    private store: Store,
+    private testObj: TestDataService,
+    private toastr: ToastrService
+  ) {}
+
   ngOnInit(): void {
     this.loginForm = new FormGroup({
-      username: new FormControl('', [Validators.required]),
-      password: new FormControl('', Validators.required)
+      username: new FormControl('', Validators.required),
+      password: new FormControl('', Validators.required),
     });
-    
   }
 
-  handleLoginSubmit(){
+  async handleLoginSubmit() {
     var userInfo = {
       username: this.loginForm.value.username ?? '',
-      password: this.loginForm.value.password ?? ''
-    }
+      password: this.loginForm.value.password ?? '',
+    };
 
-    if(userInfo.username == "admin" && userInfo.password == "admin"){
-      this.store.dispatch(login({ username: userInfo.username, password: userInfo.password }));
-      this.router.navigateByUrl('/dashboard')
+    // this.store.dispatch(fromAuth.login({ username: userInfo.username, password: userInfo.password }));
+    try {
+      const res = await this.testObj.isAuth(userInfo.username, userInfo.password);
+      if (res && res.status == 200) {
+        this.store.dispatch(fromAuth.loginSuccess({username: res.username, password: res.password}))
+        this.toastr.success('Success!', res.error);
+        this.router.navigateByUrl('/dashboard')
+      } else {
+        this.toastr.error('Warning!', res.error);
+        this.loginForm.value.username = "";
+        this.loginForm.value.password = ""
+      }
+    } catch (error) {
     }
   }
 
-  inputusername(){
-    if(this.loginForm.value.username !== ""){
+  inputusername() {
+    if (this.loginForm.value.username !== '') {
       this.val_username_req = false;
     } else {
       this.val_username_req = true;
     }
   }
 
-
-  inputpassword(){
-    if(this.loginForm.value.password !== ""){
+  inputpassword() {
+    if (this.loginForm.value.password !== '') {
       this.val_password_req = false;
     } else {
       this.val_password_req = true;

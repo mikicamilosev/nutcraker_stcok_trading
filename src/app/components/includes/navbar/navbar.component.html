@@ -26,8 +26,8 @@
     </div>
     <div class="collapse navbar-collapse" id="navbarNav">
       <ul class="nav navbar-nav navbar-right">
-        <!-- <ng-container *ngIf="someData$.username === 'admin'"> -->
-          <li class="" style="">
+        <ng-container *ngIf="isAuth">
+          <li>
             <button
               class="btn btn-sm btn-nutcracker-connect visible-md-block visible-lg-block btn-warning"
               ng-class="getlsStatus()"
@@ -43,19 +43,15 @@
               Delayed Feed
             </button>
           </li>
-          <li class="" style="">
+          <li>
             <a routerLink="">Welcome </a>
           </li>
-          <li data-ng-class="" class="" style="">
+          <li>
             <a routerLink="/dashboard"
               ><span class="glyphicon glyphicon-globe"></span>&nbsp;Market Data</a
             >
           </li>
-          <li
-            data-ng-class="{'active':isActive('/fixdashboard')}"
-            class=""
-            style=""
-          >
+          <li>
             <a routerLink="/fixdashboard"
               ><span class="glyphicon glyphicon-briefcase"></span>&nbsp;Trading</a
             >
@@ -114,28 +110,26 @@
               <!-- end ngRepeat: oe in orderEntryTypes -->
             </ul>
           </li>
-          <li data-ng-class="" class="" style="">
+          <li>
             <a routerLink="" target="_blank"
               ><span class="glyphicon glyphicon-question-sign"></span
               >&nbsp;Help</a
             >
           </li>
-          <li data-ng-class="" class="" style="">
+          <li>
             <a routerLink="/about"
               ><span class="glyphicon glyphicon-info-sign"></span>&nbsp;About</a
             >
           </li>
-          <li class="" style="">
-            <a routerLink="javascript::void()" (click)="logout()" class=""
+          <li>
+            <a routerLink="/" (click)="logout()" class=""
               ><span class="glyphicon glyphicon-log-out"></span>&nbsp;Logout</a
             >
           </li>
-        <!-- </ng-container>
-        <ng-container *ngIf="someData$.username !=='admin'"> -->
+        </ng-container>
+        <ng-container *ngIf="!isAuth">
           <li
             data-ng-hide="authentication.isAuth"
-            data-ng-class=""
-            style=""
           >
             <a routerLink="/home"
               ><span class="glyphicon glyphicon-th-large"></span>&nbsp;Home</a
@@ -143,14 +137,12 @@
           </li>
           <li
             data-ng-hide="authentication.isAuth"
-            data-ng-class=""
-            style=""
           >
             <a routerLink="/login"
               ><span class="glyphicon glyphicon-log-in"></span>&nbsp;Login</a
             >
           </li>
-        <!-- </ng-container> -->
+        </ng-container>
       </ul>
     </div>
   </div>

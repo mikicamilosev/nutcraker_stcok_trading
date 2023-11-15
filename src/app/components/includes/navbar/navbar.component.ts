@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { Store, select } from '@ngrx/store'
-import { AppState } from '../../../store';
-import { getSomeData } from '../../../reducers/auth/auth.selectors';
-import { Observable } from 'rxjs';
+import { Store, select } from '@ngrx/store';
+import * as fromAuthSelector from '../../../reducers/auth/auth.selectors';
+import * as fromAuth from '../../../reducers/auth/auth.action'
+import { TestDataService } from 'src/app/services/test-data.service';
 
 @Component({
   selector: 'app-navbar',
@@ -11,40 +11,41 @@ import { Observable } from 'rxjs';
   styleUrls: ['./navbar.component.css'],
 })
 export class NavbarComponent implements OnInit {
-  sessionActive: Boolean;
-  someData$: Observable<any>;
+  isAuth = false;
 
-  constructor(private router: Router, private store: Store) {
-    const storedSession = localStorage.getItem('isAuth');
-    this.sessionActive = storedSession == "true" ? true : false;
-    this.someData$ = this.store.pipe(select(getSomeData));
+  constructor(
+    private router: Router,
+    private store: Store,
+    private testData: TestDataService
+  ) {
+    this.store
+      .select(fromAuthSelector.selectIsAuth)
+      .subscribe((isAuth) => (this.isAuth = isAuth));
   }
 
-  async getUsername() {
-    const res = await this.store.pipe(select(getSomeData));
-    console.log(res)
-    return res;
-  }
+  async getUsername() {}
 
-  ngOnChanges(){
+  ngOnChanges() {
+    // this.store
+    //   .select(fromAuthSelector.selectIsAuth)
+    //   .subscribe((isAuth) => (this.isAuth = isAuth));
+  }
     
-  }
-
   ngOnInit() {
-    const storedSession = localStorage.getItem('isAuth');
-    console.log(storedSession)
-    this.sessionActive = storedSession == "true" ? true : false;
-    console.log(window.location.pathname)
+    if (!this.isAuth) {
+      this.router.navigateByUrl('/');
+    }
   }
 
-  logout(){
-    this.sessionActive = false;
-    localStorage.setItem('isAuth', "false");
-    this.router.navigateByUrl('/login')
+  logout() {
+    try {
+      const res = this.logout()
+      this.isAuth = false;
+      this.store.dispatch(fromAuth.loginFailure({username: "", password: ""}))
+    } catch (error) {
+      
+    }
   }
 
-  gotopage(str: string){
-    const isAuth = localStorage.getItem('isAuth') == "true" ? true: false;
-    return str;
-  }
+  gotopage(str: string) {}
 }

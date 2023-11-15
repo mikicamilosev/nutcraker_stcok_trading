@@ -22,6 +22,12 @@ import { TradebookComponent } from './components/fixDashboard/tradebook/tradeboo
 import { PositionsComponent } from './components/fixDashboard/positions/positions.component';
 import { StockchartComponent } from './components/dashboard/stockchart/stockchart.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { metaReducers, reducers } from './reducers/index.reducer';
+import { TestDataService } from './services/test-data.service';
+
+import { CommonModule } from '@angular/common';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ToastrModule } from 'ngx-toastr';
 
 @NgModule({
   declarations: [
@@ -44,13 +50,29 @@ import { ReactiveFormsModule } from '@angular/forms';
     StockchartComponent,
   ],
   imports: [
+    CommonModule,
+    BrowserAnimationsModule,
+    ToastrModule.forRoot({
+      timeOut: 3000,
+      positionClass: 'toast-top-center',
+      preventDuplicates: true,
+    }),
     BrowserModule,
     AppRoutingModule,
     NgbModule,
     ReactiveFormsModule,
-    StoreModule.forRoot({}, {}),
+    StoreModule.forRoot(reducers, {
+      runtimeChecks: {
+        strictStateImmutability: true,
+        strictActionImmutability: true,
+      },
+      metaReducers,
+    }),
+    // EffectsModule.forRoot(AuthEffects),
   ],
-  providers: [],
+  providers: [
+    TestDataService,
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
