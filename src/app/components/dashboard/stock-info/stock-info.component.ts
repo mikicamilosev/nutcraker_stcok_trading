@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { NTVoyagerApiWtp } from 'src/app/services/api.service';
 
 @Component({
   selector: 'app-stock-info',
@@ -7,4 +8,11 @@ import { Component } from '@angular/core';
 })
 export class StockInfoComponent {
 
+  constructor(private apiservice: NTVoyagerApiWtp){
+
+  }
+
+  ngOnInit(){
+    
+  }
 }

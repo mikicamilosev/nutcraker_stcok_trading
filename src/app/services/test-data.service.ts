@@ -9,7 +9,7 @@ import { Router } from '@angular/router';
 export class TestDataService {
   constructor(private store: Store, private router: Router) {}
 
-  isAuth(username: string, password: string) {
+  login(username: string, password: string) {
     var userInfo = {
       username: username,
       password: password,
