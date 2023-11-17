@@ -5,6 +5,12 @@ import { Store, select } from '@ngrx/store';
 import * as fromAuth from '../../reducers/auth/auth.action';
 import { TestDataService } from 'src/app/services/test-data.service';
 import { ToastrService } from 'ngx-toastr';
+import { NTVoyagerApiWtp } from 'src/app/services/api.service';
+
+type userInfoProps = {
+  userName: string;
+  password: string;
+}
 
 @Component({
   selector: 'app-login',
@@ -25,7 +31,8 @@ export class LoginComponent implements OnInit {
     private router: Router,
     private store: Store,
     private testObj: TestDataService,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private apiservice: NTVoyagerApiWtp
   ) {}
 
   ngOnInit(): void {
@@ -35,26 +42,17 @@ export class LoginComponent implements OnInit {
     });
   }
 
-  async handleLoginSubmit() {
-    var userInfo = {
-      username: this.loginForm.value.username ?? '',
-      password: this.loginForm.value.password ?? '',
-    };
-
-    // this.store.dispatch(fromAuth.login({ username: userInfo.username, password: userInfo.password }));
-    try {
-      const res = await this.testObj.isAuth(userInfo.username, userInfo.password);
-      if (res && res.status == 200) {
-        this.store.dispatch(fromAuth.loginSuccess({username: res.username, password: res.password}))
-        this.toastr.success('Success!', res.error);
-        this.router.navigateByUrl('/dashboard')
-      } else {
-        this.toastr.error('Warning!', res.error);
-        this.loginForm.value.username = "";
-        this.loginForm.value.password = ""
-      }
-    } catch (error) {
-    }
+  handleLoginSubmit() {
+    // this.apiservice.login(this.loginForm).subscribe(
+    //   (res) => {
+    //     console.log(res)
+    this.store.dispatch(fromAuth.loginSuccess({username: "admin", password: "admin"}))
+        this.router.navigateByUrl('/dashboard');
+    //   },
+    //   (err) => {
+    //     console.log(err)
+    //   }
+    // )
   }
 
   inputusername() {

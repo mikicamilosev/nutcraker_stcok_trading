@@ -32,9 +32,9 @@ export class NavbarComponent implements OnInit {
   }
     
   ngOnInit() {
-    if (!this.isAuth) {
-      this.router.navigateByUrl('/');
-    }
+    // if (!this.isAuth) {
+    //   this.router.navigateByUrl('/');
+    // }
   }
 
   logout() {

@@ -1,11 +1,11 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { AppComponent } from './app.component';
 import { LoginComponent } from './pages/login/login.component';
 import { HomeComponent } from './pages/home/home.component';
 import { AboutComponent } from './pages/about/about.component';
 import { FixdashboardComponent } from './pages/fixdashboard/fixdashboard.component';
 import { DashboardComponent } from './pages/dashboard/dashboard.component';
+import { Store } from '@ngrx/store';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -20,4 +20,8 @@ const routes: Routes = [
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule]
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {
+  // ngOnInit(){
+    
+  // }
+}

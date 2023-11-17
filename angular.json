@@ -25,6 +25,7 @@
               "src/assets"
             ],
             "styles": [
+              "src/custom-theme.scss",
               "node_modules/bootstrap/dist/css/bootstrap.min.css",
               "src/assets/css/angular-csp.css",
               "src/assets/css/ui-bootstrap-csp.css",

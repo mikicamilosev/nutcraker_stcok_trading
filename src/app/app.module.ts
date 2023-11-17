@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, importProvidersFrom } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -21,13 +21,18 @@ import { OrderbookComponent } from './components/fixDashboard/orderbook/orderboo
 import { TradebookComponent } from './components/fixDashboard/tradebook/tradebook.component';
 import { PositionsComponent } from './components/fixDashboard/positions/positions.component';
 import { StockchartComponent } from './components/dashboard/stockchart/stockchart.component';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { metaReducers, reducers } from './reducers/index.reducer';
 import { TestDataService } from './services/test-data.service';
 
 import { CommonModule } from '@angular/common';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToastrModule } from 'ngx-toastr';
+import { NTVoyagerApiWtp } from './services/api.service';
+import { HttpClientModule } from '@angular/common/http';
+import { LocalStorageDirective, LocalStorageService } from 'ngx-localstorage';
+import { WatchlistService } from './services/watchlist.service';
+import { NewwatchlistComponent } from './components/templates/newwatchlist/newwatchlist.component';
 
 @NgModule({
   declarations: [
@@ -48,6 +53,7 @@ import { ToastrModule } from 'ngx-toastr';
     TradebookComponent,
     PositionsComponent,
     StockchartComponent,
+    NewwatchlistComponent,
   ],
   imports: [
     CommonModule,
@@ -60,6 +66,7 @@ import { ToastrModule } from 'ngx-toastr';
     BrowserModule,
     AppRoutingModule,
     NgbModule,
+    FormsModule,
     ReactiveFormsModule,
     StoreModule.forRoot(reducers, {
       runtimeChecks: {
@@ -69,9 +76,14 @@ import { ToastrModule } from 'ngx-toastr';
       metaReducers,
     }),
     // EffectsModule.forRoot(AuthEffects),
+    HttpClientModule,
+    LocalStorageDirective,
   ],
   providers: [
     TestDataService,
+    NTVoyagerApiWtp,
+    LocalStorageService,
+    WatchlistService,
   ],
   bootstrap: [AppComponent],
 })
