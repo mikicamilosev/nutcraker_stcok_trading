@@ -1,11 +1,9 @@
 import { Component } from '@angular/core';
-import { WatchlistService } from 'src/app/services/watchlist.service';
 import { LocalStorageService } from 'ngx-localstorage';
 import { Watchlist } from '../../../models/watchlist.model';
 import { NTVoyagerApiWtp } from 'src/app/services/api.service';
 import { isArray } from '@amcharts/amcharts5/.internal/core/util/Type';
 import { ToastrService } from 'ngx-toastr';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { NewwatchlistComponent } from '../../templates/newwatchlist/newwatchlist.component';
 
 @Component({
@@ -20,11 +18,9 @@ export class WatchlistComponent {
   symbol: any;
 
   constructor(
-    private watchlsitService: WatchlistService,
     private lss: LocalStorageService,
     private apiService: NTVoyagerApiWtp,
     private notif: ToastrService,
-    private modalService: NgbModal
   ) {
     if(this.lss.get('ThreeLineDepth')){
       this.lss.set('ThreeLineDepth', false)
@@ -57,13 +53,45 @@ export class WatchlistComponent {
         }
       )
     } 
-    this.watchlsitService.getWatchLists();
     this.watchlists = this.lss.get('watchlist');
     this.instruments = this.lss.get('instruments')
   }
 
   ngOnInit() {
+    if(this.lss.get('ThreeLineDepth')){
+      this.lss.set('ThreeLineDepth', false)
+    }
+    if(!this.lss.get('watchlists')){
+      this.apiService.v2().subscribe(
+        (res) => {
+          var tempWatchlists = [];
+          if(isArray(res)){
+            tempWatchlists = res;
+            this.lss.set('watchlists', res);
+            if(tempWatchlists.length > 0){
+              var defaultWatchlist = tempWatchlists.find(function(ele){
+                return ele.name === "DEFAULT"
+              })
+              if(defaultWatchlist !== null){
+                this.lss.set('watchlist', defaultWatchlist);
+                this.watchlistChanged();
+              } else {
+                this.lss.set('watchlist', res[0]);
+                this.watchlistChanged();
+              }
+            }
+          } else {
 
+          }
+        },
+        (err) => {
+          console.log(err)
+        }
+      )
+    } 
+    console.log(this.lss.get('watchlists'))
+    this.watchlists = this.lss.get('watchlists');
+    this.instruments = this.lss.get('instruments')
   }
 
   toggleDepth() {
@@ -122,7 +150,6 @@ export class WatchlistComponent {
   }
 
   searchInstrument(){
-    this.watchlsitService.searchInstrument()
   }
 
   navstockInfo(pesk: any, symbol: any, name: any){
@@ -148,38 +175,43 @@ export class WatchlistComponent {
     if(Array(this.lss.get('watchlists')).length > 3){
       this.notif.warning('You currently have reached your watchlist limit of 3. Cannot add more watchlists.', 'Limit reached!')
     }
-    const modalRef = this.modalService.open(NewwatchlistComponent);
-    modalRef.componentInstance.watchlists = this.lss.get('watchlists');
-  
-    modalRef.result.then((newWLName) => {
-      if (newWLName) {
-        const watchlists = [...(this.lss.get('watchlists') as Watchlist[]), newWLName];
-        this.lss.set('watchlists', watchlists);
-        this.notif.success(`Your new watchlist with the name '${newWLName.name}' was created successfully.`, "Saved!", { timeOut: 3000 });
-      }
-    });
+    
   }
 
   renameWatchlist() {
-
+    // modal issue newWatchlist
   }
 
   deleteWatchlist() {
-
+    // modal issue
   }
 
   newOrder(side: string, price: string, pesk: string){
     try {
+      var od = OrderDetails(side, price, pesk)
+      // if ($rootScope.swapWatchlistBuySell) {
+        if (od.Side === "B") {
+            od.Side = "S";
+        } else {
+            od.Side = "B";
+        }
+    // }
+      var tradableInstrument = null;
+      //Find all tradable instruments by Public Exchange Symbol Key
     } catch (error) {
       this.notif.error(String(error), "Warning!")
     }
+  }
+
+  openOrderEntry () {
+
   }
 }
 
   function instrument (pesk: string, symbol: string, name: string) {
     var res = {
       pesk : pesk,
-      Symbol : symbol,
+      symbol : symbol,
       name : name,
       BS1 : '',
       B1 : '',
@@ -203,5 +235,27 @@ export class WatchlistComponent {
       H : '',
       chgColour : 'warning',
     }
+    return res;
+  }
+
+  function OrderDetails(s: any, p: any, i: any){
+    var res = {
+      FixSession : '',
+      Side : s,
+      Price : Number(p),
+      Exchange : '',
+      TESK : '',
+      Symbol : '',
+      Quantity : 0,
+      Account : '',
+      OrderType : 'LO',
+      TIF : 'GFD',
+      Expiry : '',
+      Notes : '',
+      PESK : i,
+      Instrument : null,
+      TriggerPrice : null,
+    }
+
     return res;
   }
