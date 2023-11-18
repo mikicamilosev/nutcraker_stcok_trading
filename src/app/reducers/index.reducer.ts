@@ -5,18 +5,18 @@ import {
     Action
   } from '@ngrx/store';
   import * as fromAuth from './auth/auth.reducer';
-//   import * as fromAdmin from '../admin/store/admin.reducer';
-  import { AuthState } from './auth/auth.state';
-//   import { AdminState } from '../admin/store/admin.state';
+  
+import * as fromMaket from './market/market.reducer'
+import { MarketState } from './market/market.state';
   
   export interface AppState {
     auth: any;
-    // admin: AdminState;
+    market: MarketState;
   }
   
   export const reducers: ActionReducerMap<AppState> = {
     auth: fromAuth.loginReducer,
-    // admin: fromAdmin.adminReducer
+    market: fromMaket.watchlistReducer
   };
   
   export function clearState(reducer: ActionReducer<AppState>): ActionReducer<AppState> {

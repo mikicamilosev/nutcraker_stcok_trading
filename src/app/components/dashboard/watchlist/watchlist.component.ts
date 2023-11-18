@@ -5,6 +5,8 @@ import { NTVoyagerApiWtp } from 'src/app/services/api.service';
 import { isArray } from '@amcharts/amcharts5/.internal/core/util/Type';
 import { ToastrService } from 'ngx-toastr';
 import { NewwatchlistComponent } from '../../templates/newwatchlist/newwatchlist.component';
+import { Store } from '@ngrx/store';
+import { watchlists } from 'src/app/reducers/market/market.action';
 
 @Component({
   selector: 'app-watchlist',
@@ -21,13 +23,15 @@ export class WatchlistComponent {
     private lss: LocalStorageService,
     private apiService: NTVoyagerApiWtp,
     private notif: ToastrService,
+    private store: Store,
   ) {
     if(this.lss.get('ThreeLineDepth')){
       this.lss.set('ThreeLineDepth', false)
     }
-    if(!this.lss.get('watchlists')){
+    // if(!this.lss.get('watchlists')){
       this.apiService.v2().subscribe(
         (res) => {
+          this.store.dispatch(watchlists({ watchlists: res }));
           var tempWatchlists = [];
           if(isArray(res)){
             tempWatchlists = res;
@@ -52,7 +56,7 @@ export class WatchlistComponent {
           console.log(err)
         }
       )
-    } 
+    // } 
     this.watchlists = this.lss.get('watchlist');
     this.instruments = this.lss.get('instruments')
   }
@@ -65,6 +69,7 @@ export class WatchlistComponent {
       this.apiService.v2().subscribe(
         (res) => {
           var tempWatchlists = [];
+          this.store.dispatch(watchlists({ watchlists: res }))
           if(isArray(res)){
             tempWatchlists = res;
             this.lss.set('watchlists', res);
@@ -89,7 +94,6 @@ export class WatchlistComponent {
         }
       )
     } 
-    console.log(this.lss.get('watchlists'))
     this.watchlists = this.lss.get('watchlists');
     this.instruments = this.lss.get('instruments')
   }
