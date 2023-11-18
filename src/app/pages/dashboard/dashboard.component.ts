@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Output } from '@angular/core';
 import { LocalStorageService } from 'ngx-localstorage';
 
 @Component({
@@ -8,6 +8,7 @@ import { LocalStorageService } from 'ngx-localstorage';
 })
 export class DashboardComponent {
   stockInfo: any;
+  selectedTab: any;
 
   constructor(private lss: LocalStorageService){
     this.stockInfo = this.lss.get('stockInfo')
@@ -20,5 +21,9 @@ export class DashboardComponent {
 
   ngOnChanges(){
     this.stockInfo = this.lss.get('stockInfo')
+  }
+
+  isSelectedTab(tabName: string): boolean {
+    return this.selectedTab === tabName;
   }
 }

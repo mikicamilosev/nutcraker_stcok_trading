@@ -9,6 +9,7 @@
                 </select>
                 <span class="input-group-btn input-group-sm">
                     <button class="btn btn-default btn-sm" type="button" (click)="newWatchlist()"><span class="glyphicon glyphicon-plus"></span></button>
+                    <!-- <button class="btn btn-default btn-sm" type="button" (click)="openModal(myModalContent)"><span class="glyphicon glyphicon-plus"></span></button> -->
                     <button class="btn btn-primary btn-sm" type="button" ng-click="deleteWatchlist()"><span class="glyphicon glyphicon-minus" ng-disabled="!dataStore.watchlist"></span></button>
                     <button class="btn btn-primary btn-sm" type="button" ng-click="renameWatchlist()"><span class="glyphicon glyphicon-edit" ng-disabled="!dataStore.watchlist"></span></button>
                 </span>
@@ -149,3 +150,15 @@
         </table>
     </div>
 </div>
+
+<ng-template #myModalContent>
+  <div class="modal-header">
+    <h4 class="modal-title">Modal Title</h4>
+  </div>
+  <div class="modal-body">
+    Modal Content
+  </div>
+  <div class="modal-footer">
+    <button class="btn btn-secondary" (click)="dismissAll()">Close</button>
+  </div>
+</ng-template>

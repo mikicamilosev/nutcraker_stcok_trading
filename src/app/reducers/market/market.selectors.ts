@@ -13,3 +13,8 @@ export const getIndexWatchlistId = createSelector(
     getMarketState,
     (market: MarketState) => market.indexWatchlistId
 );
+
+export const getInstruments = createSelector(
+    getMarketState,
+    (market: MarketState) => market.instruments
+)

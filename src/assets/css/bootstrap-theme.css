@@ -3071,15 +3071,6 @@ input[type="reset"].btn-block,
 input[type="button"].btn-block {
   width: 100%;
 }
-.fade {
-  opacity: 0;
-  -webkit-transition: opacity 0.15s linear;
-  -o-transition: opacity 0.15s linear;
-  transition: opacity 0.15s linear;
-}
-.fade.in {
-  opacity: 1;
-}
 .collapse {
   display: none;
 }
@@ -5351,39 +5342,6 @@ button.close {
 .modal-open {
   overflow: hidden;
 }
-.modal {
-  display: none;
-  overflow: hidden;
-  position: fixed;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  z-index: 1050;
-  -webkit-overflow-scrolling: touch;
-  outline: 0;
-}
-.modal.fade .modal-dialog {
-  -webkit-transform: translate3d(0, -25%, 0);
-  transform: translate3d(0, -25%, 0);
-  -webkit-transition: -webkit-transform 0.3s ease-out;
-  -moz-transition: -moz-transform 0.3s ease-out;
-  -o-transition: -o-transform 0.3s ease-out;
-  transition: transform 0.3s ease-out;
-}
-.modal.in .modal-dialog {
-  -webkit-transform: translate3d(0, 0, 0);
-  transform: translate3d(0, 0, 0);
-}
-.modal-open .modal {
-  overflow-x: hidden;
-  overflow-y: auto;
-}
-.modal-dialog {
-  position: relative;
-  width: auto;
-  margin: 10px;
-}
 .modal-content {
   position: relative;
   background-color: #2e3338;
@@ -5394,23 +5352,6 @@ button.close {
   box-shadow: 0 3px 9px rgba(0, 0, 0, 0.5);
   background-clip: padding-box;
   outline: 0;
-}
-.modal-backdrop {
-  position: fixed;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  z-index: 1040;
-  background-color: #000000;
-}
-.modal-backdrop.fade {
-  opacity: 0;
-  filter: alpha(opacity=0);
-}
-.modal-backdrop.in {
-  opacity: 0.5;
-  filter: alpha(opacity=50);
 }
 .modal-header {
   padding: 15px;

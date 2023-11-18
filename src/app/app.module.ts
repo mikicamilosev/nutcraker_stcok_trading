@@ -52,6 +52,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     TradebookComponent,
     PositionsComponent,
     StockchartComponent,
+    NewwatchlistComponent,
   ],
   imports: [
     CommonModule,
@@ -75,7 +76,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     // EffectsModule.forRoot(AuthEffects),
     HttpClientModule,
     LocalStorageDirective,
-    NgbModule
+    NgbModule,
   ],
   providers: [
     TestDataService,

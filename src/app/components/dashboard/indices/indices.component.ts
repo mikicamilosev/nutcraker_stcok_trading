@@ -24,9 +24,21 @@ export class IndicesComponent {
   ) {
     // this.indices = [];
     // this.lss.set('indexWatchlistId', 0)
+    if(this.indices == undefined){
+      this.indices = this.lss.get('instruments')
+    }
   }
 
   ngOnInit() {
+    console.log(this.indices)
+    
+    this.store.select(fromMarket.getInstruments).subscribe(
+      (res) => {
+        if(res.length > 0){
+          this.indices = res;
+        }
+      }
+    )
     var red_watchlists = this.store.select(getWatchlists).subscribe(
       (res) => {
         console.log(res)

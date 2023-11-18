@@ -1,48 +1,65 @@
 <div class="col-md-8 col-sm-12">
-    <div class="panel panel-default" style="min-height:320px;">
-        <div class="panel-heading">
-            <h3 class="panel-title">Watchlist</h3>
-        </div>
-        <div class="panel-body">
-            <app-watchlist />
-        </div>
+  <div class="panel panel-default" style="min-height: 320px">
+    <div class="panel-heading">
+      <h3 class="panel-title">Watchlist</h3>
     </div>
+    <div class="panel-body">
+      <app-watchlist />
+    </div>
+  </div>
 </div>
 <div class="col-md-4 col-sm-12">
-    <div class="panel panel-default" style="min-height: 320px;">
-        <div class="panel-heading">
-            <h3 class="panel-title">Indices</h3>
-        </div>
-        <div class="panel-body">
-            <app-indices />
-        </div>
+  <div class="panel panel-default" style="min-height: 320px">
+    <div class="panel-heading">
+      <h3 class="panel-title">Indices</h3>
     </div>
+    <div class="panel-body">
+      <app-indices />
+    </div>
+  </div>
 </div>
 <div class="col-md-8 col-sm-12">
-    <div class="panel panel-default" style="min-height: 324px;" id="pnlStockInfo">
-        <div class="panel-heading">
-            <h3 class="panel-title">Stock Info - <small>dataStore.stockInfo.Name</small></h3>
-        </div>
-        <div class="panel-body">
-            <app-stock-info />
-        </div>
+  <div class="panel panel-default" style="min-height: 324px" id="pnlStockInfo">
+    <div class="panel-heading">
+      <h3 class="panel-title">
+        Stock Info - <small>dataStore.stockInfo.Name</small>
+      </h3>
     </div>
+    <div class="panel-body">
+      <app-stock-info />
+    </div>
+  </div>
 </div>
 <div class="col-md-4 col-sm-12">
-    <div class="panel panel-default">
-        <div class="panel-heading">
-            <h3 class="panel-title">Intraday Chart - <small>dataStore.stockInfo.Name</small></h3>
-        </div>
-        <div class="panel-body">
-            <app-stockchart />
-        </div>
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h3 class="panel-title">
+        Intraday Chart - <small>dataStore.stockInfo.Name</small>
+      </h3>
     </div>
+    <div class="panel-body">
+      <app-stockchart />
+    </div>
+  </div>
 </div>
 <div>
-    <div class="col-md-8 col-sm-12">
-        <app-news />
+  <div class="col-md-8 col-sm-12">
+    <app-news />
+  </div>
+  <div class="col-md-4 col-sm-12">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title">
+          Market Movers -
+          <small
+            >Last Updated:
+             dataStore.mmLastUpdated | date : "HH:mm:ss" </small
+          >
+        </h3>
+      </div>
+      <div class="panel-body">
+        
+      </div>
     </div>
-    <div class="col-md-4 col-sm-12">
-        <app-market-movers />
-    </div>
+  </div>
 </div>
