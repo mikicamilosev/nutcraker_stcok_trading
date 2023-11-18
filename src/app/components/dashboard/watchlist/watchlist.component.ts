@@ -14,6 +14,7 @@ import {
 import { RenameWatchlistNameComponent } from '../../templates/rename-watchlist-name/rename-watchlist-name.component';
 import { DeleteWatchlistComponent } from '../../templates/delete-watchlist/delete-watchlist.component';
 import { InstrumentSearchComponent } from '../../templates/instrument-search/instrument-search.component';
+import * as fromMarket from '../../../reducers/market/market.selectors'
 
 @Component({
   selector: 'app-watchlist',
@@ -71,6 +72,11 @@ export class WatchlistComponent {
   }
 
   ngOnInit() {
+    this.store.select(fromMarket.getWatchlists as any).subscribe(
+      (res) =>{
+        this.watchlists = res;
+      }
+    );
     if (this.lss.get('ThreeLineDepth')) {
       this.lss.set('ThreeLineDepth', false);
     }
