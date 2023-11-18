@@ -18,6 +18,7 @@ export class IndicesComponent {
   indices: any;
   action: any;
   searchString: any;
+  symbol: any;
 
   constructor(
     private lss: LocalStorageService,
@@ -25,6 +26,7 @@ export class IndicesComponent {
     private store: Store<AppState>,
     private modalService: NgbModal
   ) {
+    this.symbol = ''
     // this.indices = [];
     // this.lss.set('indexWatchlistId', 0)
     if(this.indices == undefined){

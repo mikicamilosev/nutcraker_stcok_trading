@@ -27,7 +27,7 @@
         <div class="form-group" ng-if="isRealTimeUser()">
             <div class="input-group input-group-sm">
                 <span class="input-group-btn">
-                    <button class="btn btn-primary btn-sm" type="button" ng-click="toggleDepth()"><span ng-class="{ 'glyphicon glyphicon-minus' : dataStore.ThreeLineDepth, 'glyphicon glyphicon-th-list' : !dataStore.ThreeLineDepth }"></span>  {{ThreeLineDepth ? ' 1 Line Depth' : ' 3 Line Depth'}}</button>
+                    <button class="btn btn-primary btn-sm" type="button" (click)="toggleDepth()"><span ng-class="{ 'glyphicon glyphicon-minus' : dataStore.ThreeLineDepth, 'glyphicon glyphicon-th-list' : !dataStore.ThreeLineDepth }"></span>  {{ThreeLineDepth ? ' 1 Line Depth' : ' 3 Line Depth'}}</button>
                 </span>
             </div>
         </div>

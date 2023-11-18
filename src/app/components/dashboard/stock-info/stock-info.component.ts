@@ -11,12 +11,15 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 })
 export class StockInfoComponent {
   stockInfo: any;
+  symbol: any;
 
   constructor(
     private apiservice: NTVoyagerApiWtp,
     private lss: LocalStorageService,
     private modalService: NgbModal
-  ) {}
+  ) {
+    this.symbol = ''
+  }
 
   ngOnInit() {
     if (this.lss.get('stockInfo') === null || this.stockInfo === undefined) {

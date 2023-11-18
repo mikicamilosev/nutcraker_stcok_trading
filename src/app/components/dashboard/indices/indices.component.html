@@ -2,10 +2,12 @@
     <form role="form" class="form-inline">
         <div class="form-group">
             <div class="input-group input-group-sm">
-                <input type="text" class="form-control input-sm" ng-keydown="keypress($event)" style=" min-width:200px;" ng-model="symbol" placeholder="Index code or name" capitalize />
-                <span class="input-group-btn input-group-sm">
-                    <button class="btn btn-default btn-sm" ng-disabled="symbol === null || symbol === ''" type="button" (click)="searchInstrument()"><span class="glyphicon glyphicon-search"></span></button>
-                </span>
+                <input type="text" class="form-control" name="watchlistsearch" (keydown)="keypress($event)" style="min-width:200px;" [(ngModel)]="symbol" placeholder="Instrument code or name" />
+              <span class="input-group-btn">
+                <button class="btn btn-default" [disabled]="symbol === null || symbol === ''" type="button" (click)="searchInstrument()">
+                  <span class="glyphicon glyphicon-search"></span>
+                </button>
+              </span>
             </div>
         </div>
     </form>

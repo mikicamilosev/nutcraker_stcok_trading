@@ -34,6 +34,7 @@ export class WatchlistComponent {
     private store: Store,
     private modalService: NgbModal
   ) {
+    this.symbol = ''
     if (this.lss.get('ThreeLineDepth')) {
       this.lss.set('ThreeLineDepth', false);
     }
@@ -104,8 +105,9 @@ export class WatchlistComponent {
   }
 
   toggleDepth() {
-    this.lss.set('ThreeLineDepth', !this.lss.get('ThreeLineDepth'));
-    if (!this.lss.get('ThreeLineDepth')) {
+    this.ThreeLineDepth = !this.lss.get('ThreeLineDepth');
+    this.lss.set('ThreeLineDepth', this.ThreeLineDepth);
+    if (this.ThreeLineDepth) {
       var instruments: any = this.lss.get('instruments');
       instruments.forEach((ele: any) => {
         ele.B2 = '';

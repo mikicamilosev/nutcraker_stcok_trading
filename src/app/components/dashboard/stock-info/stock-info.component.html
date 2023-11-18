@@ -1,10 +1,12 @@
 <div ng-controller="stockinfoController">
     <div class="col-md-8">
         <div class="input-group  input-group-sm">
-            <input id="txtStockInfo" type="text" class="form-control" ng-keydown="keypressed($event)" style="min-width:200px;" ng-model="siSymbol" placeholder="Enter an instrument code" capitalize />
-            <span class="input-group-btn">
-                <button class="btn btn-default" ng-disabled="siSymbol === null || siSymbol === ''" type="button" (click)="searchInstrument()"><span class="glyphicon glyphicon-search"></span></button>
-            </span>
+            <input type="text" class="form-control" name="watchlistsearch" (keydown)="keypress($event)" style="min-width:200px;" [(ngModel)]="symbol" placeholder="Instrument code or name" />
+              <span class="input-group-btn">
+                <button class="btn btn-default" [disabled]="symbol === null || symbol === ''" type="button" (click)="searchInstrument()">
+                  <span class="glyphicon glyphicon-search"></span>
+                </button>
+              </span>
         </div>
         <div id="stock-info-table" class="table-responsive ">
             <table class="table table-condensed">

@@ -13,15 +13,15 @@
             </tr>
         </thead>
         <tbody>
-            <tr ng-show="loading">
+            <!-- <tr ng-show="loading">
                 <td colspan="4">
                     <span><i class="glyphicon glyphicon-repeat gly-spin"></i>&nbsp;Loading...</span>
                 </td>
-            </tr>
-            <tr ng-repeat="instrument in instruments">
-                <td> ::instrument.symbol </td>
-                <td> ::instrument.name </td>
-                <td> ::instrument.exchange </td>
+            </tr> -->
+            <tr *ngFor="let instrument of instruments">
+                <td>{{ instrument.symbol }}</td>
+                <td>{{ instrument.name }}</td>
+                <td>{{ instrument.exchange }}</td>
                 <td style="text-align:center"><button class="btn btn-xs btn-default" ng-show="$parent.options.action === 'WL' || $parent.options.action === 'IWL'" ng-click="doAction('WL',instrument.exchangeSymbolKey,instrument.symbol,instrument.name)"><span class="glyphicon glyphicon-plus"></span> WL</button> <button class="btn btn-xs btn-default" ng-show="$parent.options.action=='SI'" ng-click="doAction('SI',instrument.exchangeSymbolKey,instrument.symbol,instrument.name)"><span class="glyphicon glyphicon-refresh"></span> SI</button> <button class="btn btn-xs btn-default" ng-show="$parent.options.action=='OR'" ng-click="doAction('OR',instrument.exchangeSymbolKey,instrument.symbol,instrument.name)"><span class="glyphicon glyphicon-record"></span> OR</button></td>
             </tr>
         </tbody>
