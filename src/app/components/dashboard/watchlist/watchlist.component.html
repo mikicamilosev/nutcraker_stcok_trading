@@ -9,9 +9,8 @@
                 </select>
                 <span class="input-group-btn input-group-sm">
                     <button class="btn btn-default btn-sm" type="button" (click)="newWatchlist()"><span class="glyphicon glyphicon-plus"></span></button>
-                    <!-- <button class="btn btn-default btn-sm" type="button" (click)="openModal(myModalContent)"><span class="glyphicon glyphicon-plus"></span></button> -->
-                    <button class="btn btn-primary btn-sm" type="button" ng-click="deleteWatchlist()"><span class="glyphicon glyphicon-minus" ng-disabled="!dataStore.watchlist"></span></button>
-                    <button class="btn btn-primary btn-sm" type="button" ng-click="renameWatchlist()"><span class="glyphicon glyphicon-edit" ng-disabled="!dataStore.watchlist"></span></button>
+                    <button class="btn btn-primary btn-sm" type="button" (click)="deleteWatchlist()"><span class="glyphicon glyphicon-minus" ng-disabled="!dataStore.watchlist"></span></button>
+                    <button class="btn btn-primary btn-sm" type="button" (click)="renameWatchlist()"><span class="glyphicon glyphicon-edit" ng-disabled="!dataStore.watchlist"></span></button>
                 </span>
             </div>
         </div>
@@ -28,7 +27,7 @@
         <div class="form-group" ng-if="isRealTimeUser()">
             <div class="input-group input-group-sm">
                 <span class="input-group-btn">
-                    <button class="btn btn-primary btn-sm" type="button" ng-click="toggleDepth()"><span ng-class="{ 'glyphicon glyphicon-minus' : dataStore.ThreeLineDepth, 'glyphicon glyphicon-th-list' : !dataStore.ThreeLineDepth }"></span>  dataStore.ThreeLineDepth ? ' 1 Line Depth' : ' 3 Line Depth'</button>
+                    <button class="btn btn-primary btn-sm" type="button" ng-click="toggleDepth()"><span ng-class="{ 'glyphicon glyphicon-minus' : dataStore.ThreeLineDepth, 'glyphicon glyphicon-th-list' : !dataStore.ThreeLineDepth }"></span>  {{ThreeLineDepth ? ' 1 Line Depth' : ' 3 Line Depth'}}</button>
                 </span>
             </div>
         </div>
@@ -87,7 +86,7 @@
                         <button class="btn btn-danger btn-xs" (click)="removeInstrument(inst)">
                             <span class="glyphicon glyphicon-remove"></span>
                         </button>
-                        <a href="" (click)="navstockInfo(inst.pesk, inst.Symbol, inst.name)">
+                        <a href="javascript::void(0)" (click)="navstockInfo(inst.pesk, inst.Symbol, inst.name)">
                             {{inst.symbol}}
                         </a>
                     </td>

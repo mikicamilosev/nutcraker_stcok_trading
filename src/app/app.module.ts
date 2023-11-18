@@ -32,6 +32,10 @@ import { HttpClientModule } from '@angular/common/http';
 import { LocalStorageDirective, LocalStorageService } from 'ngx-localstorage';
 import { NewwatchlistComponent } from './components/templates/newwatchlist/newwatchlist.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { RenameWatchlistNameComponent } from './components/templates/rename-watchlist-name/rename-watchlist-name.component';
+import { DeleteWatchlistComponent } from './components/templates/delete-watchlist/delete-watchlist.component';
+import { InstrumentSearchComponent } from './components/templates/instrument-search/instrument-search.component';
+import { OrderEntryComponent } from './components/templates/order-entry/order-entry.component';
 
 @NgModule({
   declarations: [
@@ -53,6 +57,10 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     PositionsComponent,
     StockchartComponent,
     NewwatchlistComponent,
+    RenameWatchlistNameComponent,
+    DeleteWatchlistComponent,
+    InstrumentSearchComponent,
+    OrderEntryComponent,
   ],
   imports: [
     CommonModule,

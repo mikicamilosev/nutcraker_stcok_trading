@@ -11,6 +11,9 @@ import {
   updateInstruments,
   watchlists,
 } from 'src/app/reducers/market/market.action';
+import { RenameWatchlistNameComponent } from '../../templates/rename-watchlist-name/rename-watchlist-name.component';
+import { DeleteWatchlistComponent } from '../../templates/delete-watchlist/delete-watchlist.component';
+import { InstrumentSearchComponent } from '../../templates/instrument-search/instrument-search.component';
 
 @Component({
   selector: 'app-watchlist',
@@ -22,6 +25,7 @@ export class WatchlistComponent {
   instruments: any;
   watchlists: any;
   symbol: any;
+  ThreeLineDepth = false;
 
   constructor(
     private lss: LocalStorageService,
@@ -124,6 +128,7 @@ export class WatchlistComponent {
 
   watchlistChanged() {
     if (this.selectedWatchlist) {
+      this.lss.set('watchlist', this.selectedWatchlist)
       this.lss.set('instruments', []);
       this.lss.set('wlSubscriptions', []);
       this.apiService.instrumentsAll(this.selectedWatchlist.id).subscribe(
@@ -161,7 +166,19 @@ export class WatchlistComponent {
     }
   }
 
-  searchInstrument() {}
+  searchInstrument() {
+    const modalRef = this.modalService.open(InstrumentSearchComponent, { backdrop: 'static', modalDialogClass: 'modal-lg' });
+    // modalRef.componentInstance.instrumentCollection = data.items;
+    
+    modalRef.result.then((selectedInstrument) => {
+      // tradableInstrument = selectedInstrument;
+      // this.openOrderEntry(od, tradableInstrument);
+      },
+      (dismissReason) => {
+        console.log('Modal dismissed:', dismissReason);
+      }
+    );
+  }
 
   navstockInfo(pesk: any, symbol: any, name: any) {
     this.lss.set('siPesk', pesk);
@@ -195,25 +212,58 @@ export class WatchlistComponent {
       return ;
     }
 
-    const modalRef = this.modalService.open(NewwatchlistComponent, { backdrop: 'static' });
+    const modalRef = this.modalService.open(NewwatchlistComponent, { backdrop: 'static', modalDialogClass: 'modal-lg' });
     // modalRef.componentInstance.instrumentCollection = data.items;
     
     modalRef.result.then((selectedInstrument) => {
       // tradableInstrument = selectedInstrument;
       // this.openOrderEntry(od, tradableInstrument);
-    },
-    (dismissReason) => {
-      console.log('Modal dismissed:', dismissReason);
-    }
+      },
+      (dismissReason) => {
+        console.log('Modal dismissed:', dismissReason);
+      }
     );
   }
 
   renameWatchlist() {
     // modal issue newWatchlist
+    if(!this.lss.get('watchlist') || this.lss.get('watchlist') == "" || this.lss.get('watchlist') == undefined){
+      this.notif.warning('Please select a watchlist to rename.', 'Rename', {
+        positionClass: 'toast-top-right'
+      })
+      return ;
+    }
+    const modalRef = this.modalService.open(RenameWatchlistNameComponent, { backdrop: 'static', modalDialogClass: 'modal-lg' });
+    modalRef.componentInstance.instrumentCollection = this.selectedWatchlist;
+    
+    modalRef.result.then((selectedInstrument) => {
+      // tradableInstrument = selectedInstrument;
+      // this.openOrderEntry(od, tradableInstrument);
+      },
+      (dismissReason) => {
+        console.log('Modal dismissed:', dismissReason);
+      }
+    );
   }
 
   deleteWatchlist() {
-    // modal issue
+    if(!this.lss.get('watchlist') || this.lss.get('watchlist') == "" || this.lss.get('watchlist') == undefined){
+      this.notif.warning('Please select a watchlist to delete.', 'Warning', {
+        positionClass: 'toast-top-right'
+      })
+      return ;
+    }
+    const modalRef = this.modalService.open(DeleteWatchlistComponent, { backdrop: 'static', modalDialogClass: 'modal-lg' });
+    // modalRef.componentInstance.instrumentCollection = data.items;
+    
+    modalRef.result.then((selectedInstrument) => {
+      // tradableInstrument = selectedInstrument;
+      // this.openOrderEntry(od, tradableInstrument);
+      },
+      (dismissReason) => {
+        console.log('Modal dismissed:', dismissReason);
+      }
+    );
   }
 
   newOrder(side: string, price: string, pesk: string) {

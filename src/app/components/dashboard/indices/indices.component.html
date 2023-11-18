@@ -4,7 +4,7 @@
             <div class="input-group input-group-sm">
                 <input type="text" class="form-control input-sm" ng-keydown="keypress($event)" style=" min-width:200px;" ng-model="symbol" placeholder="Index code or name" capitalize />
                 <span class="input-group-btn input-group-sm">
-                    <button class="btn btn-default btn-sm" ng-disabled="symbol === null || symbol === ''" type="button" ng-click="searchInstrument()"><span class="glyphicon glyphicon-search"></span></button>
+                    <button class="btn btn-default btn-sm" ng-disabled="symbol === null || symbol === ''" type="button" (click)="searchInstrument()"><span class="glyphicon glyphicon-search"></span></button>
                 </span>
             </div>
         </div>
@@ -32,7 +32,7 @@
             </thead>
             <tbody>
                 <tr *ngFor="let item of indices">
-                    <td><button class="btn btn-danger btn-xs" ng-click="removeInstrument(item)"><span class="glyphicon glyphicon-remove"></span></button> <a href="" ng-click="navstockInfo(item.pesk, item.Symbol, item.name)">{{item.name}}</a></td>
+                    <td><button class="btn btn-danger btn-xs" ng-click="removeInstrument(item)"><span class="glyphicon glyphicon-remove"></span></button> <a href="javascript::void(0)" ng-click="navstockInfo(item.pesk, item.Symbol, item.name)">{{item.name}}</a></td>
                     <td class="numeric hidden-xs">{{item.Cls}}</td>
                     <td highlight="item.LTP" change-item="item" change-prop="Chg" class="numeric">{{ item.Chg | number:'1.2-2' }}</td>
                     <td highlight="item.Chg" change-item="item" change-prop="Chg" class="numeric hidden-xs text-item.chgColour">{{ item.Chg | number:'1.2-2' }}</td>

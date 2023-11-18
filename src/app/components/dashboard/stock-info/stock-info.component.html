@@ -3,7 +3,7 @@
         <div class="input-group  input-group-sm">
             <input id="txtStockInfo" type="text" class="form-control" ng-keydown="keypressed($event)" style="min-width:200px;" ng-model="siSymbol" placeholder="Enter an instrument code" capitalize />
             <span class="input-group-btn">
-                <button class="btn btn-default" ng-disabled="siSymbol === null || siSymbol === ''" type="button" ng-click="searchInstrument()"><span class="glyphicon glyphicon-search"></span></button>
+                <button class="btn btn-default" ng-disabled="siSymbol === null || siSymbol === ''" type="button" (click)="searchInstrument()"><span class="glyphicon glyphicon-search"></span></button>
             </span>
         </div>
         <div id="stock-info-table" class="table-responsive ">

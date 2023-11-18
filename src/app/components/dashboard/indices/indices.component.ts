@@ -6,6 +6,8 @@ import { getWatchlists } from 'src/app/reducers/market/market.selectors';
 import { NTVoyagerApiWtp } from 'src/app/services/api.service';
 import * as fromMarket from '../../../reducers/market/market.selectors'
 import { AppState } from 'src/app/reducers/index.reducer';
+import { InstrumentSearchComponent } from '../../templates/instrument-search/instrument-search.component';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-indices',
@@ -20,7 +22,8 @@ export class IndicesComponent {
   constructor(
     private lss: LocalStorageService,
     private apiService: NTVoyagerApiWtp, 
-    private store: Store<AppState>
+    private store: Store<AppState>,
+    private modalService: NgbModal
   ) {
     // this.indices = [];
     // this.lss.set('indexWatchlistId', 0)
@@ -114,7 +117,17 @@ export class IndicesComponent {
   };
 
   searchInstrument() {
-    //  add serchAction & modal open()
+    const modalRef = this.modalService.open(InstrumentSearchComponent, { backdrop: 'static', modalDialogClass: 'modal-lg' });
+    // modalRef.componentInstance.instrumentCollection = data.items;
+    
+    modalRef.result.then((selectedInstrument) => {
+      // tradableInstrument = selectedInstrument;
+      // this.openOrderEntry(od, tradableInstrument);
+      },
+      (dismissReason) => {
+        console.log('Modal dismissed:', dismissReason);
+      }
+    );
   }
 }
 
