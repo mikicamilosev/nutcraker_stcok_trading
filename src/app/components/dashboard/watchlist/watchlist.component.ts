@@ -77,6 +77,7 @@ export class WatchlistComponent {
     this.apiService.v2().subscribe(
       (res) => {
         var tempWatchlists = [];
+        this.watchlists = res;
         this.store.dispatch(watchlists({ watchlists: res }));
         if (isArray(res)) {
           tempWatchlists = res;
