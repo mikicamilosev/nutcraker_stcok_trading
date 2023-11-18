@@ -1,9 +1,8 @@
-import { NgModule, importProvidersFrom } from '@angular/core';
+import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { StoreModule } from '@ngrx/store';
 import { LoginComponent } from './pages/login/login.component';
 import { DashboardComponent } from './pages/dashboard/dashboard.component';
@@ -31,8 +30,8 @@ import { ToastrModule } from 'ngx-toastr';
 import { NTVoyagerApiWtp } from './services/api.service';
 import { HttpClientModule } from '@angular/common/http';
 import { LocalStorageDirective, LocalStorageService } from 'ngx-localstorage';
-import { WatchlistService } from './services/watchlist.service';
 import { NewwatchlistComponent } from './components/templates/newwatchlist/newwatchlist.component';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   declarations: [
@@ -53,7 +52,6 @@ import { NewwatchlistComponent } from './components/templates/newwatchlist/newwa
     TradebookComponent,
     PositionsComponent,
     StockchartComponent,
-    NewwatchlistComponent,
   ],
   imports: [
     CommonModule,
@@ -65,7 +63,6 @@ import { NewwatchlistComponent } from './components/templates/newwatchlist/newwa
     }),
     BrowserModule,
     AppRoutingModule,
-    NgbModule,
     FormsModule,
     ReactiveFormsModule,
     StoreModule.forRoot(reducers, {
@@ -78,12 +75,12 @@ import { NewwatchlistComponent } from './components/templates/newwatchlist/newwa
     // EffectsModule.forRoot(AuthEffects),
     HttpClientModule,
     LocalStorageDirective,
+    NgbModule
   ],
   providers: [
     TestDataService,
     NTVoyagerApiWtp,
     LocalStorageService,
-    WatchlistService,
   ],
   bootstrap: [AppComponent],
 })
