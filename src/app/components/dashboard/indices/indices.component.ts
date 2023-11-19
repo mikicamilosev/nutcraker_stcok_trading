@@ -37,11 +37,15 @@ export class IndicesComponent {
   }
 
   ngOnInit() {
-    this.apiService.indexInstruments().subscribe((res) => {
-      console.log(res)
-      this.indexInstruments = res;
-      this.lss.set('indexInstruments', res);      
-    });
+    if(this.lss.get('indexInstruments') == null){
+      this.apiService.indexInstruments().subscribe((res) => {
+        console.log(res)
+        this.indexInstruments = res;
+        this.lss.set('indexInstruments', res);      
+      });
+    } else {
+      this.indexInstruments = this.lss.get('indexInstruments');
+    }
   }
 
   navstockInfo(pesk: any, symbol: any, name: any) {
@@ -52,17 +56,16 @@ export class IndicesComponent {
   }
 
   removeInstrument(item: any) {
-    var updateIndexWatchlist = {
-      id: this.lss.get('indexWatchlistId'),
-      type: 'Index',
-      exchangeSymbolKeys: [],
-    };
-    var temp = [];
-    Array(this.lss.get('indices')).forEach((element: any) => {
-      if (element.pesk === item.pesk) {
-        temp.push(element.pesk);
+    console.log(item)
+    var oldIdxInstruments: any = this.lss.get('indexInstruments');
+    var newIdxInstruments: any = [];
+    oldIdxInstruments.forEach((ele: any) => {
+      if(ele.name !== item.name){
+        newIdxInstruments.push(ele)
       }
     });
+    this.lss.set('indexInstruments', newIdxInstruments);
+    this.indexInstruments = newIdxInstruments;
     // API links contains 'put'
   }
 
@@ -74,13 +77,17 @@ export class IndicesComponent {
   }
 
   searchAction = function (a: any, s: any) {
-    // this.action = a;
-    // this.searchString = s;
+    var res = {
+      action: a,
+      searchString: s
+    }
+
+    return res;
   };
 
   searchInstrument() {
     const modalRef = this.modalService.open(InstrumentSearchComponent, { backdrop: 'static', modalDialogClass: 'modal-lg' });
-    // modalRef.componentInstance.instrumentCollection = data.items;
+    modalRef.componentInstance.instrumentCollection = this.searchAction('IWL', this.symbol);
     
     modalRef.result.then((selectedInstrument) => {
       // tradableInstrument = selectedInstrument;
@@ -91,19 +98,4 @@ export class IndicesComponent {
       }
     );
   }
-}
-
-function instrument(pesk: any, symbol: any, name: any) {
-  var res = {
-    pesk: pesk,
-    symbol: symbol,
-    name: name,
-    LTP: '',
-    LTT: '',
-    Chg: '',
-    ChgP: '',
-    Cls: '',
-    chgColour: 'warning',
-  };
-  return res;
 }

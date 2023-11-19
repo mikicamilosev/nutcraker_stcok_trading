@@ -36,6 +36,7 @@ import { RenameWatchlistNameComponent } from './components/templates/rename-watc
 import { DeleteWatchlistComponent } from './components/templates/delete-watchlist/delete-watchlist.component';
 import { InstrumentSearchComponent } from './components/templates/instrument-search/instrument-search.component';
 import { OrderEntryComponent } from './components/templates/order-entry/order-entry.component';
+import { TestLightStreamerComponent } from './pages/test-light-streamer/test-light-streamer.component';
 
 @NgModule({
   declarations: [
@@ -61,6 +62,7 @@ import { OrderEntryComponent } from './components/templates/order-entry/order-en
     DeleteWatchlistComponent,
     InstrumentSearchComponent,
     OrderEntryComponent,
+    TestLightStreamerComponent,
   ],
   imports: [
     CommonModule,

@@ -18,7 +18,7 @@ export class StockInfoComponent {
     private lss: LocalStorageService,
     private modalService: NgbModal
   ) {
-    this.symbol = ''
+    this.symbol = this.lss.get('siSymbol');
   }
 
   ngOnInit() {
@@ -126,12 +126,20 @@ export class StockInfoComponent {
     // });
   };
 
+  searchAction(a: any, s: any) {
+    var res = {
+      action: a,
+      searchString: s
+    }
+    return res;
+  };
+
   searchInstrument() {
     const modalRef = this.modalService.open(InstrumentSearchComponent, {
       backdrop: 'static',
       modalDialogClass: 'modal-lg',
     });
-    // modalRef.componentInstance.instrumentCollection = data.items;
+    modalRef.componentInstance.instrumentCollection = this.searchAction('SI', this.symbol);
 
     modalRef.result.then(
       (selectedInstrument) => {

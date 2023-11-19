@@ -18,6 +18,6 @@
     </div>
     <div class="modal-footer">
         <button class="btn btn-sm btn-success" type="submit" [disabled]="renameWatchlistForm.controls.watchlistName.errors?.maxlength || renameWatchlistForm.controls.watchlistName.errors?.required" >Save</button>
-        <button class="btn btn-sm btn-danger" (click)="cancel()">Cancel</button>
+        <button class="btn btn-sm btn-danger" type="button" (click)="cancel()">Cancel</button>
     </div>
 </form>

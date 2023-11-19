@@ -62,6 +62,7 @@ export class WatchlistComponent {
           this.lss.set('watchlists', res)
           console.log(res[0].id)
           this.selectedWatchlist = res[0];
+          this.lss.set('watchlist', this.selectedWatchlist);
           this.apiService.instrumentsAll(res[0].id).subscribe(
             (res: any) => {
               var tempInstruments: any = [];
@@ -77,7 +78,9 @@ export class WatchlistComponent {
           )
         } else {
           this.watchlists = oldWatchlists;
+          console.log(oldInstruments)
           this.selectedWatchlist = oldWatchlists[0];
+          this.lss.set('watchlist', this.selectedWatchlist)
           if(oldInstruments == null){
             this.apiService.instrumentsAll(res[0].id).subscribe(
               (res: any) => {
@@ -160,6 +163,7 @@ export class WatchlistComponent {
   }
 
   keypress(event: KeyboardEvent): void {
+    this.lss.set('indexWLStr', SearchAction('WL',this.symbol))
     if (event.key === 'Enter') {
       // if (event.key === 'Enter' && this.symbol !== null && this.symbol !== '') {
       this.searchInstrument();
@@ -169,7 +173,7 @@ export class WatchlistComponent {
 
   searchInstrument() {
     const modalRef = this.modalService.open(InstrumentSearchComponent, { backdrop: 'static', modalDialogClass: 'modal-lg' });
-    // modalRef.componentInstance.instrumentCollection = data.items;
+    modalRef.componentInstance.instrumentCollection = SearchAction('WL',this.symbol)
     
     modalRef.result.then((selectedInstrument) => {
       // tradableInstrument = selectedInstrument;
@@ -195,9 +199,21 @@ export class WatchlistComponent {
   }
 
   removeInstrument(item: any) {
-    var updateWatchlist = {
-      id: this.selectedWatchlist?.id,
-    };
+    var oldInstruments: any = this.lss.get('instruments');
+    var newInstruments: any = [];
+    oldInstruments.forEach((cell:any) => {
+      if(cell.pesk !== item.pesk){
+        newInstruments.push(cell);
+      }
+    })
+    console.log(newInstruments)
+    this.instruments = newInstruments;
+    this.lss.set('instruments', newInstruments);
+    this.apiService.updatePesks2({watchlistId: this.selectedWatchlist?.id, pesks: [item.pesk]} as any).subscribe(
+      (res) =>{
+        console.log(res)
+      }
+    )
   }
 
   newWatchlist() {
@@ -346,3 +362,11 @@ function OrderDetails(s: any, p: any, i: any) {
 
   return res;
 }
+
+function SearchAction(a: any, s: any) {
+  var res = {
+    action : a,
+    searchString : s
+  }
+  return res;
+};
