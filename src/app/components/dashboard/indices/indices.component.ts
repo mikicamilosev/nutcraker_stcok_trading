@@ -15,6 +15,8 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
   styleUrls: ['./indices.component.css'],
 })
 export class IndicesComponent {
+  indexInstruments: any;
+
   indices: any;
   action: any;
   searchString: any;
@@ -35,52 +37,10 @@ export class IndicesComponent {
   }
 
   ngOnInit() {
-    console.log(this.indices)
-    
-    this.store.select(fromMarket.getInstruments).subscribe(
-      (res) => {
-        if(res.length > 0){
-          this.indices = res;
-        }
-      }
-    )
-    var red_watchlists = this.store.select(getWatchlists).subscribe(
-      (res) => {
-        console.log(res)
-      }
-    );
-    console.log(red_watchlists)
-    this.lss.set('indexSubscriptions', []);
-    this.apiService.v2().subscribe((res) => {
-      if (isArray(res)) {
-        res.forEach((ele: any) => {
-          if (this.lss.get('indexWatchlistId') === 0) {
-            this.lss.set('indexWatchlistId', ele.id);
-            this.apiService.instrumentsAll(ele.id).subscribe((res) => {
-              if (isArray(res)) {
-                var temp: any = [];
-                var temp2: any = [];
-                res.forEach((cell: any) => {
-                  console.log(cell.symbol);
-                  temp.push(instrument(cell.symbol, cell.value, cell.name));
-                  temp2.push(cell.symbol);
-                });
-                this.lss.set('indices', temp);
-                this.indices = temp;
-                this.lss.set('indexSubscriptions', temp2);
-                // subscribeData()
-                if (this.lss.get('indexWatchlistId') === 0) {
-                  var newIndexWatchlist = {
-                    name: 'My Index Watchlist',
-                    type: 'Index',
-                    exchangeSymbolKeys: [],
-                  };
-                }
-              }
-            });
-          }
-        });
-      }
+    this.apiService.indexInstruments().subscribe((res) => {
+      console.log(res)
+      this.indexInstruments = res;
+      this.lss.set('indexInstruments', res);      
     });
   }
 

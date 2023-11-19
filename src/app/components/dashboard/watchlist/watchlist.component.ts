@@ -23,8 +23,9 @@ import * as fromMarket from '../../../reducers/market/market.selectors'
 })
 export class WatchlistComponent {
   selectedWatchlist: Watchlist | undefined;
-  instruments: any;
   watchlists: any;
+  instruments: any;
+  indexInstrumentCode: any;
   symbol: any;
   ThreeLineDepth = false;
 
@@ -35,45 +36,17 @@ export class WatchlistComponent {
     private store: Store,
     private modalService: NgbModal
   ) {
-    this.symbol = ''
-    if (this.lss.get('ThreeLineDepth')) {
-      this.lss.set('ThreeLineDepth', false);
+    this.symbol = '';
+    console.log(this.lss.get('ThreeLineDepth'))
+    if(this.lss.get('ThreeLineDepth') == null){
+      this.lss.set('ThreeLineDepth', false)
     }
-    // if(!this.lss.get('watchlists')){
-    this.apiService.v2().subscribe(
-      (res) => {
-        this.store.dispatch(watchlists({ watchlists: res }));
-        var tempWatchlists = [];
-        if (isArray(res)) {
-          tempWatchlists = res;
-          this.lss.set('watchlists', res);
-          if (tempWatchlists.length > 0) {
-            var defaultWatchlist = tempWatchlists.find(function (ele) {
-              return ele.name === 'DEFAULT';
-            });
-            if (defaultWatchlist !== null) {
-              this.lss.set('watchlist', defaultWatchlist);
-              this.watchlistChanged();
-            } else {
-              this.lss.set('watchlist', res[0]);
-              this.watchlistChanged();
-            }
-          }
-        } else {
-        }
-      },
-      (err) => {
-        console.log(err);
-      }
-    );
-    // }
-    this.watchlists = this.lss.get('watchlist');
-    this.instruments = this.lss.get('instruments');
   }
 
   ngOnInit() {
     this.store.select(fromMarket.getWatchlists as any).subscribe(
       (res) =>{
+        console.log(res)
         this.watchlists = res;
       }
     );
@@ -81,34 +54,53 @@ export class WatchlistComponent {
       this.lss.set('ThreeLineDepth', false);
     }
     this.apiService.v2().subscribe(
-      (res) => {
-        var tempWatchlists = [];
-        this.watchlists = res;
-        this.store.dispatch(watchlists({ watchlists: res }));
-        if (isArray(res)) {
-          tempWatchlists = res;
-          this.lss.set('watchlists', res);
-          if (tempWatchlists.length > 0) {
-            var defaultWatchlist = tempWatchlists.find(function (ele) {
-              return ele.name === 'DEFAULT';
-            });
-            if (defaultWatchlist !== null) {
-              this.lss.set('watchlist', defaultWatchlist);
-              this.watchlistChanged();
-            } else {
-              this.lss.set('watchlist', res[0]);
-              this.watchlistChanged();
+      (res: any) => {
+        var oldWatchlists: any = this.lss.get('watchlists');
+        var oldInstruments = this.lss.get('instruments');
+        if(oldWatchlists == null){
+          this.watchlists = res;
+          this.lss.set('watchlists', res)
+          console.log(res[0].id)
+          this.selectedWatchlist = res[0];
+          this.apiService.instrumentsAll(res[0].id).subscribe(
+            (res: any) => {
+              var tempInstruments: any = [];
+                res.forEach((cell: any) => {
+                  tempInstruments.push(instrument(cell.pesk, cell.symbol, cell.name));                  
+                });
+                this.lss.set('instruments', tempInstruments)
+                this.instruments = tempInstruments;
+            },
+            (err) => {
+              console.log(err)
             }
-          }
+          )
         } else {
+          this.watchlists = oldWatchlists;
+          this.selectedWatchlist = oldWatchlists[0];
+          if(oldInstruments == null){
+            this.apiService.instrumentsAll(res[0].id).subscribe(
+              (res: any) => {
+                var tempInstruments: any = [];
+                res.forEach((cell: any) => {
+                  tempInstruments.push(instrument(cell.pesk, cell.symbol, cell.name));                  
+                });
+                this.lss.set('instruments', tempInstruments)
+                this.instruments = tempInstruments;
+              },
+              (err) => {
+                console.log(err)
+              }
+            )
+          } else {
+            this.instruments = oldInstruments;
+          }
         }
       },
       (err) => {
         console.log(err);
       }
     );
-    this.watchlists = this.lss.get('watchlists');
-    this.instruments = this.lss.get('instruments');
   }
 
   toggleDepth() {
