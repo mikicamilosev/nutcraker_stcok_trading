@@ -36,6 +36,11 @@ export class RenameWatchlistNameComponent {
 
   renameExistingWatchlist(){
     var newName: string = this.renameWatchlistForm.get('watchlistName').value
+    var watchlist: any = this.lss.get('watchlist');
+    if(watchlist.name == newName){
+      this.notif.warning('Input correct name!', 'Warning', {positionClass: 'toast-top-right'});
+      return;
+    }
     var watchlists: any = this.lss.get('watchlists');
     watchlists.forEach((ele: any) => {
       if(ele.name == newName){

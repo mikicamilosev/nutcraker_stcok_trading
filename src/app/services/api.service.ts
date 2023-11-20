@@ -158,6 +158,7 @@ export class NTVoyagerApiWtp {
         };
 
         return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            console.log(response_)
             return this.processIndexInstruments(response_);
         })).pipe(_observableCatch((response_: any) => {
             if (response_ instanceof HttpResponseBase) {
@@ -2027,6 +2028,9 @@ export class IndexInstrumentDTO implements IIndexInstrumentDTO {
     pesk?: string | undefined;
     index?: string | undefined;
     name?: string | undefined;
+    value?: string | undefined;
+    change?: string | undefined;
+    changePercentage?: string | undefined;
 
     constructor(data?: IIndexInstrumentDTO) {
         if (data) {
@@ -2065,6 +2069,9 @@ export interface IIndexInstrumentDTO {
     pesk?: string | undefined;
     index?: string | undefined;
     name?: string | undefined;
+    value?: string | undefined;
+    change?: string | undefined;
+    changePercentage?: string | undefined;
 }
 
 export class IndexUpdatePesksCommand implements IIndexUpdatePesksCommand {

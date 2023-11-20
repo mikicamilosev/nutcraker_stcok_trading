@@ -28,7 +28,7 @@
         <tbody>
             <tr *ngFor="let item of marketMovers">
                 <td>
-                    <a href="javascript:void(0)" ng-click="navstockInfo(item.exchangeSymbolKey, item.symbol, item.name)">
+                    <a href="javascript:void(0)" (click)="navstockInfo(item.exchangeSymbolKey, item.symbol, item.name)">
                         {{item.symbol}}
                     </a>
                 </td>

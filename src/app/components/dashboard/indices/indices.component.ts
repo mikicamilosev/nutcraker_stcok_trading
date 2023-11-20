@@ -8,6 +8,7 @@ import * as fromMarket from '../../../reducers/market/market.selectors'
 import { AppState } from 'src/app/reducers/index.reducer';
 import { InstrumentSearchComponent } from '../../templates/instrument-search/instrument-search.component';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { updateWatchlists } from 'src/app/reducers/market/market.action';
 
 @Component({
   selector: 'app-indices',
@@ -38,6 +39,7 @@ export class IndicesComponent {
   
   ngOnInit() {
     this.apiService.indexInstruments().subscribe((res) => {
+      console.log(res)
       if(this.lss.get('indexInstruments') == null){
         this.indexInstruments = res;
         this.lss.set('indexInstruments', res);      
@@ -55,6 +57,7 @@ export class IndicesComponent {
     this.lss.set('siPesk', pesk);
     this.lss.set('siSymbol', symbol);
     this.lss.set('siName', name);
+    this.store.dispatch(updateWatchlists({watchlists: []}))
   }
 
   removeInstrument(item: any) {
@@ -99,5 +102,6 @@ export class IndicesComponent {
         console.log('Modal dismissed:', dismissReason);
       }
     );
+    this.symbol = ''
   }
 }

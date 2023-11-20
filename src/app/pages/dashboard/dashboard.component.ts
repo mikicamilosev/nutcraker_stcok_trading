@@ -26,14 +26,16 @@ export class DashboardComponent {
   ngOnInit() {
     this.store.select(fromMarket.getWatchlists as any).subscribe(
       (res: any) => {
-        this.stockInfo = this.instrument(res.siPesk, res.siSymbol, res.siName);
+        var siSymbol = this.lss.get('siSymbol');
+        var siPesk = this.lss.get('siPesk');
+        var siName = this.lss.get('siName');
+        this.stockInfo = this.instrument(siPesk, siSymbol, siName);
       }
     )
     var siSymbol = this.lss.get('siSymbol');
     var siPesk = this.lss.get('siPesk');
     var siName = this.lss.get('siName');
     this.stockInfo = this.instrument(siPesk, siSymbol, siName);
-    console.log(this.stockInfo)
   }
 
   ngOnChanges() {

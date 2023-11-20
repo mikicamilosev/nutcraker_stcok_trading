@@ -1,7 +1,9 @@
 import { Component } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { Store } from '@ngrx/store';
 import { LocalStorageService } from 'ngx-localstorage';
 import { ToastrService } from 'ngx-toastr';
+import { updateWatchlists } from 'src/app/reducers/market/market.action';
 import { NTVoyagerApiWtp, WatchlistDeleteCommand } from 'src/app/services/api.service';
 
 @Component({
@@ -15,7 +17,8 @@ export class DeleteWatchlistComponent {
     private activeModal: NgbActiveModal,
     private lss: LocalStorageService,
     private apiService: NTVoyagerApiWtp,
-    private notif: ToastrService
+    private notif: ToastrService,
+    private store: Store
   ) {
     this.watchlist = this.lss.get('watchlist')
   }
@@ -37,13 +40,14 @@ export class DeleteWatchlistComponent {
           })
           this.lss.set('watchlists', newWlLists);
           this.lss.set('watchlist', newWlLists[0]);
+          this.notif.success(res.message, "Success!", { positionClass: "toast-top-right"})
           this.apiService.instrumentsAll(newWlLists[0].id).subscribe(
             (res) => {
               this.lss.set('instruments', res);
+              this.store.dispatch(updateWatchlists({watchlists: []}))
+              this.cancel()
             }
           )
-          this.notif.success(res.message, "Success!", { positionClass: "toast-top-right"})
-          this.cancel()
         }
       }
     )

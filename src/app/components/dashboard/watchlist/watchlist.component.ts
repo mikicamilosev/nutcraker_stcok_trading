@@ -44,9 +44,9 @@ export class WatchlistComponent {
   ngOnInit() {
     this.store.select(fromMarket.getWatchlists as any).subscribe(
       (res) => {
+        this.selectedWatchlist = this.lss.get('watchlist') as any;
         this.instruments = this.lss.get('instruments');
         this.watchlists = this.lss.get('watchlists');
-        this.selectedWatchlist = this.lss.get('watchlist');
         this.ThreeLineDepth = this.lss.get('ThreeLineDepth');
       }
     );
@@ -135,7 +135,6 @@ export class WatchlistComponent {
       this.lss.set('wlSubscriptions', []);
       this.apiService.instrumentsAll(this.selectedWatchlist.id).subscribe(
         (res) => {
-          console.log(res);
           if (isArray(res)) {
             this.lss.set('instruments', []);
             this.lss.set('wlSubscriptions', []);
@@ -180,12 +179,14 @@ export class WatchlistComponent {
         console.log('Modal dismissed:', dismissReason);
       }
     );
+    this.symbol = ''
   }
 
   navstockInfo(pesk: any, symbol: any, name: any) {
     this.lss.set('siPesk', pesk);
     this.lss.set('siSymbol', symbol);
     this.lss.set('siName', name);
+    this.store.dispatch(updateWatchlists({watchlists: []}));
   }
 
   subscribeData() {

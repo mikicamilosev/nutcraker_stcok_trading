@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { Store } from '@ngrx/store';
 import { LocalStorageService } from 'ngx-localstorage';
+import { updateWatchlists } from 'src/app/reducers/market/market.action';
 import { NTVoyagerApiWtp } from 'src/app/services/api.service';
 
 @Component({
@@ -40,17 +41,15 @@ export class InstrumentSearchComponent {
       var oldInstrumentsList: any = this.lss.get('instruments');
       oldInstrumentsList.push(this.wlInstrument(symbolkey, symbol, name));
       this.lss.set('instruments', oldInstrumentsList);
-      this.cancel()
-      return ;
     } else if(this.action === 'IWL') {
       var oldIndexInstruments: any = this.lss.get('indexInstruments');
       oldIndexInstruments.push(this.idcInstrument(symbolkey, symbol, name));
       this.lss.set('indexInstruments', oldIndexInstruments);
-      this.cancel()
-      return ;
     } else if(this.action === 'SI'){
       
     }
+    this.store.dispatch(updateWatchlists({watchlists: []}));
+    this.cancel()
   }
   
   selectedInstrument(wlInstruments: any){

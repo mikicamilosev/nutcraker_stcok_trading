@@ -37,6 +37,7 @@ import { DeleteWatchlistComponent } from './components/templates/delete-watchlis
 import { InstrumentSearchComponent } from './components/templates/instrument-search/instrument-search.component';
 import { OrderEntryComponent } from './components/templates/order-entry/order-entry.component';
 import { TestLightStreamerComponent } from './pages/test-light-streamer/test-light-streamer.component';
+import { NewsModalComponent } from './components/templates/news-modal/news-modal.component';
 
 @NgModule({
   declarations: [
@@ -63,6 +64,7 @@ import { TestLightStreamerComponent } from './pages/test-light-streamer/test-lig
     InstrumentSearchComponent,
     OrderEntryComponent,
     TestLightStreamerComponent,
+    NewsModalComponent,
   ],
   imports: [
     CommonModule,
