@@ -80,6 +80,8 @@ import { TestLightStreamerComponent } from './pages/test-light-streamer/test-lig
       runtimeChecks: {
         strictStateImmutability: true,
         strictActionImmutability: true,
+        strictStateSerializability: true,
+        strictActionSerializability: true,
       },
       metaReducers,
     }),

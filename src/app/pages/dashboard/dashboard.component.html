@@ -22,7 +22,7 @@
   <div class="panel panel-default" style="min-height: 324px" id="pnlStockInfo">
     <div class="panel-heading">
       <h3 class="panel-title">
-        Stock Info - <small>{{stockInfo.Name}}</small>
+        Stock Info - <small>{{ stockInfo.Name }}</small>
       </h3>
     </div>
     <div class="panel-body">
@@ -34,7 +34,7 @@
   <div class="panel panel-default">
     <div class="panel-heading">
       <h3 class="panel-title">
-        Intraday Chart - <small>{{stockInfo.Name}}</small>
+        Intraday Chart - <small>{{ stockInfo.Name }}</small>
       </h3>
     </div>
     <div class="panel-body">
@@ -44,21 +44,68 @@
 </div>
 <div>
   <div class="col-md-8 col-sm-12">
-    <app-news />
+    <app-news  [exchange]="exchange" />
   </div>
   <div class="col-md-4 col-sm-12">
     <div class="panel panel-default">
       <div class="panel-heading">
         <h3 class="panel-title">
-          Market Movers -
+          JSE Equalities - Market Movers -
           <small
-            >Last Updated:
-             dataStore.mmLastUpdated | date : "HH:mm:ss" </small
-          >
+            >Last Updated: dataStore.mmLastUpdated | date : "HH:mm:ss"
+          </small>
         </h3>
       </div>
       <div class="panel-body">
-        
+        <div>
+          <ul
+            class="nav nav-tabs"
+          >
+            <li
+              heading="Gainers"
+              [ngClass]="{ 'active': moverType == 'Gainers' }"
+            >
+              <a href="javascript:void(0)" (click)="handleNavSelect('Up','Gainers')" class=""
+                >Gainers</a
+              >
+            </li>
+            <li
+              heading="Losers"
+              [ngClass]="{ 'active': moverType == 'Losers' }"
+            >
+              <a href="javascript:void(0)" (click)="handleNavSelect('Down','Losers')" class=""
+                >Losers</a
+              >
+            </li>
+            <li
+              heading="by Value"
+              [ngClass]="{ 'active': moverType === 'Value' }"
+            >
+              <a href="javascript:void(0)" (click)="handleNavSelect('Value','Value')" class=""
+                >by Value</a
+              >
+            </li>
+            <li
+              heading="by Volume"
+              [ngClass]="{ 'active': moverType === 'Volume' }"
+            >
+              <a href="javascript:void(0)" (click)="handleNavSelect('Volume','Volume')" class=""
+                >by Volume</a
+              >
+            </li>
+            <li
+              heading="by Trades"
+              [ngClass]="{ 'active': moverType === 'Trades' }"
+            >
+              <a href="javascript:void(0)" (click)="handleNavSelect('Trades','Trades')" class=""
+                >by Trades</a
+              >
+            </li>
+          </ul>
+          <div class="tab-content">
+            <app-market-movers [exchange]="exchange" [moverType]="moverType"></app-market-movers>
+          </div>
+        </div>
       </div>
     </div>
   </div>

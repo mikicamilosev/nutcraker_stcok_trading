@@ -1,5 +1,8 @@
 import { Component, Output } from '@angular/core';
+import { Store } from '@ngrx/store';
 import { LocalStorageService } from 'ngx-localstorage';
+import * as fromMarket from '../../reducers/market/market.selectors'
+import { NTVoyagerApiWtp } from 'src/app/services/api.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -7,18 +10,30 @@ import { LocalStorageService } from 'ngx-localstorage';
   styleUrls: ['./dashboard.component.css'],
 })
 export class DashboardComponent {
+  exchange: any;
+  moverType: any;
+
+  active: any;
   stockInfo: any;
   selectedTab: any;
 
-  constructor(private lss: LocalStorageService) {
+  constructor(private lss: LocalStorageService,private store: Store, private apiService: NTVoyagerApiWtp) {
+    this.exchange = 'Up'
+    this.moverType = 'Gainers'
     this.stockInfo = this.lss.get('stockInfo');
   }
 
   ngOnInit() {
+    this.store.select(fromMarket.getWatchlists as any).subscribe(
+      (res: any) => {
+        this.stockInfo = this.instrument(res.siPesk, res.siSymbol, res.siName);
+      }
+    )
     var siSymbol = this.lss.get('siSymbol');
     var siPesk = this.lss.get('siPesk');
     var siName = this.lss.get('siName');
     this.stockInfo = this.instrument(siPesk, siSymbol, siName);
+    console.log(this.stockInfo)
   }
 
   ngOnChanges() {
@@ -27,6 +42,11 @@ export class DashboardComponent {
 
   isSelectedTab(tabName: string): boolean {
     return this.selectedTab === tabName;
+  }
+
+  handleNavSelect(exchange: string, moverType: string){
+    this.exchange = exchange;
+    this.moverType = moverType;
   }
 
   instrument(pesk: any, symbol: any, name: any) {
@@ -88,3 +108,4 @@ export class DashboardComponent {
     return res;
   }
 }
+

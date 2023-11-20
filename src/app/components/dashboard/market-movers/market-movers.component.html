@@ -1,27 +1,44 @@
-<div class="panel panel-default">
-    <div class="panel-heading">
-        <h3 class="panel-title">Market Movers - <small>Last Updated: dataStore.mmLastUpdated | date:'HH:mm:ss'</small></h3>
-    </div>
-    <div class="panel-body">
-        <div class="panel-heading">
-            <h3 class="panel-title">JSE Equities - Market Movers - <small>Last Updated: mmLastUpdated | date:'HH:mm:ss'</small></h3>
-        </div>
-        <div class="panel-body">
-            <ul ngbNav #nav="ngbNav" [(activeId)]="active" class="nav-tabs">
-                <li [ngbNavItem]="1">
-                    <button ngbNavLink>One</button>
-                </li>
-                <li [ngbNavItem]="2">
-                    <button ngbNavLink>TWO</button>
-                </li>
-                <li [ngbNavItem]="3">
-                    <button ngbNavLink>Three</button>
-                </li>
-            </ul>
-            
-            <div [ngbNavOutlet]="nav" class="mt-2"></div>
-            
-            <pre>Active: {{ active }}</pre>
-        </div>
-    </div>
+<div class="table-responsive">
+    <table class="table table-condensed table-small">
+        <thead>
+            <tr>
+                <th>
+                    Symbol
+                </th>
+                <th class="numeric" style="padding-left: 5px;">
+                    Close
+                </th>
+                <th class="numeric" style="padding-left: 5px;">
+                    Price
+                </th>
+                <th class="numeric" style="padding-left: 5px;">
+                    Chg
+                </th>
+                <th class="numeric" style="padding-left: 5px;">
+                    % Chg
+                </th>
+                <th class="numeric" style="padding-left: 5px;">
+                    Volume
+                </th>
+                <th class="numeric" style="padding-left: 5px;">
+                    Value
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let item of marketMovers">
+                <td>
+                    <a href="javascript:void(0)" ng-click="navstockInfo(item.exchangeSymbolKey, item.symbol, item.name)">
+                        {{item.symbol}}
+                    </a>
+                </td>
+                <td class="numeric">{{item.prevClose | number:'1.2-2'}} </td>
+                <td class="numeric">{{item.lastTrade | number:'1.2-2'}} </td>
+                <td class="numeric" [class.text-success]="item.change > 0" [class.text-danger]="item.change < 0" [class.text-warning]="item.change === 0">{{ item.change | number: '2.2-2' }}</td>
+                <td class="numeric" [class.text-success]="item.change > 0" [class.text-danger]="item.change < 0" [class.text-warning]="item.change === 0">{{ item.changePerc | number: '2.2-2' }}</td>
+                <td class="numeric">{{item.volume | number }}</td>
+                <td class="numeric">{{item.value | number:'1.2-2'}}</td>
+            </tr>
+        </tbody>
+    </table>
 </div>

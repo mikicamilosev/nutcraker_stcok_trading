@@ -34,7 +34,7 @@
             </thead>
             <tbody>
                 <tr *ngFor="let item of indexInstruments">
-                    <td><button class="btn btn-danger btn-xs" (click)="removeInstrument(item)"><span class="glyphicon glyphicon-remove"></span></button> <a (click)="navstockInfo(item.pesk, item.Symbol, item.name)">{{item.name}}</a></td>
+                    <td><button class="btn btn-danger btn-xs" (click)="removeInstrument(item)"><span class="glyphicon glyphicon-remove"></span></button> <a href="javascript:void(0)" (click)="navstockInfo(item.pesk, item.Symbol, item.name)">{{item.name}}</a></td>
                     <td class="numeric hidden-xs">{{item.Cls}}</td>
                     <td highlight="item.LTP" change-item="item" change-prop="Chg" class="numeric">{{ item.Chg | number:'1.2-2' }}</td>
                     <td highlight="item.Chg" change-item="item" change-prop="Chg" class="numeric hidden-xs text-item.chgColour">{{ item.Chg | number:'1.2-2' }}</td>

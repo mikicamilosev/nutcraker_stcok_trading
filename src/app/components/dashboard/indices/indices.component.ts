@@ -29,30 +29,32 @@ export class IndicesComponent {
     private modalService: NgbModal
   ) {
     this.symbol = ''
-    // this.indices = [];
-    // this.lss.set('indexWatchlistId', 0)
-    if(this.indices == undefined){
-      this.indices = this.lss.get('instruments')
-    }
+    this.store.select(fromMarket.getWatchlists as any).subscribe(
+      (res) => {
+        this.indexInstruments = this.lss.get('indexInstruments');
+      }
+    )
   }
-
+  
   ngOnInit() {
-    if(this.lss.get('indexInstruments') == null){
-      this.apiService.indexInstruments().subscribe((res) => {
-        console.log(res)
+    this.apiService.indexInstruments().subscribe((res) => {
+      if(this.lss.get('indexInstruments') == null){
         this.indexInstruments = res;
         this.lss.set('indexInstruments', res);      
-      });
-    } else {
-      this.indexInstruments = this.lss.get('indexInstruments');
-    }
+      } else {
+        console.log('!null')
+        this.indexInstruments = this.lss.get('indexInstruments');
+      }
+    });
+  }
+
+  ngOnChanges(){
   }
 
   navstockInfo(pesk: any, symbol: any, name: any) {
     this.lss.set('siPesk', pesk);
     this.lss.set('siSymbol', symbol);
     this.lss.set('siName', name);
-    // broadcastingStockInfo()
   }
 
   removeInstrument(item: any) {

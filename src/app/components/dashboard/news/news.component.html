@@ -19,15 +19,12 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr ng-repeat="item in dataStore.newsHeadlines | orderBy:'NewsId':true">
-                        <td style="white-space: nowrap;">::item.timeStamp | date:'HH:mm:ss'</td>
+                    <tr *ngFor="let item of newsHeadlines">
+                        <td style="white-space: nowrap;">{{ item.timeStamp | date:'HH:mm:ss'}}</td>
                         <td style="white-space: nowrap; padding-left: 5px;">
-                            <span ng-repeat="symbol in item.instrumentCodes|limitTo:1">
-                                <span tooltip-placement="top" tooltip=" item.instrumentCodes.join(', ') " ng-show="item.instrumentCodes.length > 1">::item.instrumentCodes[0]...</span>
-                                <span ng-hide="item.instrumentCodes.length > 1">::item.instrumentCodes[0]</span>
-                            </span>
+                            {{ item.symbols[0] }}
                         </td>
-                        <td style="padding-left: 5px;"><a href="" ng-click="showNewsContent(item.id)">::item.headline</a></td>
+                        <td style="padding-left: 5px;"><a href="javascript:void(0)" ng-click="showNewsContent(item.id)">{{item.headline}}</a></td>
                     </tr>
                 </tbody>
             </table>

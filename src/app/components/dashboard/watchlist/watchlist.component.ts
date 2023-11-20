@@ -5,11 +5,10 @@ import { NTVoyagerApiWtp } from 'src/app/services/api.service';
 import { isArray } from '@amcharts/amcharts5/.internal/core/util/Type';
 import { ToastrService } from 'ngx-toastr';
 import { NewwatchlistComponent } from '../../templates/newwatchlist/newwatchlist.component';
-import { Store } from '@ngrx/store';
+import { Store, select } from '@ngrx/store';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import {
-  updateInstruments,
-  watchlists,
+  updateWatchlists,
 } from 'src/app/reducers/market/market.action';
 import { RenameWatchlistNameComponent } from '../../templates/rename-watchlist-name/rename-watchlist-name.component';
 import { DeleteWatchlistComponent } from '../../templates/delete-watchlist/delete-watchlist.component';
@@ -22,12 +21,11 @@ import * as fromMarket from '../../../reducers/market/market.selectors'
   styleUrls: ['./watchlist.component.css'],
 })
 export class WatchlistComponent {
-  selectedWatchlist: Watchlist | undefined;
+  selectedWatchlist: any;
   watchlists: any;
   instruments: any;
-  indexInstrumentCode: any;
   symbol: any;
-  ThreeLineDepth = false;
+  ThreeLineDepth: any;
 
   constructor(
     private lss: LocalStorageService,
@@ -37,7 +35,7 @@ export class WatchlistComponent {
     private modalService: NgbModal
   ) {
     this.symbol = '';
-    console.log(this.lss.get('ThreeLineDepth'))
+    this.instruments = [];
     if(this.lss.get('ThreeLineDepth') == null){
       this.lss.set('ThreeLineDepth', false)
     }
@@ -45,9 +43,11 @@ export class WatchlistComponent {
 
   ngOnInit() {
     this.store.select(fromMarket.getWatchlists as any).subscribe(
-      (res) =>{
-        console.log(res)
-        this.watchlists = res;
+      (res) => {
+        this.instruments = this.lss.get('instruments');
+        this.watchlists = this.lss.get('watchlists');
+        this.selectedWatchlist = this.lss.get('watchlist');
+        this.ThreeLineDepth = this.lss.get('ThreeLineDepth');
       }
     );
     if (this.lss.get('ThreeLineDepth')) {
@@ -60,7 +60,6 @@ export class WatchlistComponent {
         if(oldWatchlists == null){
           this.watchlists = res;
           this.lss.set('watchlists', res)
-          console.log(res[0].id)
           this.selectedWatchlist = res[0];
           this.lss.set('watchlist', this.selectedWatchlist);
           this.apiService.instrumentsAll(res[0].id).subscribe(
@@ -78,7 +77,6 @@ export class WatchlistComponent {
           )
         } else {
           this.watchlists = oldWatchlists;
-          console.log(oldInstruments)
           this.selectedWatchlist = oldWatchlists[0];
           this.lss.set('watchlist', this.selectedWatchlist)
           if(oldInstruments == null){
@@ -154,7 +152,6 @@ export class WatchlistComponent {
               // wlSubscription save
             });
             this.instruments = temp;
-            this.store.dispatch(updateInstruments({ instruments: temp }));
           }
         },
         (err) => [console.log(err)]
@@ -189,9 +186,6 @@ export class WatchlistComponent {
     this.lss.set('siPesk', pesk);
     this.lss.set('siSymbol', symbol);
     this.lss.set('siName', name);
-    // broadcastStockInfo
-
-    // smaller device condition
   }
 
   subscribeData() {

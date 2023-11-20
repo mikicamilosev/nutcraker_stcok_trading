@@ -276,7 +276,6 @@ export class NTVoyagerApiWtp {
                 "Accept": "text/plain"
             })
         };
-
         return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
             return this.processChartDataBasic(response_);
         })).pipe(_observableCatch((response_: any) => {

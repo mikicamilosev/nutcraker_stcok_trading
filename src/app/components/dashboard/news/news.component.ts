@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { LocalStorageService } from 'ngx-localstorage';
 import { NTVoyagerApiWtp } from 'src/app/services/api.service';
 
@@ -8,30 +8,28 @@ import { NTVoyagerApiWtp } from 'src/app/services/api.service';
   styleUrls: ['./news.component.css']
 })
 export class NewsComponent {
+  @Input() exchange: any;
+  newsHeadlines: any;
   constructor(private lss: LocalStorageService, private apiService: NTVoyagerApiWtp){
-    // this.lss.set('newsHeadlines', []);
-    // this.apiService.newsHeadlines("2023-11-18T15:13:50.361Z").subscribe(
-    //   (res) => {
-    //     if(res){
-    //       this.lss.set('newsHeadlines', res);
-    //     }
-    //   }
-    // )
   }
 
   ngOnInit(){
-    // this.lss.set('newsHeadlines', []);
-    // this.apiService.newsHeadlines("2023-11-18T15:13:50.361Z").subscribe(
-    //   (res) => {
-    //     if(res){
-    //       console.log(res)
-    //       this.lss.set('newsHeadlines', res);
-    //     }
-    //   }
-    // )
+    this.apiService.newsHeadlines(this.exchange).subscribe(
+      (res) => {
+        if(res){
+          this.newsHeadlines = res;
+        }
+      }
+    )
   }
 
   ngOnChanges(){
-
+    this.apiService.newsHeadlines(this.exchange).subscribe(
+      (res) => {
+        if(res){
+          this.newsHeadlines = res;
+        }
+      }
+    )
   }
 }
