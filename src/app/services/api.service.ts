@@ -2046,6 +2046,9 @@ export class IndexInstrumentDTO implements IIndexInstrumentDTO {
             this.pesk = _data["pesk"];
             this.index = _data["index"];
             this.name = _data["name"];
+            this.value = _data["value"];
+            this.change = _data["change"];
+            this.changePercentage = _data["changePercentage"];
         }
     }
 
@@ -2061,6 +2064,9 @@ export class IndexInstrumentDTO implements IIndexInstrumentDTO {
         data["pesk"] = this.pesk;
         data["index"] = this.index;
         data["name"] = this.name;
+        data["value"] = this.value;
+        data["change"] = this.change;
+        data["changePercentage"] = this.changePercentage;
         return data;
     }
 }
