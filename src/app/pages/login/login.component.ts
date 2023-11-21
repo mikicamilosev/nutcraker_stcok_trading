@@ -2,10 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Store, select } from '@ngrx/store';
-import * as fromAuth from '../../reducers/auth/auth.action';
-import { TestDataService } from 'src/app/services/test-data.service';
 import { ToastrService } from 'ngx-toastr';
 import { NTVoyagerApiWtp } from 'src/app/services/api.service';
+import { LocalStorageService } from 'ngx-localstorage';
 
 type userInfoProps = {
   userName: string;
@@ -18,21 +17,16 @@ type userInfoProps = {
   styleUrls: ['./login.component.css'],
 })
 export class LoginComponent implements OnInit {
-  token = '';
-  error = '';
   isLoading = false;
   loginForm: any;
-  val_username_req = true;
-  val_password_req = true;
-  inputValue1 = '1';
-  inputValue2 = '1';
+  loginText = "Login";
 
   constructor(
     private router: Router,
     private store: Store,
-    private testObj: TestDataService,
-    private toastr: ToastrService,
-    private apiservice: NTVoyagerApiWtp
+    private notif: ToastrService,
+    private apiservice: NTVoyagerApiWtp,
+    private lss: LocalStorageService
   ) {}
 
   ngOnInit(): void {
@@ -43,31 +37,22 @@ export class LoginComponent implements OnInit {
   }
 
   handleLoginSubmit() {
-    // this.apiservice.login(this.loginForm).subscribe(
-    //   (res) => {
-    //     console.log(res)
-    this.store.dispatch(fromAuth.loginSuccess({username: "admin", password: "admin"}))
-        this.router.navigateByUrl('/dashboard');
-    //   },
-    //   (err) => {
-    //     console.log(err)
-    //   }
-    // )
-  }
-
-  inputusername() {
-    if (this.loginForm.value.username !== '') {
-      this.val_username_req = false;
-    } else {
-      this.val_username_req = true;
-    }
-  }
-
-  inputpassword() {
-    if (this.loginForm.value.password !== '') {
-      this.val_password_req = false;
-    } else {
-      this.val_password_req = true;
-    }
+    var userName = this.loginForm.get('username').value;
+    var password = this.loginForm.get('password').value;
+    this.loginText = 'Validating...please wait'
+    this.isLoading = true;
+    this.apiservice.login({userName: userName, password: password} as any).subscribe(
+      (res) => {
+        this.isLoading = false;
+        this.loginText = 'Login'
+        if(res.isSuccess === true){
+          this.notif.success(res.message, "Success!")
+          this.router.navigateByUrl('/dashboard');
+          this.lss.set('isAuth', true)
+        } else {
+          this.notif.error(res.message, "Error!", { positionClass: 'toast-top-center'})
+        }
+      }
+    )
   }
 }

@@ -2,13 +2,10 @@ import { isArray } from '@amcharts/amcharts5/.internal/core/util/Type';
 import { Component } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { LocalStorageService } from 'ngx-localstorage';
-import { getWatchlists } from 'src/app/reducers/market/market.selectors';
 import { NTVoyagerApiWtp } from 'src/app/services/api.service';
-import * as fromMarket from '../../../reducers/market/market.selectors'
 import { AppState } from 'src/app/reducers/index.reducer';
 import { InstrumentSearchComponent } from '../../templates/instrument-search/instrument-search.component';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { updateWatchlists } from 'src/app/reducers/market/market.action';
 
 @Component({
   selector: 'app-indices',
@@ -30,23 +27,12 @@ export class IndicesComponent {
     private modalService: NgbModal
   ) {
     this.symbol = ''
-    this.store.select(fromMarket.getWatchlists as any).subscribe(
-      (res) => {
-        this.indexInstruments = this.lss.get('indexInstruments');
-      }
-    )
   }
   
   ngOnInit() {
     this.apiService.indexInstruments().subscribe((res) => {
-      console.log(res)
-      if(this.lss.get('indexInstruments') == null){
-        this.indexInstruments = res;
-        this.lss.set('indexInstruments', res);      
-      } else {
-        console.log('!null')
-        this.indexInstruments = this.lss.get('indexInstruments');
-      }
+      this.indexInstruments = res;
+      this.lss.set('indexInstruments', res);      
     });
   }
 
@@ -57,7 +43,6 @@ export class IndicesComponent {
     this.lss.set('siPesk', pesk);
     this.lss.set('siSymbol', symbol);
     this.lss.set('siName', name);
-    this.store.dispatch(updateWatchlists({watchlists: []}))
   }
 
   removeInstrument(item: any) {

@@ -1,7 +1,6 @@
 import { Component, Output } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { LocalStorageService } from 'ngx-localstorage';
-import * as fromMarket from '../../reducers/market/market.selectors'
 import { NTVoyagerApiWtp } from 'src/app/services/api.service';
 
 @Component({
@@ -24,14 +23,6 @@ export class DashboardComponent {
   }
 
   ngOnInit() {
-    this.store.select(fromMarket.getWatchlists as any).subscribe(
-      (res: any) => {
-        var siSymbol = this.lss.get('siSymbol');
-        var siPesk = this.lss.get('siPesk');
-        var siName = this.lss.get('siName');
-        this.stockInfo = this.instrument(siPesk, siSymbol, siName);
-      }
-    )
     var siSymbol = this.lss.get('siSymbol');
     var siPesk = this.lss.get('siPesk');
     var siName = this.lss.get('siName');

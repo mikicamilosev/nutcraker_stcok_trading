@@ -6,17 +6,16 @@ import {
   } from '@ngrx/store';
   import * as fromAuth from './auth/auth.reducer';
   
-import * as fromMaket from './market/market.reducer'
-import { MarketState } from './market/market.state';
+import { AuthState } from './auth/auth.state';
   
   export interface AppState {
-    auth: any;
-    market: MarketState;
+    auth: AuthState;
+    // market: MarketState;
   }
   
   export const reducers: ActionReducerMap<AppState> = {
     auth: fromAuth.loginReducer,
-    market: fromMaket.watchlistReducer
+    // market: fromMaket.watchlistReducer
   };
   
   export function clearState(reducer: ActionReducer<AppState>): ActionReducer<AppState> {

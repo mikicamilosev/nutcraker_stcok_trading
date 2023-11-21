@@ -1,20 +1,51 @@
 import { createReducer, on } from '@ngrx/store';
-import { login, loginSuccess, loginFailure } from './auth.action';
+import { loginSuccess, loginFailure } from './auth.action';
+import { AuthState } from './auth.state';
 
-export interface State {
-  username: string;
-  password: string;
-  isAuth: Boolean;
-}
-
-const initialState: State = {
-  username: '',
-  password: '',
-  isAuth: false
+const initialState: AuthState = {
+  email: "",
+  displayName: "",
+  jwt: "",
+  permission: {
+    realTimeData: false,
+    canTrade: false,
+    canViewOrders: false,
+  },
+  role: "",
+  userName: "",
+  isAuth: false,
 };
 
-export const loginReducer = createReducer(initialState,
-  on(login, state => ({ ...state, isAuth: false })),
-  on(loginSuccess, state => ({ ...state, isAuth: true })),
-  on(loginFailure, state => ({ ...state, isAuth: false }))
+export const loginReducer = createReducer(
+  initialState,
+  on(
+    loginSuccess,
+    (
+      state,
+      { email, displayName, jwt, permission, role, userName, isAuth }
+    ) => ({
+      ...state,
+      email: email,
+      displayName: displayName,
+      jwt: jwt,
+      permission: permission,
+      role: role,
+      userName: userName,
+      isAuth: true,
+    })
+  ),
+  on(loginFailure, (state) => ({
+    ...state,
+    email: "",
+    displayName: "",
+    jwt: "",
+    permission: {
+      realTimeData: false,
+      canTrade: false,
+      canViewOrders: false,
+    },
+    role: "",
+    userName: "",
+    isAuth: false,
+  }))
 );

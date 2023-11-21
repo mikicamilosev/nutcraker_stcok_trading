@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { Store } from '@ngrx/store';
 import { LocalStorageService } from 'ngx-localstorage';
-import { updateWatchlists } from 'src/app/reducers/market/market.action';
 import { NTVoyagerApiWtp } from 'src/app/services/api.service';
 
 @Component({
@@ -48,7 +47,6 @@ export class InstrumentSearchComponent {
     } else if(this.action === 'SI'){
       
     }
-    this.store.dispatch(updateWatchlists({watchlists: []}));
     this.cancel()
   }
   

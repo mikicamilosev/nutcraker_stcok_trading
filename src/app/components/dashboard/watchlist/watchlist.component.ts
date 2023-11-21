@@ -7,13 +7,9 @@ import { ToastrService } from 'ngx-toastr';
 import { NewwatchlistComponent } from '../../templates/newwatchlist/newwatchlist.component';
 import { Store, select } from '@ngrx/store';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import {
-  updateWatchlists,
-} from 'src/app/reducers/market/market.action';
 import { RenameWatchlistNameComponent } from '../../templates/rename-watchlist-name/rename-watchlist-name.component';
 import { DeleteWatchlistComponent } from '../../templates/delete-watchlist/delete-watchlist.component';
 import { InstrumentSearchComponent } from '../../templates/instrument-search/instrument-search.component';
-import * as fromMarket from '../../../reducers/market/market.selectors'
 
 @Component({
   selector: 'app-watchlist',
@@ -42,61 +38,28 @@ export class WatchlistComponent {
   }
 
   ngOnInit() {
-    this.store.select(fromMarket.getWatchlists as any).subscribe(
-      (res) => {
-        this.selectedWatchlist = this.lss.get('watchlist') as any;
-        this.instruments = this.lss.get('instruments');
-        this.watchlists = this.lss.get('watchlists');
-        this.ThreeLineDepth = this.lss.get('ThreeLineDepth');
-      }
-    );
     if (this.lss.get('ThreeLineDepth')) {
       this.lss.set('ThreeLineDepth', false);
     }
     this.apiService.v2().subscribe(
       (res: any) => {
-        var oldWatchlists: any = this.lss.get('watchlists');
-        var oldInstruments = this.lss.get('instruments');
-        if(oldWatchlists == null){
-          this.watchlists = res;
-          this.lss.set('watchlists', res)
-          this.selectedWatchlist = res[0];
-          this.lss.set('watchlist', this.selectedWatchlist);
-          this.apiService.instrumentsAll(res[0].id).subscribe(
-            (res: any) => {
-              var tempInstruments: any = [];
-                res.forEach((cell: any) => {
-                  tempInstruments.push(instrument(cell.pesk, cell.symbol, cell.name));                  
-                });
-                this.lss.set('instruments', tempInstruments)
-                this.instruments = tempInstruments;
-            },
-            (err) => {
-              console.log(err)
-            }
-          )
-        } else {
-          this.watchlists = oldWatchlists;
-          this.selectedWatchlist = oldWatchlists[0];
-          this.lss.set('watchlist', this.selectedWatchlist)
-          if(oldInstruments == null){
-            this.apiService.instrumentsAll(res[0].id).subscribe(
-              (res: any) => {
-                var tempInstruments: any = [];
-                res.forEach((cell: any) => {
-                  tempInstruments.push(instrument(cell.pesk, cell.symbol, cell.name));                  
-                });
-                this.lss.set('instruments', tempInstruments)
-                this.instruments = tempInstruments;
-              },
-              (err) => {
-                console.log(err)
-              }
-            )
-          } else {
-            this.instruments = oldInstruments;
+        this.watchlists = res;
+        this.lss.set('watchlists', res)
+        this.selectedWatchlist = res[0];
+        this.lss.set('watchlist', this.selectedWatchlist);
+        this.apiService.instrumentsAll(res[0].id).subscribe(
+          (res: any) => {
+            var tempInstruments: any = [];
+              res.forEach((cell: any) => {
+                tempInstruments.push(instrument(cell.pesk, cell.symbol, cell.name));                  
+              });
+              this.lss.set('instruments', tempInstruments)
+              this.instruments = tempInstruments;
+          },
+          (err) => {
+            console.log(err)
           }
-        }
+        )
       },
       (err) => {
         console.log(err);
@@ -186,7 +149,6 @@ export class WatchlistComponent {
     this.lss.set('siPesk', pesk);
     this.lss.set('siSymbol', symbol);
     this.lss.set('siName', name);
-    this.store.dispatch(updateWatchlists({watchlists: []}));
   }
 
   subscribeData() {

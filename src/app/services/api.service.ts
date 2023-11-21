@@ -13,7 +13,7 @@ import { Observable, throwError as _observableThrow, of as _observableOf } from 
 import { Injectable, Inject, Optional, InjectionToken as OpaqueToken } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpResponse, HttpResponseBase } from '@angular/common/http';
 
-export const API_BASE_URL = 'https://ntwebtraderpro.azurewebsites.net';
+export const API_BASE_URL = 'https://wtpupgrade-api.azurewebsites.net';
 
 @Injectable({
     providedIn: 'root',
@@ -25,7 +25,7 @@ export class NTVoyagerApiWtp {
 
     constructor(@Inject(HttpClient) http: HttpClient, @Optional() @Inject(API_BASE_URL) baseUrl?: string) {
         this.http = http;
-        this.baseUrl = 'https://ntwebtraderpro.azurewebsites.net';
+        this.baseUrl = 'https://wtpupgrade-api.azurewebsites.net';
     }
 
     /**
@@ -93,8 +93,6 @@ export class NTVoyagerApiWtp {
         url_ = url_.replace(/[?&]$/, "");
 
         const content_ = JSON.stringify(body);
-
-        console.log(content_)
 
         let options_ : any = {
             body: content_,

@@ -22,7 +22,6 @@ import { PositionsComponent } from './components/fixDashboard/positions/position
 import { StockchartComponent } from './components/dashboard/stockchart/stockchart.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { metaReducers, reducers } from './reducers/index.reducer';
-import { TestDataService } from './services/test-data.service';
 
 import { CommonModule } from '@angular/common';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -71,7 +70,7 @@ import { NewsModalComponent } from './components/templates/news-modal/news-modal
     BrowserAnimationsModule,
     ToastrModule.forRoot({
       timeOut: 3000,
-      positionClass: 'toast-top-center',
+      positionClass: 'toast-top-right',
       preventDuplicates: true,
     }),
     BrowserModule,
@@ -93,7 +92,6 @@ import { NewsModalComponent } from './components/templates/news-modal/news-modal
     NgbModule,
   ],
   providers: [
-    TestDataService,
     NTVoyagerApiWtp,
     LocalStorageService,
   ],

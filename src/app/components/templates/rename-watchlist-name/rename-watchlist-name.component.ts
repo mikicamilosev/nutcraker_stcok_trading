@@ -4,7 +4,6 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { Store } from '@ngrx/store';
 import { LocalStorageService } from 'ngx-localstorage';
 import { ToastrService } from 'ngx-toastr';
-import { updateWatchlists } from 'src/app/reducers/market/market.action';
 import { NTVoyagerApiWtp } from 'src/app/services/api.service';
 
 @Component({
@@ -61,7 +60,6 @@ export class RenameWatchlistNameComponent {
             }
           });
           this.lss.set('watchlists', newWlLists);
-          this.store.dispatch(updateWatchlists({watchlists: newWlLists}))
           this.notif.success(res.message, "Success!", { positionClass: 'toast-top-right' })
           this.cancel()
         } else {
