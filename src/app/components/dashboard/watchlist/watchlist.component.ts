@@ -1,7 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { LocalStorageService } from 'ngx-localstorage';
 import { Watchlist } from '../../../models/watchlist.model';
-import { NTVoyagerApiWtp } from 'src/app/services/api.service';
+import { NTVoyagerApiWtp, WatchlistDTO } from 'src/app/services/api.service';
 import { isArray } from '@amcharts/amcharts5/.internal/core/util/Type';
 import { ToastrService } from 'ngx-toastr';
 import { NewwatchlistComponent } from '../../templates/newwatchlist/newwatchlist.component';
@@ -17,7 +17,6 @@ import { InstrumentSearchComponent } from '../../templates/instrument-search/ins
   styleUrls: ['./watchlist.component.css'],
 })
 export class WatchlistComponent {
-  @Input() wlInstrumnets: any
   selectedWatchlist: any;
   watchlists: any;
   instruments: any;
@@ -32,44 +31,24 @@ export class WatchlistComponent {
     private modalService: NgbModal
   ) {
     this.symbol = '';
-    this.instruments = [];
+    this.watchlists = this.lss.get<WatchlistDTO[]>('watchlists');
+    this.selectedWatchlist = this.lss.get<WatchlistDTO>('watchlist');
+    this.instruments = this.lss.get('instruments')
     if(this.lss.get('ThreeLineDepth') == null){
       this.lss.set('ThreeLineDepth', false)
     }
   }
 
   ngOnInit() {
-    if (this.lss.get('ThreeLineDepth')) {
+    if (this.lss.get('ThreeLineDepth') == (null || undefined)) {
       this.lss.set('ThreeLineDepth', false);
     }
-    this.apiService.v2().subscribe(
-      (res: any) => {
-        this.watchlists = res;
-        this.lss.set('watchlists', res)
-        this.selectedWatchlist = res[0];
-        this.lss.set('watchlist', this.selectedWatchlist);
-        this.apiService.instrumentsAll(res[0].id).subscribe(
-          (res: any) => {
-            var tempInstruments: any = [];
-              res.forEach((cell: any) => {
-                tempInstruments.push(instrument(cell.pesk, cell.symbol, cell.name));                  
-              });
-              this.lss.set('instruments', tempInstruments)
-              this.instruments = tempInstruments;
-          },
-          (err) => {
-            console.log(err)
-          }
-        )
-      },
-      (err) => {
-        console.log(err);
-      }
-    );
+    this.watchlists = this.lss.get('watchlists');
+    this.selectedWatchlist = this.lss.get<WatchlistDTO>('watchlist');
+    this.instruments = this.lss.get('instruments')
   }
 
   ngOnChanges(){
-    this.instruments = this.wlInstrumnets
   }
 
   toggleDepth() {

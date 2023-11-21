@@ -32,20 +32,15 @@ export class NavbarComponent {
     .subscribe((event: any) => {
       const currentUrl = event.url;
       var isAuth = this.lss.get('isAuth');
-      if(currentUrl === '/dashboard' && isAuth === true){
+      if(isAuth === true){
+        this.router.navigateByUrl(currentUrl)
         this.isAuth = isAuth;
-      } else if(currentUrl == "/login" && isAuth || currentUrl == "/home" && isAuth || currentUrl == '/' && isAuth){
-        this.router.navigateByUrl('/dashboard')
       } else {
         this.router.navigateByUrl('/login')
       }
     });
   }
   
-  ngOnChanges() {
-    console.log('isAuth is false')
-  }
-
   logout() {
     try {
       this.isAuth = false;
@@ -54,6 +49,4 @@ export class NavbarComponent {
       
     }
   }
-
-  gotopage(str: string) {}
 }

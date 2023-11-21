@@ -156,7 +156,6 @@ export class NTVoyagerApiWtp {
         };
 
         return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            console.log(response_)
             return this.processIndexInstruments(response_);
         })).pipe(_observableCatch((response_: any) => {
             if (response_ instanceof HttpResponseBase) {
