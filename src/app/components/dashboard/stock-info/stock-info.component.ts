@@ -59,7 +59,7 @@ export class StockInfoComponent {
   }
 
   keypress(event: KeyboardEvent) {
-    if (event.keyCode === 13) {
+    if (event.keyCode === 13 && this.symbol !== null && this.symbol !== '') {
       this.searchInstrument();
       event.preventDefault();
     }

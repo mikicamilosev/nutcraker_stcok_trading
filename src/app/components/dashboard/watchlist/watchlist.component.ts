@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { LocalStorageService } from 'ngx-localstorage';
 import { Watchlist } from '../../../models/watchlist.model';
 import { NTVoyagerApiWtp } from 'src/app/services/api.service';
@@ -17,6 +17,7 @@ import { InstrumentSearchComponent } from '../../templates/instrument-search/ins
   styleUrls: ['./watchlist.component.css'],
 })
 export class WatchlistComponent {
+  @Input() wlInstrumnets: any
   selectedWatchlist: any;
   watchlists: any;
   instruments: any;
@@ -65,6 +66,10 @@ export class WatchlistComponent {
         console.log(err);
       }
     );
+  }
+
+  ngOnChanges(){
+    this.instruments = this.wlInstrumnets
   }
 
   toggleDepth() {
@@ -123,8 +128,7 @@ export class WatchlistComponent {
 
   keypress(event: KeyboardEvent): void {
     this.lss.set('indexWLStr', SearchAction('WL',this.symbol))
-    if (event.key === 'Enter') {
-      // if (event.key === 'Enter' && this.symbol !== null && this.symbol !== '') {
+    if (event.key === 'Enter' && this.symbol !== null && this.symbol !== '') {
       this.searchInstrument();
       event.preventDefault();
     }
@@ -134,7 +138,8 @@ export class WatchlistComponent {
     const modalRef = this.modalService.open(InstrumentSearchComponent, { backdrop: 'static', modalDialogClass: 'modal-lg' });
     modalRef.componentInstance.instrumentCollection = SearchAction('WL',this.symbol)
     
-    modalRef.result.then((selectedInstrument) => {
+    modalRef.result.then((doAction) => {
+      console.log('doAction event')
       // tradableInstrument = selectedInstrument;
       // this.openOrderEntry(od, tradableInstrument);
       },

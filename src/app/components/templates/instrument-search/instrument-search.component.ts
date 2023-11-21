@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Output } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { Store } from '@ngrx/store';
 import { LocalStorageService } from 'ngx-localstorage';
@@ -10,6 +10,9 @@ import { NTVoyagerApiWtp } from 'src/app/services/api.service';
   styleUrls: ['./instrument-search.component.css'],
 })
 export class InstrumentSearchComponent {
+  @Output() wlInstrumnets: any;
+  @Output() idxInstruments: any;
+
   instrumentCollection: any;
   indexInstruments: any;
   loading: any;
@@ -40,6 +43,7 @@ export class InstrumentSearchComponent {
       var oldInstrumentsList: any = this.lss.get('instruments');
       oldInstrumentsList.push(this.wlInstrument(symbolkey, symbol, name));
       this.lss.set('instruments', oldInstrumentsList);
+      this.wlInstrumnets = oldInstrumentsList;
     } else if(this.action === 'IWL') {
       var oldIndexInstruments: any = this.lss.get('indexInstruments');
       oldIndexInstruments.push(this.idcInstrument(symbolkey, symbol, name));
