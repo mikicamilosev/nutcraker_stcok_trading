@@ -34,14 +34,14 @@
                 </tr>
             </thead>
             <tbody>
-                <tr ng-repeat="item in dataStore.tradesbook | orderBy:'timestamp':true">
-                    <td>::item.account</td>
-                    <td>::item.exchange</td>
-                    <td>::item.symbol</td>
-                    <td>::convertSide(item.side)</td>
-                    <td class="numeric">::item.price | number</td>
-                    <td class="numeric">::item.quantity</td>
-                    <td style="text-align: center;">::item.timestamp | date : 'yyyy-MM-dd HH:mm:ss'</td>
+                <tr *ngFor="let item of tradesbook"> <!--  | orderBy:'timestamp':true -->
+                    <td>{{item.accountNo}}</td>
+                    <td>{{item.exchange}}</td>
+                    <td>{{item.symbol}}</td>
+                    <td>{{item.side}}</td> <!-- convertSide(item.side) -->
+                    <td class="numeric">{{item.tradePrice | number}}</td>
+                    <td class="numeric">{{item.tradeQuantity}}</td>
+                    <td style="text-align: center;">{{item.tradeDateTime | date : 'yyyy-MM-dd HH:mm:ss'}}</td>
                 </tr>
             </tbody>
         </table>

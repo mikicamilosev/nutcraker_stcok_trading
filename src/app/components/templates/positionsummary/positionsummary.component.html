@@ -27,7 +27,7 @@
                 </th>
             </tr>
         </thead>
-        <tbody ng-repeat="item in dataStore.positionsSummary.items">
+        <tbody *ngFor="let item in positionInfo">
             <tr ng-class="{ 'boldtr' : shouldBold(item) }">
                 <td>
                     :: item.category || 

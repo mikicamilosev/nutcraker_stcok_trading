@@ -19,8 +19,8 @@
   <button
     class="btn btn-primary btn-sm"
     type="button"
-    ng-click="dataStore.isCollapsed = !dataStore.isCollapsed"
+    (click)="handleClickCollapse()"
   >
-    dataStore.isCollapsed ? "Show Details" : "Hide Details"
+    {{ isCollapsed ? "Show Details" : "Hide Details"}}
   </button>
 </div>

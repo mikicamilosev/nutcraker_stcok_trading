@@ -5,8 +5,8 @@
                 <tr>
                     <th colspan="12">
                         <div class="pull-left">
-                            <button class="btn btn-info btn-xs" type="button" ng-click="dataStore.openOrdersOnly = !(dataStore.openOrdersOnly)">
-                                Show only open orders <span class="badge"> dataStore.openOrdersOnly === true ? "Yes" : "No" </span>
+                            <button class="btn btn-info btn-xs" type="button" (click)="handleOpenOrdersOnly()">
+                                Show only open orders <span class="badge"> {{openOrdersOnly === true ? "Yes" : "No"}} </span>
                             </button>
                         </div>
                         <div class="pull-right">
@@ -54,23 +54,23 @@
                 </tr>
             </thead>
             <tbody>
-                <tr ng-repeat="item in dataStore.orderbook |orderBy:'created':true">
+                <tr *ngFor="let item of orderbook">
                     <td>
                         <button class=" btn btn-danger btn-xs" ng-click="cancelOrder(item)" ng-show=" global.isTrader && (item.remainingQuantity !== 0) || (item.instructionStatus.indexOf('AA:') === 0) || (item.instructionStatus.indexOf('PEX:') === 0) || (item.instructionStatus.indexOf('P:') === 0) " tooltip-placement="right" tooltip-html-unsafe='Click to cancel order. item.side item.orderQuantity item.symbol  @ item.price'>
                             <span class="glyphicon glyphicon-remove"></span>
-                        </button> ::item.account
+                        </button> {{item.accountNo}}
                     </td>
-                    <td>::item.exchange</td>
-                    <td>::item.symbol</td>
-                    <td>::convertSide(item.side)</td>
-                    <td class="numeric">::item.price</td>
-                    <td class="numeric">::item.tradedQuantity / ::item.orderQuantity</td>
-                    <td class="numeric"> ::item.vwap | number</td>
-                    <td style="text-align: center;">::convertLifeTime(item.timeInForce)</td>
-                    <td style="text-align: center;">::convertType(item.orderType)</td>
-                    <td style="text-align: center;">::item.created | date:'yyyy-MM-dd HH:mm:ss'</td>
-                    <td style="text-align: center;" ng-class="getOrderStatusClass(item.orderStatus)">::item.orderStatus</td>
-                    <td style="text-align: center;" ng-class="getInstructionStatusClass(item.instructionStatus)" tooltip-placement="left" tooltip-html-unsafe=' item.handledBy  item.rejectReason '>::item.instructionStatus</td>
+                    <td>{{item.exchange}}</td>
+                    <td>{{item.symbol}}</td>
+                    <td>convertSide(item.side)</td>
+                    <td class="numeric">{{item.orderPrice}}</td>
+                    <td class="numeric">{{item.tradedQuantity / item.orderQuantity}}</td>
+                    <td class="numeric"> {{item.vwap | number}}</td>
+                    <td style="text-align: center;">{{item.timeInForce}}</td> <!-- convertLifeTime(item.timeInForce) -->
+                    <td style="text-align: center;">{{item.orderType}}</td> <!-- convertType(item.orderType) --> 
+                    <td style="text-align: center;">{{item.lastUpdateTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+                    <td style="text-align: center;" ng-class="getOrderStatusClass(item.orderStatus)">{{item.orderStatus}}</td>
+                    <td style="text-align: center;" ng-class="getInstructionStatusClass(item.instructionStatus)" tooltip-placement="left" tooltip-html-unsafe=' item.handledBy  item.rejectReason '>{{item.instructionStatus}}</td>
                 </tr>
             </tbody>
         </table>

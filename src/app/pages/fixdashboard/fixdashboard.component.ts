@@ -6,13 +6,24 @@ import { Component } from '@angular/core';
   styleUrls: ['./fixdashboard.component.css']
 })
 export class FixdashboardComponent {
+  selAcc: any;
+  isCollapse: any;
   tableType: any;
+  selNav: string;
 
   constructor(){
-    
+    this.selNav = 'Orderbook'
   }
 
-  handleNavSelect(str: string, str1: string) {
+  handleNavSelect(str: string) {
+    this.selNav = str;
+  }
 
+  receiveColllapse(data: boolean) {
+    this.isCollapse = data;
+  }
+
+  receiveSelAcc(data: string) {
+    this.selAcc = data;
   }
 }

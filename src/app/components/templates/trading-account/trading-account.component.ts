@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { NTVoyagerApiWtp } from 'src/app/services/api.service';
 
 @Component({
@@ -7,22 +7,25 @@ import { NTVoyagerApiWtp } from 'src/app/services/api.service';
   styleUrls: ['./trading-account.component.css']
 })
 export class TradingAccountComponent {
+  @Output() dataEvent = new EventEmitter<string>();
   selectedTradingAccount: any;
   tradingAccounts: any;
 
   constructor(
     private apiService: NTVoyagerApiWtp
   ){}
+  
 
   ngOnInit(){
     this.apiService.tradingAccounts().subscribe(
-      (res) => {
+      (res: any) => {
         this.tradingAccounts = res;
+        this.selectedTradingAccount = res[0]
       }
     )
   }
 
   handleTradingAccountChanged(){
-
+    this.dataEvent.emit(this.selectedTradingAccount);
   }
 }

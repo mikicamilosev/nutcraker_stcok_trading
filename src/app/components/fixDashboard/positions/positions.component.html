@@ -48,21 +48,21 @@
             </tr>
         </thead>
         <tbody>
-            <tr ng-repeat="item in dataStore.positions | orderBy:'Symbol'">
+            <tr *ngFor="let item of positions"> <!--  | orderBy:'Symbol' -->
                 <td>
                     <button type="button" class="btn btn-default btn-xs" ng-show="global.isTrader" ng-click="newOrderFromPos(item)">New Order</button>&nbsp;item.account
                 </td>
-                <td>::item.exchange</td>
-                <td>::item.symbol</td>
-                <td class="numeric">::item.start</td>
-                <td class="numeric">::item.bought</td>
-                <td class="numeric">::item.sold</td>
-                <td class="numeric">::item.close</td>
-                <td class="numeric">::item.rulingPrice | number</td>
-                <td class="numeric">::item.exposure | number:2</td>
-                <td class="numeric">::item.previousClosePrice | number</td>
-                <td class="numeric">::item.profitLoss | number:2</td>
-                <td class="numeric">::item.dailyMargin | number:2</td>
+                <td>{{item.exchange}}</td>
+                <td>{{item.symbol}}</td>
+                <td class="numeric">{{item.start}}</td>
+                <td class="numeric">{{item.bought}}</td>
+                <td class="numeric">{{item.sold}}</td>
+                <td class="numeric">{{item.close}}</td>
+                <td class="numeric">{{item.rulingPrice | number}}</td>
+                <td class="numeric">{{item.exposure | number:'1.2-2'}}</td>
+                <td class="numeric">{{item.previousClosePrice | number}}</td>
+                <td class="numeric">{{item.profitLoss | number:'1.2-2'}}</td>
+                <td class="numeric">{{item.dailyMargin | number:'1.2-2'}}</td>
             </tr>
         </tbody>
     </table>

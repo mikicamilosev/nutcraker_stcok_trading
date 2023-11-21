@@ -4,43 +4,43 @@
       <h3 class="panel-title">Trading Dashboard</h3>
     </div>
     <div class="panel-body">
-      <app-trading-account></app-trading-account>
-      <app-position-summary-info></app-position-summary-info>
-      <app-positionsummary  *ngIf="false" />
+      <app-trading-account (dataEvent)="receiveSelAcc($event)" ></app-trading-account>
+      <app-position-summary-info (dataEvent)="receiveColllapse($event)" ></app-position-summary-info>
+      <app-positionsummary  *ngIf="isCollapse" [selTradeAcc]="selAcc" />
       <ul class="nav nav-tabs">
-        <li heading="Gainers" [ngClass]="{ active: tableType == 'Gainers' }">
+        <li heading="Gainers" [ngClass]="{ active: selNav == 'Orderbook' }">
           <a
             href="javascript:void(0)"
-            (click)="handleNavSelect('Up', 'Orderbook')"
+            (click)="handleNavSelect('Orderbook')"
             class=""
             >Orderbook</a
           >
         </li>
-        <li heading="Losers" [ngClass]="{ active: tableType == 'Losers' }">
+        <li heading="Losers" [ngClass]="{ active: selNav == 'Tradesbook' }">
           <a
             href="javascript:void(0)"
-            (click)="handleNavSelect('Down', 'Tradesbook')"
+            (click)="handleNavSelect('Tradesbook')"
             class=""
             >Tradesbook</a
           >
         </li>
-        <li heading="by Value" [ngClass]="{ active: tableType === 'Positions' }">
+        <li heading="by Value" [ngClass]="{ active: selNav === 'Positions' }">
           <a
             href="javascript:void(0)"
-            (click)="handleNavSelect('Value', 'Positions')"
+            (click)="handleNavSelect('Positions')"
             class=""
             >Positions</a
           >
         </li>
       </ul>
-      <ng-container *ngIf="false">
-        <app-orderbook />
+      <ng-container *ngIf="selNav == 'Orderbook'">
+        <app-orderbook [selAcc]="selAcc" />
       </ng-container>
-      <ng-container *ngIf="false">
-        <app-positions />
+      <ng-container *ngIf="selNav == 'Tradesbook'">
+        <app-tradebook [selAcc]="selAcc" />
       </ng-container>
-      <ng-container *ngIf="false">
-        <app-tradebook />
+      <ng-container *ngIf="selNav == 'Positions'">
+        <app-positions [selAcc]="selAcc" />
       </ng-container>
     </div>
   </div>

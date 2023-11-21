@@ -1,13 +1,13 @@
 <div ng-controller="tradingAccountController">
   <div class="input-group input-group-sm col-sm-4">
     <select class="form-control" [(ngModel)]="selectedTradingAccount" (ngModelChange)="handleTradingAccountChanged()">
-      <ng-container *ngFor="let ta of tradingAccounts ">
-        <optgroup [label]="ta.fixSession">
-          <option *ngFor="let account of ta.items" [value]="account.accountId">
+      <!-- <ng-container *ngFor="let ta of tradingAccounts ">
+        <optgroup [label]="ta.fixSession"> -->
+          <option *ngFor="let account of tradingAccounts" [value]="account.accountId">
             {{ account.account }} ({{ account.name }})
           </option>
-        </optgroup>
-      </ng-container>
+        <!-- </optgroup>
+      </ng-container> -->
     </select>
     <span class="input-group-btn">
       <button

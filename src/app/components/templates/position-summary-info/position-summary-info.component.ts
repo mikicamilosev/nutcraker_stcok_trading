@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output, Input } from '@angular/core';
+import { NTVoyagerApiWtp } from 'src/app/services/api.service';
 
 @Component({
   selector: 'app-position-summary-info',
@@ -6,7 +7,18 @@ import { Component } from '@angular/core';
   styleUrls: ['./position-summary-info.component.css']
 })
 export class PositionSummaryInfoComponent {
-  constructor(){
-    
+  @Input() selAcc: any;
+  @Output() dataEvent = new EventEmitter<boolean>();
+  isCollapsed: any;
+
+  constructor(
+  ){
+    this.isCollapsed = false;
+  }
+
+  handleClickCollapse () {
+    this.isCollapsed = !this.isCollapsed;
+    this.dataEvent.emit(this.isCollapsed)
+    console.log(this.isCollapsed)
   }
 }
