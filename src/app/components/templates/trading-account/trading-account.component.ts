@@ -17,7 +17,6 @@ export class TradingAccountComponent {
   ngOnInit(){
     this.apiService.tradingAccounts().subscribe(
       (res) => {
-        console.log(res)
         this.tradingAccounts = res;
       }
     )

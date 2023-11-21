@@ -414,7 +414,7 @@ export class NTVoyagerApiWtp {
     interval: string
   ): Observable<ChartDataPointDTO[] | ChartDataPointDTO> {
     let url_ =
-      this.baseUrl + '/api/wtp/MarketData/v2/ChartDataBasic/{pesk}/{interval}';
+      this.baseUrl + '/api/wtp/MarketData/v2/ChartDataIntrday/{pesk}/{interval}';
     if (pesk === undefined || pesk === null)
       throw new Error("The parameter 'pesk' must be defined.");
     url_ = url_.replace('{pesk}', encodeURIComponent('' + pesk));
