@@ -4,6 +4,7 @@ import { NTVoyagerApiWtp } from 'src/app/services/api.service';
 import { InstrumentSearchComponent } from '../../templates/instrument-search/instrument-search.component';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Store } from '@ngrx/store';
+import { getMarketData } from 'src/app/reducers/market/market.selector';
 
 @Component({
   selector: 'app-stock-info',
@@ -24,6 +25,17 @@ export class StockInfoComponent {
   }
 
   ngOnInit() {
+    this.store.select(getMarketData).subscribe(
+      (res) => {
+        var siPesk = this.lss.get('siPesk');
+        var siSymbol = this.lss.get('siSymbol');
+        var siName = this.lss.get('siName');
+        var stockInfo = instrument(siPesk, siSymbol, siName);
+        this.lss.set('stockInfo', stockInfo);
+        this.stockInfo = stockInfo;
+        this.symbol = siSymbol;
+      }
+    )
     if (this.lss.get('stockInfo') === null || this.stockInfo === undefined) {
       this.stockInfo = instrument('', '', '');
     } else {

@@ -6,6 +6,7 @@ import { NTVoyagerApiWtp } from 'src/app/services/api.service';
 import { AppState } from 'src/app/reducers/index.reducer';
 import { InstrumentSearchComponent } from '../../templates/instrument-search/instrument-search.component';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { UpdateMarketData } from 'src/app/reducers/market/market.action';
 
 @Component({
   selector: 'app-indices',
@@ -30,10 +31,11 @@ export class IndicesComponent {
   }
   
   ngOnInit() {
-    this.apiService.indexInstruments().subscribe((res) => {
-      this.indexInstruments = res;
-      this.lss.set('indexInstruments', res);      
-    });
+    this.indexInstruments = this.lss.get('indexInstruments')
+    // this.apiService.indexInstruments().subscribe((res) => {
+    //   this.indexInstruments = res;
+    //   this.lss.set('indexInstruments', res);      
+    // });
   }
 
   ngOnChanges(){
@@ -43,6 +45,7 @@ export class IndicesComponent {
     this.lss.set('siPesk', pesk);
     this.lss.set('siSymbol', symbol);
     this.lss.set('siName', name);
+    this.store.dispatch(UpdateMarketData({data:name}))
   }
 
   removeInstrument(item: any) {

@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { Store } from '@ngrx/store';
 import { LocalStorageService } from 'ngx-localstorage';
 import { ToastrService } from 'ngx-toastr';
+import { UpdateMarketData } from 'src/app/reducers/market/market.action';
 import { NTVoyagerApiWtp } from 'src/app/services/api.service';
 
 @Component({
@@ -18,7 +20,8 @@ export class NewwatchlistComponent implements OnInit {
     private activeModal: NgbActiveModal,
     private apiService: NTVoyagerApiWtp,
     private lss: LocalStorageService,
-    private notif: ToastrService
+    private notif: ToastrService,
+    private store: Store
   ) {
     this.watchlistName = '';
   }
@@ -47,9 +50,10 @@ export class NewwatchlistComponent implements OnInit {
     this.apiService.addNew({name: newName, pesks: []} as any).subscribe(
       (res) => {
         if(res.isSuccess){
-          oldWlLists.push({id: newId, name: newName});
+          oldWlLists.push({id: newName, name: newName});
           this.lss.set('watchlists', oldWlLists);
-          this.notif.success(res.message, "Success!", {positionClass: "toast-top-right"})
+          this.notif.success(res.message, "Success!", {positionClass: "toast-top-right"});
+          this.store.dispatch(UpdateMarketData({data: "newWl" + ""}))
           this.cancel()
         } else {
           this.notif.error(res.message, "Error!", {positionClass: "toast-top-right"})

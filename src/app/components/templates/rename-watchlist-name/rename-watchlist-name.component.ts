@@ -4,6 +4,7 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { Store } from '@ngrx/store';
 import { LocalStorageService } from 'ngx-localstorage';
 import { ToastrService } from 'ngx-toastr';
+import { UpdateMarketData } from 'src/app/reducers/market/market.action';
 import { NTVoyagerApiWtp } from 'src/app/services/api.service';
 
 @Component({
@@ -12,6 +13,7 @@ import { NTVoyagerApiWtp } from 'src/app/services/api.service';
   styleUrls: ['./rename-watchlist-name.component.css'],
 })
 export class RenameWatchlistNameComponent {
+  selectedId: any;
   watchlist: any;
   renameWatchlistForm: any;
 
@@ -31,6 +33,10 @@ export class RenameWatchlistNameComponent {
         Validators.maxLength(15),
       ]),
     });
+  }
+
+  ngOnChanges() {
+    this.watchlist = this.lss.get('watchlists');
   }
 
   renameExistingWatchlist(){
@@ -61,6 +67,7 @@ export class RenameWatchlistNameComponent {
           });
           this.lss.set('watchlists', newWlLists);
           this.notif.success(res.message, "Success!", { positionClass: 'toast-top-right' })
+          this.store.dispatch(UpdateMarketData({data: "rename" + watchlist.id}))
           this.cancel()
         } else {
           this.notif.error(res.message, "Error!")

@@ -2,15 +2,14 @@ import { createReducer, on } from '@ngrx/store';
 import { UpdateMarketData } from './market.action';import { MarketState } from './market.state';
 
 const initialize: MarketState = {
-    status: false
+    data: ''
 }
 
 export const marketReducer = createReducer(
     initialize,
-    on(UpdateMarketData, (state, {status}) => {
+    on(UpdateMarketData, (state, {data}) => {
         return {
-            ...state,
-            status: status
+            data: data
         }
     })
 )

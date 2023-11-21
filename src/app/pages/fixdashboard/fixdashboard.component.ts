@@ -6,5 +6,13 @@ import { Component } from '@angular/core';
   styleUrls: ['./fixdashboard.component.css']
 })
 export class FixdashboardComponent {
+  tableType: any;
 
+  constructor(){
+    
+  }
+
+  handleNavSelect(str: string, str1: string) {
+
+  }
 }

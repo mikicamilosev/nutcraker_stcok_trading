@@ -1,0 +1,24 @@
+<div ng-controller="tradingAccountController">
+  <div class="input-group input-group-sm col-sm-4">
+    <select class="form-control" [(ngModel)]="selectedTradingAccount" (ngModelChange)="handleTradingAccountChanged()">
+      <ng-container *ngFor="let ta of tradingAccounts ">
+        <optgroup [label]="ta.fixSession">
+          <option *ngFor="let account of ta.items" [value]="account.accountId">
+            {{ account.account }} ({{ account.name }})
+          </option>
+        </optgroup>
+      </ng-container>
+    </select>
+    <span class="input-group-btn">
+      <button
+        class="btn btn-default"
+        type="button"
+        ng-click="handleTradingAccountChanged()"
+      >
+        <span class="glyphicon glyphicon-refresh"></span> Refresh
+      </button>
+    </span>
+  </div>
+  <br />
+</div>
+<!-- | groupBy: 'fixSession'; trackBy: tradingAccounts.id -->

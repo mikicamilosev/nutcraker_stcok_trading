@@ -7,7 +7,8 @@ import * as am5xy from '@amcharts/amcharts5/xy';
 import * as am5stock from '@amcharts/amcharts5/stock';
 import { LocalStorageService } from 'ngx-localstorage';
 import { NTVoyagerApiWtp } from 'src/app/services/api.service';
-import am5themes_Animated from "@amcharts/amcharts5/themes/Animated";
+import am5themes_Animated from '@amcharts/amcharts5/themes/Animated';
+import { getMarketData } from 'src/app/reducers/market/market.selector';
 
 @Component({
   selector: 'app-stockchart',
@@ -15,7 +16,9 @@ import am5themes_Animated from "@amcharts/amcharts5/themes/Animated";
   styleUrls: ['./stockchart.component.css'],
 })
 export class StockchartComponent {
-  chartData: any;
+  chartData: any; // for test
+  chartData1: any;
+  chartData2: any;
   constructor(
     private store: Store,
     private lss: LocalStorageService,
@@ -464,30 +467,48 @@ export class StockchartComponent {
       },
     ];
     var pesk: any = this.lss.get('siPesk');
-    if(pesk){
+    if (pesk) {
       this.apiService.chartDataBasic(pesk, '800').subscribe((res) => {
-        this.chartData = res;
+        this.chartData1 = res;
         // this.apiService
         //   .chartDataTechnical(
         //     pesk,
-        //     this.chartData[0].date,
-        //     this.chartData[this.chartData.length - 1].date
+        //     this.chartData1[0].date,
+        //     this.chartData1[this.chartData1.length - 1].date
         //   )
-        //   .subscribe((res) => {
-        //     this.chartData = res;
+        //   .subscribe((res1) => {
+        //     console.log(res1)
+        //     this.chartData2 = res;
         //   });
       });
     }
   }
 
   ngOnInit() {
+    this.store.select(getMarketData).subscribe((res) => {
+      var pesk: any = this.lss.get('siPesk');
+      this.apiService.chartDataBasic(pesk, '200').subscribe((res) => {
+        this.chartData1 = res;
+        // this.apiService
+        //   .chartDataTechnical(
+        //     pesk,
+        //     this.chartData1[0].date,
+        //     this.chartData1[this.chartData1.length - 1].date
+        //   )
+        //   .subscribe((res1) => {
+        //     this.chartData2 = res;
+        //   });
+      });
+    });
+  }
+
+  ngAfterViewInit() {
     let root = am5.Root.new('chartdiv');
 
     // Create a stock chart
     // https://www.amcharts.com/docs/v5/charts/stock-chart/#Instantiating_the_chart
     let stockChart = root.container.children.push(
-      am5stock.StockChart.new(root, {
-      })
+      am5stock.StockChart.new(root, {})
     );
 
     /**
@@ -504,7 +525,7 @@ export class StockchartComponent {
       })
     );
 
-      // Create axes
+    // Create axes
     // https://www.amcharts.com/docs/v5/charts/xy-chart/axes/
     let valueAxis = mainPanel.yAxes.push(
       am5xy.ValueAxis.new(root, {
@@ -533,23 +554,25 @@ export class StockchartComponent {
         yAxis: valueAxis,
         legendValueText: '{valueY}',
         tooltip: am5.Tooltip.new(root, {
-          pointerOrientation: "horizontal",
-          labelText: "{valueY}"
-        })
+          pointerOrientation: 'horizontal',
+          labelText: '{valueY}',
+        }),
       })
     );
 
     valueSeries.fills.template.setAll({
       fillOpacity: 0.2,
-      visible: true
+      visible: true,
     });
-    
-    valueSeries.set("fill", am5.color(0x00ff00));
-    valueSeries.set("stroke", am5.color(0x00ff00));
+
+    valueSeries.set('fill', am5.color(0x00ff00));
+    valueSeries.set('stroke', am5.color(0x00ff00));
     valueSeries.data.setAll(this.chartData);
-    valueSeries.children.unshift(am5.Label.new(root, {
-      text: 'Value'
-    }))
+    valueSeries.children.unshift(
+      am5.Label.new(root, {
+        text: 'Value',
+      })
+    );
     /**
      * Secondary (volume) panel
      */
@@ -595,17 +618,18 @@ export class StockchartComponent {
         yAxis: volumeValueAxis,
         legendValueText: '{valueY}',
         tooltip: am5.Tooltip.new(root, {
-          pointerOrientation: "horizontal",
-          labelText: "{valueY}"
-        })
+          pointerOrientation: 'horizontal',
+          labelText: '{valueY}',
+        }),
       })
     );
-    volumeSeries.set("stroke", am5.color(0xff0000));
-    volumeSeries.set("fill", am5.color(0xff0000));
-    volumeSeries.children.unshift(am5.Label.new(root, {
-      text: 'Volumn',
-      
-    }))
+    volumeSeries.set('stroke', am5.color(0xff0000));
+    volumeSeries.set('fill', am5.color(0xff0000));
+    volumeSeries.children.unshift(
+      am5.Label.new(root, {
+        text: 'Volumn',
+      })
+    );
     volumeSeries.data.setAll(this.chartData);
 
     // Set main value series

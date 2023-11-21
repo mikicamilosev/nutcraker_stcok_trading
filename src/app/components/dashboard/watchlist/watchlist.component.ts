@@ -10,6 +10,8 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { RenameWatchlistNameComponent } from '../../templates/rename-watchlist-name/rename-watchlist-name.component';
 import { DeleteWatchlistComponent } from '../../templates/delete-watchlist/delete-watchlist.component';
 import { InstrumentSearchComponent } from '../../templates/instrument-search/instrument-search.component';
+import { UpdateMarketData } from 'src/app/reducers/market/market.action';
+import { getMarketData } from 'src/app/reducers/market/market.selector';
 
 @Component({
   selector: 'app-watchlist',
@@ -40,6 +42,13 @@ export class WatchlistComponent {
   }
 
   ngOnInit() {
+    this.store.select(getMarketData).subscribe(
+      (res) => {
+        this.watchlists = this.lss.get('watchlists');
+        this.selectedWatchlist = this.lss.get<WatchlistDTO>('watchlist');
+        this.instruments = this.lss.get('instruments')
+      }
+    )
     if (this.lss.get('ThreeLineDepth') == (null || undefined)) {
       this.lss.set('ThreeLineDepth', false);
     }
@@ -133,6 +142,7 @@ export class WatchlistComponent {
     this.lss.set('siPesk', pesk);
     this.lss.set('siSymbol', symbol);
     this.lss.set('siName', name);
+    this.store.dispatch(UpdateMarketData({data: pesk}));
   }
 
   subscribeData() {

@@ -30,13 +30,16 @@ import { NTVoyagerApiWtp } from './services/api.service';
 import { HttpClientModule } from '@angular/common/http';
 import { LocalStorageDirective, LocalStorageService } from 'ngx-localstorage';
 import { NewwatchlistComponent } from './components/templates/newwatchlist/newwatchlist.component';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbCollapseModule, NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { RenameWatchlistNameComponent } from './components/templates/rename-watchlist-name/rename-watchlist-name.component';
 import { DeleteWatchlistComponent } from './components/templates/delete-watchlist/delete-watchlist.component';
 import { InstrumentSearchComponent } from './components/templates/instrument-search/instrument-search.component';
 import { OrderEntryComponent } from './components/templates/order-entry/order-entry.component';
 import { TestLightStreamerComponent } from './pages/test-light-streamer/test-light-streamer.component';
 import { NewsModalComponent } from './components/templates/news-modal/news-modal.component';
+import { PositionsummaryComponent } from './components/templates/positionsummary/positionsummary.component';
+import { TradingAccountComponent } from './components/templates/trading-account/trading-account.component';
+import { PositionSummaryInfoComponent } from './components/templates/position-summary-info/position-summary-info.component';
 
 @NgModule({
   declarations: [
@@ -64,6 +67,9 @@ import { NewsModalComponent } from './components/templates/news-modal/news-modal
     OrderEntryComponent,
     TestLightStreamerComponent,
     NewsModalComponent,
+    PositionsummaryComponent,
+    TradingAccountComponent,
+    PositionSummaryInfoComponent,
   ],
   imports: [
     CommonModule,
@@ -77,12 +83,11 @@ import { NewsModalComponent } from './components/templates/news-modal/news-modal
     AppRoutingModule,
     FormsModule,
     ReactiveFormsModule,
+    NgbCollapseModule,
     StoreModule.forRoot(reducers, {
       runtimeChecks: {
         strictStateImmutability: true,
-        strictActionImmutability: true,
-        strictStateSerializability: true,
-        strictActionSerializability: true,
+        strictActionImmutability: true
       },
       metaReducers,
     }),

@@ -4,62 +4,44 @@
       <h3 class="panel-title">Trading Dashboard</h3>
     </div>
     <div class="panel-body">
-      <div class="" ng-include="'app/views/tradingaccount.html'"></div>
-      <div
-        class=""
-        ng-if="global.showPositions && global.showPositionsSummary"
-        ng-include="'app/views/positionssummaryinfo.html'"
-      ></div>
-      <div
-        class=""
-        ng-if="global.showPositionsSummary"
-        ng-include="'app/views/positionssummary.html'"
-        ng-controller="positionsSummaryController"
-      ></div>
-      <!-- <tabset>
-        <tab heading="Orderbook">
-          <div class="panel panel-default">
-            <div class="panel-body">
-              <app-orderbook />
-            </div>
-          </div>
-        </tab>
-        <tab heading="Tradesbook">
-          <div class="panel panel-default">
-            <div class="panel-body">
-              <app-positions />
-            </div>
-          </div>
-        </tab>
-        <tab heading="Positions" ng-if="global.showPositions">
-          <div class="panel panel-default">
-            <div class="panel-body">
-              <app-positions />
-            </div>
-          </div>
-        </tab>
-      </tabset> -->
-      <!-- <ul ngbNav #nav="ngbNav" class="nav-tabs">
-        <li ngbNavItem>
-          <button ngbNavLink>First</button>
-          <ng-template ngbNavContent> -->
-            <app-orderbook />
-        <!-- </ng-template>
+      <app-trading-account></app-trading-account>
+      <app-position-summary-info></app-position-summary-info>
+      <app-positionsummary  *ngIf="false" />
+      <ul class="nav nav-tabs">
+        <li heading="Gainers" [ngClass]="{ active: tableType == 'Gainers' }">
+          <a
+            href="javascript:void(0)"
+            (click)="handleNavSelect('Up', 'Orderbook')"
+            class=""
+            >Orderbook</a
+          >
         </li>
-        <li ngbNavItem>
-          <button ngbNavLink>Second</button>
-          <ng-template ngbNavContent> -->
-            <app-tradebook />
-        <!-- </ng-template>
+        <li heading="Losers" [ngClass]="{ active: tableType == 'Losers' }">
+          <a
+            href="javascript:void(0)"
+            (click)="handleNavSelect('Down', 'Tradesbook')"
+            class=""
+            >Tradesbook</a
+          >
         </li>
-        <li ngbNavItem>
-          <button ngbNavLink>Third</button>
-          <ng-template ngbNavContent> -->
-            <app-positions />
-        <!-- </ng-template>
+        <li heading="by Value" [ngClass]="{ active: tableType === 'Positions' }">
+          <a
+            href="javascript:void(0)"
+            (click)="handleNavSelect('Value', 'Positions')"
+            class=""
+            >Positions</a
+          >
         </li>
       </ul>
-      <div [ngbNavOutlet]="nav"></div> -->
+      <ng-container *ngIf="false">
+        <app-orderbook />
+      </ng-container>
+      <ng-container *ngIf="false">
+        <app-positions />
+      </ng-container>
+      <ng-container *ngIf="false">
+        <app-tradebook />
+      </ng-container>
     </div>
   </div>
 </div>

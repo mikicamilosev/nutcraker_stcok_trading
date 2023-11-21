@@ -1,8 +1,8 @@
 import { createSelector } from '@ngrx/store';
 
-const selectMarket = (state: any) => state.auth;
+const selectMarket = (state: any) => state.market;
 
-export const selectIsAuth = createSelector(
+export const getMarketData = createSelector(
     selectMarket,
-    (state) => state.status
+    (state) => state.data
 );

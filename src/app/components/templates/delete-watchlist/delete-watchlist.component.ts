@@ -3,6 +3,7 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { Store } from '@ngrx/store';
 import { LocalStorageService } from 'ngx-localstorage';
 import { ToastrService } from 'ngx-toastr';
+import { UpdateMarketData } from 'src/app/reducers/market/market.action';
 import { NTVoyagerApiWtp, WatchlistDeleteCommand } from 'src/app/services/api.service';
 
 @Component({
@@ -43,6 +44,7 @@ export class DeleteWatchlistComponent {
           this.apiService.instrumentsAll(newWlLists[0].id).subscribe(
             (res) => {
               this.lss.set('instruments', res);
+              this.store.dispatch(UpdateMarketData({data: "del" + id}));
               this.cancel()
             }
           )

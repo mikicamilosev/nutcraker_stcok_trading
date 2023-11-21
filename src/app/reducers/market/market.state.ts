@@ -1,3 +1,3 @@
 export interface MarketState {
-    status: boolean;
+    data: string;
 }
