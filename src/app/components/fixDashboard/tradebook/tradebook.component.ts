@@ -22,4 +22,23 @@ export class TradebookComponent {
       }
     )
   }
+
+  convertSide (orderSide: any) {
+    switch (orderSide) {
+        case "B":
+            return "Buy";
+        case "S":
+            return "Sell";
+        case "OL":
+            return "Open Long";
+        case "CL":
+            return "Close Long";
+        case "OS":
+            return "Open Short";
+        case "CS":
+            return "Close Short";
+        default:
+            return orderSide;
+    }
+};
 }

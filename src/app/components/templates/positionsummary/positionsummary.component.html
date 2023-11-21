@@ -27,7 +27,7 @@
                 </th>
             </tr>
         </thead>
-        <tbody *ngFor="let item in positionInfo">
+        <tbody *ngFor="let item of positionInfo">
             <tr ng-class="{ 'boldtr' : shouldBold(item) }">
                 <td>
                     :: item.category || 

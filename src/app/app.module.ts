@@ -40,6 +40,7 @@ import { NewsModalComponent } from './components/templates/news-modal/news-modal
 import { PositionsummaryComponent } from './components/templates/positionsummary/positionsummary.component';
 import { TradingAccountComponent } from './components/templates/trading-account/trading-account.component';
 import { PositionSummaryInfoComponent } from './components/templates/position-summary-info/position-summary-info.component';
+import { CancelOrderComponent } from './components/templates/cancel-order/cancel-order.component';
 
 @NgModule({
   declarations: [
@@ -70,6 +71,7 @@ import { PositionSummaryInfoComponent } from './components/templates/position-su
     PositionsummaryComponent,
     TradingAccountComponent,
     PositionSummaryInfoComponent,
+    CancelOrderComponent,
   ],
   imports: [
     CommonModule,

@@ -16,14 +16,14 @@ export class PositionsummaryComponent {
   }
 
   ngOnInit(){
-
-  }
-
-  ngOnChanges(){
-    this.apiService.positions(this.selTradeAcc.accountNo).subscribe(
+    this.apiService.positionSummary(this.selTradeAcc?.accountNo || 'accountId').subscribe(
       (res) => {
+        console.log(res)
         this.positionInfo = res;
       }
     )
+  }
+
+  ngOnChanges(){
   }
 }
