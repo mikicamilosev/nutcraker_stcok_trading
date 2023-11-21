@@ -33,8 +33,12 @@ export class NavbarComponent {
       const currentUrl = event.url;
       var isAuth = this.lss.get('isAuth');
       if(isAuth === true){
-        this.router.navigateByUrl(currentUrl)
         this.isAuth = isAuth;
+        if(currentUrl == '/' || currentUrl == '/login' || currentUrl == '/home'){
+          this.router.navigateByUrl('/dashboard')
+        } else {
+          this.router.navigateByUrl(currentUrl)
+        }
       } else {
         this.router.navigateByUrl('/login')
       }

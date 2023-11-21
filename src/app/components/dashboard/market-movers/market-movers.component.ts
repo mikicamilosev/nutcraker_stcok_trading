@@ -31,7 +31,7 @@ export class MarketMoversComponent {
   }
 
   ngOnChanges() {
-    this.apiService.marketMovers(this.exchange, this.moverType).subscribe(
+    this.apiService.marketMovers(this.exchange, this.moverType, '10').subscribe(
       (res) => {
         this.marketMovers = res;
       }

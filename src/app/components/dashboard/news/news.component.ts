@@ -17,7 +17,7 @@ export class NewsComponent {
   }
 
   ngOnInit(){
-    this.apiService.newsHeadlines(this.exchange).subscribe(
+    this.apiService.newsHeadlines(this.exchange, '').subscribe(
       (res) => {
         if(res){
           this.newsHeadlines = res;
@@ -27,7 +27,7 @@ export class NewsComponent {
   }
 
   ngOnChanges(){
-    this.apiService.newsHeadlines(this.exchange).subscribe(
+    this.apiService.newsHeadlines(this.exchange, '').subscribe(
       (res) => {
         if(res){
           this.newsHeadlines = res;

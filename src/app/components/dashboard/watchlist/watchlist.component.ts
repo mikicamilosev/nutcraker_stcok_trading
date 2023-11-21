@@ -1,6 +1,5 @@
 import { Component, Input } from '@angular/core';
 import { LocalStorageService } from 'ngx-localstorage';
-import { Watchlist } from '../../../models/watchlist.model';
 import { NTVoyagerApiWtp, WatchlistDTO } from 'src/app/services/api.service';
 import { isArray } from '@amcharts/amcharts5/.internal/core/util/Type';
 import { ToastrService } from 'ngx-toastr';
@@ -80,7 +79,7 @@ export class WatchlistComponent {
     // subscribeData
   }
 
-  trackByFn(index: number, item: Watchlist) {
+  trackByFn(index: number, item: any) {
     return item.id; // Replace with the unique identifier property of your Watchlist interface or model
   }
 

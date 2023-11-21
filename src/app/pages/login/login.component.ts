@@ -87,6 +87,8 @@ export class LoginComponent implements OnInit {
           )
         } else {
           this.notif.error(res.message, "Error!", { positionClass: 'toast-top-center'})
+          this.isLoading = false
+          this.loginText = "Login";
         }
       }
     )
