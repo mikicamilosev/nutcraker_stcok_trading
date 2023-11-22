@@ -7,8 +7,9 @@ import { NTVoyagerApiWtp } from 'src/app/services/api.service';
   styleUrls: ['./tradebook.component.css']
 })
 export class TradebookComponent {
+  @Input() updateDate: any;
   @Input() selAcc: any;
-  tradesbook: any
+  tradesbook: any;
   constructor(
     private apiService: NTVoyagerApiWtp
   ){
@@ -17,7 +18,7 @@ export class TradebookComponent {
 
   ngOnInit(){
     this.apiService.trades(this.selAcc?.accountNo || 'accoundId').subscribe(
-      (res) => {
+      (res: any) => {
         this.tradesbook = res;
       }
     )

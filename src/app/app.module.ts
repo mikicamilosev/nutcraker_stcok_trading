@@ -41,6 +41,7 @@ import { PositionsummaryComponent } from './components/templates/positionsummary
 import { TradingAccountComponent } from './components/templates/trading-account/trading-account.component';
 import { PositionSummaryInfoComponent } from './components/templates/position-summary-info/position-summary-info.component';
 import { CancelOrderComponent } from './components/templates/cancel-order/cancel-order.component';
+import { NewOrderComponent } from './components/templates/new-order/new-order.component';
 
 @NgModule({
   declarations: [
@@ -72,6 +73,7 @@ import { CancelOrderComponent } from './components/templates/cancel-order/cancel
     TradingAccountComponent,
     PositionSummaryInfoComponent,
     CancelOrderComponent,
+    NewOrderComponent,
   ],
   imports: [
     CommonModule,

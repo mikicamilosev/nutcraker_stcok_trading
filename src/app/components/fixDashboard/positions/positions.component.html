@@ -4,7 +4,7 @@
             <tr>
                 <th colspan="13">
                     <div style="float:right;">
-                        <small>Last Updated: dataStore.posLastUpdated | date : 'yyyy-MM-dd HH:mm:ss'</small>
+                        <small>Last Updated: {{updateDate | date : 'yyyy-MM-dd HH:mm:ss'}}</small>
                     </div>
                 </th>
             </tr>
@@ -50,19 +50,19 @@
         <tbody>
             <tr *ngFor="let item of positions"> <!--  | orderBy:'Symbol' -->
                 <td>
-                    <button type="button" class="btn btn-default btn-xs" ng-show="global.isTrader" ng-click="newOrderFromPos(item)">New Order</button>&nbsp;item.account
+                    <button type="button" class="btn btn-default btn-xs" ng-show="global.isTrader" (click)="newOrderFromPos(item)">New Order</button>&nbsp;{{item.accountNo}}
                 </td>
                 <td>{{item.exchange}}</td>
                 <td>{{item.symbol}}</td>
-                <td class="numeric">{{item.start}}</td>
+                <td class="numeric">{{item.startPosition}}</td>
                 <td class="numeric">{{item.bought}}</td>
                 <td class="numeric">{{item.sold}}</td>
-                <td class="numeric">{{item.close}}</td>
+                <td class="numeric">{{item.closePosition}}</td>
                 <td class="numeric">{{item.rulingPrice | number}}</td>
                 <td class="numeric">{{item.exposure | number:'1.2-2'}}</td>
-                <td class="numeric">{{item.previousClosePrice | number}}</td>
+                <td class="numeric">{{item.yestClosePrice | number}}</td>
                 <td class="numeric">{{item.profitLoss | number:'1.2-2'}}</td>
-                <td class="numeric">{{item.dailyMargin | number:'1.2-2'}}</td>
+                <td class="numeric">{{item.variationMargin | number:'1.2-2'}}</td>
             </tr>
         </tbody>
     </table>

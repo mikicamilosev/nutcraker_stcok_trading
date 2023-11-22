@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Output, Input } from '@angular/core';
+import { LocalStorageService } from 'ngx-localstorage';
 import { NTVoyagerApiWtp } from 'src/app/services/api.service';
 
 @Component({
@@ -12,8 +13,14 @@ export class PositionSummaryInfoComponent {
   isCollapsed: any;
 
   constructor(
+    private lss: LocalStorageService
   ){
-    this.isCollapsed = false;
+    var isCollapse: any = this.lss.get('trdPosCollapse') as any;
+    if(isCollapse == null ){
+      this.isCollapsed = true;
+    } else {
+      this.isCollapsed = isCollapse
+    }
   }
 
   handleClickCollapse () {

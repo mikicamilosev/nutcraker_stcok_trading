@@ -10,7 +10,7 @@
                             </button>
                         </div>
                         <div class="pull-right">
-                            <small>Last Updated: dataStore.obLastUpdated | date : 'yyyy-MM-dd HH:mm:ss'</small>
+                            <small>Last Updated: {{updateDate | date : 'yyyy-MM-dd HH:mm:ss'}}</small>
                         </div>
                     </th>
                 </tr>
@@ -70,7 +70,7 @@
                     <td style="text-align: center;">{{convertType(item.orderType)}}</td>
                     <td style="text-align: center;">{{item.lastUpdateTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>
                     <td style="text-align: center;" ng-class="getOrderStatusClass(item.orderStatus)">{{item.orderStatus}}</td>
-                    <td style="text-align: center;" ng-class="getInstructionStatusClass(item.instructionStatus)" tooltip-placement="left" tooltip-html-unsafe=' item.handledBy  item.rejectReason '> API error</td> <!-- {{item.instructionStatus}} -->
+                    <td style="text-align: center;" ng-class="getInstructionStatusClass(item.instructionStatus)" tooltip-placement="left" tooltip-html-unsafe=' item.handledBy  item.rejectReason '> {{item.tesk}}</td> <!-- {{item.instructionStatus}} -->
                 </tr>
             </tbody>
         </table>

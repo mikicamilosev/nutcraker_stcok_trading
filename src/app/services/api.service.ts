@@ -2172,7 +2172,6 @@ export class NTVoyagerApiWtp {
             _responseText === ''
               ? null
               : JSON.parse(_responseText, this.jsonParseReviver);
-            console.log(resultData200)
           if (Array.isArray(resultData200)) {
             result200 = [] as any;
             for (let item of resultData200)
@@ -2180,7 +2179,6 @@ export class NTVoyagerApiWtp {
           } else {
             result200 = <any>null;
           }
-          console.log(result200);
           return _observableOf(result200);
         })
       );

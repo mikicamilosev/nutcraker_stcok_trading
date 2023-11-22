@@ -10,6 +10,7 @@ import { CancelOrderComponent } from '../../templates/cancel-order/cancel-order.
   styleUrls: ['./orderbook.component.css']
 })
 export class OrderbookComponent {
+  @Input() updateDate: any;
   @Input() selAcc: any
   orderbook: any;
   openOrdersOnly: any;
@@ -25,8 +26,7 @@ export class OrderbookComponent {
 
   ngOnInit(){
     this.apiService.orders(this.selAcc?.accountNo || 'accoundId').subscribe(
-      (res) => {
-        console.log(res)
+      (res: any) => {
         this.orderbook = res;
       }
     )

@@ -34,13 +34,13 @@
         </li>
       </ul>
       <ng-container *ngIf="selNav == 'Orderbook'">
-        <app-orderbook [selAcc]="selAcc" />
+        <app-orderbook [selAcc]="selAcc" [updateDate]="updateDate" />
       </ng-container>
       <ng-container *ngIf="selNav == 'Tradesbook'">
-        <app-tradebook [selAcc]="selAcc" />
+        <app-tradebook [selAcc]="selAcc" [updateDate]="updateDate" />
       </ng-container>
       <ng-container *ngIf="selNav == 'Positions'">
-        <app-positions [selAcc]="selAcc" />
+        <app-positions [selAcc]="selAcc" [updateDate]="updateDate" />
       </ng-container>
     </div>
   </div>
