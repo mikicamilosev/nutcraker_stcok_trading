@@ -15,6 +15,7 @@ export class OrderbookComponent {
   @Input() updateDate: any;
   @Input() selAcc: any
   orderbook: any;
+  oldOrderbook: any;
   openOrdersOnly: any;
   isLoading: any;
   
@@ -37,6 +38,7 @@ export class OrderbookComponent {
   ngOnInit(){
     this.apiService.orders(this.selAcc?.accountNo || 'accoundId').subscribe(
       (res: any) => {
+        this.oldOrderbook = res;
         if(this.openOrdersOnly){
           this.orderbook = res.filter(function (ele:any) {
             console.log(ele.orderStatus)
@@ -54,18 +56,13 @@ export class OrderbookComponent {
   handleOpenOrdersOnly() {
     this.openOrdersOnly = !this.openOrdersOnly
     this.lss.set('trdOrdOpen', this.openOrdersOnly);
-    this.apiService.orders(this.selAcc?.accountNo || 'accoundId').subscribe(
-      (res: any) => {
-        if(this.openOrdersOnly){
-          this.orderbook = res.filter(function (ele:any) {
-            return ((ele.orderStatus !== 'Expired') && (ele.orderStatus !== 'Cancelled') && (ele.orderStatus !== 'Rejected'));
-          })
-        } else {
-          this.orderbook = res;
-        }
-        this.isLoading = false;
-      }
-    )
+    if(this.openOrdersOnly){
+      this.orderbook = this.oldOrderbook.filter(function (ele:any) {
+        return ((ele.orderStatus !== 'Expired') && (ele.orderStatus !== 'Cancelled') && (ele.orderStatus !== 'Rejected'));
+      }) 
+    } else {
+      this.orderbook = this.oldOrderbook;
+    }
   } 
 
   convertType (orderType : any) {

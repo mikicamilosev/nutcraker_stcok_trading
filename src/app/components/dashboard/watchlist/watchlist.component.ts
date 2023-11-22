@@ -23,6 +23,7 @@ export class WatchlistComponent {
   instruments: any;
   symbol: any;
   ThreeLineDepth: any;
+  selWlId: any;
 
   constructor(
     private lss: LocalStorageService,
@@ -45,6 +46,7 @@ export class WatchlistComponent {
       (res) => {
         this.watchlists = this.lss.get('watchlists');
         this.selectedWatchlist = this.lss.get<WatchlistDTO>('watchlist');
+        this.selWlId = this.selectedWatchlist.id;
         this.instruments = this.lss.get('instruments')
       }
     )
@@ -53,6 +55,7 @@ export class WatchlistComponent {
     }
     this.watchlists = this.lss.get('watchlists');
     this.selectedWatchlist = this.lss.get<WatchlistDTO>('watchlist');
+    this.selWlId = this.selectedWatchlist.id;
     this.instruments = this.lss.get('instruments')
   }
 
@@ -84,7 +87,13 @@ export class WatchlistComponent {
   }
 
   watchlistChanged() {
-    if (this.selectedWatchlist) {
+    console.log(this.selWlId)
+    if (this.selWlId) {
+      var that = this;
+      var temp = this.watchlists.filter(function (ele:any) {
+        return ele.id === that.selWlId;
+      })
+      this.selectedWatchlist = temp[0]
       this.lss.set('watchlist', this.selectedWatchlist)
       this.lss.set('instruments', []);
       this.lss.set('wlSubscriptions', []);

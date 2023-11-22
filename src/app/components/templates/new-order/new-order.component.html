@@ -1,6 +1,6 @@
 <form class="form-horizontal" role="form" name="orderEntryForm" novalidate ng-init="configureOrderEntry(false,false)">
     <div class="modal-header">
-        <button type="button" class="close" ng-click="cancel()"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+        <button type="button" class="close" (click)="cancel()"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
         <h3 class="modal-title" style="">New Order</h3>
     </div>
     <div class="modal-body" stop-event="touchend">
