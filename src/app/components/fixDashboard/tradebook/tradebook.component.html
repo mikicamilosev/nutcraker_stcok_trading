@@ -34,6 +34,9 @@
                 </tr>
             </thead>
             <tbody>
+                <tr>
+                    <td ng-show="loadingInstruments"><i class="glyphicon glyphicon-repeat gly-spin"></i>&nbsp;Loading...</td>
+                </tr>
                 <tr *ngFor="let item of tradesbook"> <!--  | orderBy:'timestamp':true -->
                     <td>{{item.accountNo}}</td>
                     <td>{{item.exchange}}</td>

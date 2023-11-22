@@ -6,7 +6,7 @@
     <div class="panel-body">
       <app-trading-account (dataEvent)="receiveSelAcc($event)" ></app-trading-account>
       <app-position-summary-info (dataEvent)="receiveColllapse($event)" ></app-position-summary-info>
-      <app-positionsummary  *ngIf="isCollapse" [selTradeAcc]="selAcc" />
+      <!-- <app-positionsummary  *ngIf="isCollapse" [selTradeAcc]="selAcc" /> -->
       <ul class="nav nav-tabs">
         <li heading="Gainers" [ngClass]="{ active: selNav == 'Orderbook' }">
           <a

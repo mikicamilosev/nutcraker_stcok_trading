@@ -48,6 +48,9 @@
             </tr>
         </thead>
         <tbody>
+            <tr>
+                <td ng-show="loadingInstruments"><i class="glyphicon glyphicon-repeat gly-spin"></i>&nbsp;Loading...</td>
+            </tr>
             <tr *ngFor="let item of positions"> <!--  | orderBy:'Symbol' -->
                 <td>
                     <button type="button" class="btn btn-default btn-xs" ng-show="global.isTrader" (click)="newOrderFromPos(item)">New Order</button>&nbsp;{{item.accountNo}}

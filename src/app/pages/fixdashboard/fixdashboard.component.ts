@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { LocalStorageService } from 'ngx-localstorage';
+import { NTVoyagerApiWtp } from 'src/app/services/api.service';
 
 @Component({
   selector: 'app-fixdashboard',
@@ -14,7 +15,8 @@ export class FixdashboardComponent {
   updateDate: any;
 
   constructor(
-    private lss: LocalStorageService
+    private lss: LocalStorageService,
+    private apiService: NTVoyagerApiWtp
   ){
     var oldSubNav: string = this.lss.get('trdSubNav') as any;
     if(oldSubNav == null){
@@ -30,6 +32,14 @@ export class FixdashboardComponent {
       this.isCollapse = isCollapse
     }
     this.updateDate = new Date()
+  }
+
+  ngOnInit(){
+    this.apiService.positionSummary('test').subscribe(
+      (res) => {
+        console.log(res)
+      }
+    )
   }
 
   ngOnChanges(){

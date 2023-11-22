@@ -7,12 +7,20 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
   styleUrls: ['./new-order.component.css']
 })
 export class NewOrderComponent {
-  
+  confirmOrDetail: any
 
   constructor(
     private activeModal: NgbActiveModal
   ){
+    this.confirmOrDetail = true;
+  }
 
+  viewConfirmation(){
+    this.confirmOrDetail = false;
+  }
+
+  viewOrderDetails(){
+    this.confirmOrDetail = true;
   }
 
   cancel() {

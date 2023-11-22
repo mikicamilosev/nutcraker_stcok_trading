@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, EventEmitter, Output } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { LocalStorageService } from 'ngx-localstorage';
 import { NTVoyagerApiWtp } from 'src/app/services/api.service';
@@ -9,6 +9,7 @@ import { NTVoyagerApiWtp } from 'src/app/services/api.service';
   styleUrls: ['./market-movers.component.css']
 })
 export class MarketMoversComponent {
+  @Output() dataEvent = new EventEmitter<any>();
   @Input() exchange: any;
   @Input() moverType: any;
   marketMovers: any;
@@ -34,6 +35,7 @@ export class MarketMoversComponent {
     this.apiService.marketMovers(this.exchange, this.moverType, '10').subscribe(
       (res) => {
         this.marketMovers = res;
+        this.dataEvent.emit(new Date())
       }
     )
   }

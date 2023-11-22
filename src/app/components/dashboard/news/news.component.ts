@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { LocalStorageService } from 'ngx-localstorage';
 import { NTVoyagerApiWtp } from 'src/app/services/api.service';
@@ -12,6 +12,8 @@ import { NewsModalComponent } from '../../templates/news-modal/news-modal.compon
 export class NewsComponent {
   @Input() exchange: any;
   newsHeadlines: any;
+  updateDate: any
+
   constructor(private lss: LocalStorageService, private apiService: NTVoyagerApiWtp,
     private modalService: NgbModal){
   }
@@ -21,6 +23,7 @@ export class NewsComponent {
       (res) => {
         if(res){
           this.newsHeadlines = res;
+          this.updateDate = new Date()
         }
       }
     )
@@ -31,6 +34,7 @@ export class NewsComponent {
       (res) => {
         if(res){
           this.newsHeadlines = res;
+          this.updateDate = new Date()
         }
       }
     )

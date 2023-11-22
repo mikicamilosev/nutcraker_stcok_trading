@@ -54,6 +54,9 @@
                 </tr>
             </thead>
             <tbody>
+                <tr>
+                    <td ng-show="loadingInstruments"><i class="glyphicon glyphicon-repeat gly-spin"></i>&nbsp;Loading...</td>
+                </tr>
                 <tr *ngFor="let item of orderbook">
                     <td>
                         <button class=" btn btn-danger btn-xs" (click)="cancelOrder(item)" ng-show=" global.isTrader && (item.remainingQuantity !== 0) || (item.instructionStatus.indexOf('AA:') === 0) || (item.instructionStatus.indexOf('PEX:') === 0) || (item.instructionStatus.indexOf('P:') === 0) " tooltip-placement="right" tooltip-html-unsafe='Click to cancel order. item.side item.orderQuantity item.symbol  @ item.price'>

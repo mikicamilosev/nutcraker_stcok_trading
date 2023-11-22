@@ -1764,22 +1764,24 @@ export class NTVoyagerApiWtp {
       .request('get', url_, options_)
       .pipe(
         _observableMergeMap((response_: any) => {
+          console.log(response_)
           return this.processPositionSummary(response_);
         })
       )
       .pipe(
         _observableCatch((response_: any) => {
+          console.log(response_)
           if (response_ instanceof HttpResponseBase) {
             try {
               return this.processPositionSummary(response_ as any);
             } catch (e) {
               return _observableThrow(e) as any as Observable<
-                PositionSummary[]
+                PositionSummary
               >;
             }
           } else
             return _observableThrow(response_) as any as Observable<
-              PositionSummary[]
+              PositionSummary
             >;
         })
       );

@@ -52,7 +52,7 @@
         <h3 class="panel-title">
           JSE Equalities - Market Movers -
           <small
-            >Last Updated: dataStore.mmLastUpdated | date : "HH:mm:ss"
+            >Last Updated: {{ mmUpdateDate | date : "HH:mm:ss"}}
           </small>
         </h3>
       </div>
@@ -103,7 +103,7 @@
             </li>
           </ul>
           <div class="tab-content">
-            <app-market-movers [exchange]="exchange" [moverType]="moverType"></app-market-movers>
+            <app-market-movers [exchange]="exchange" [moverType]="moverType" (dataEvent)="receiveUpdateDate($event)" ></app-market-movers>
           </div>
         </div>
       </div>

@@ -34,7 +34,6 @@ import { NgbCollapseModule, NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { RenameWatchlistNameComponent } from './components/templates/rename-watchlist-name/rename-watchlist-name.component';
 import { DeleteWatchlistComponent } from './components/templates/delete-watchlist/delete-watchlist.component';
 import { InstrumentSearchComponent } from './components/templates/instrument-search/instrument-search.component';
-import { OrderEntryComponent } from './components/templates/order-entry/order-entry.component';
 import { TestLightStreamerComponent } from './pages/test-light-streamer/test-light-streamer.component';
 import { NewsModalComponent } from './components/templates/news-modal/news-modal.component';
 import { PositionsummaryComponent } from './components/templates/positionsummary/positionsummary.component';
@@ -66,7 +65,6 @@ import { NewOrderComponent } from './components/templates/new-order/new-order.co
     RenameWatchlistNameComponent,
     DeleteWatchlistComponent,
     InstrumentSearchComponent,
-    OrderEntryComponent,
     TestLightStreamerComponent,
     NewsModalComponent,
     PositionsummaryComponent,

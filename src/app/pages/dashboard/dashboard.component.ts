@@ -12,6 +12,7 @@ import { NTVoyagerApiWtp } from 'src/app/services/api.service';
 export class DashboardComponent {
   exchange: any;
   moverType: any;
+  mmUpdateDate: any
 
   active: any;
   stockInfo: any;
@@ -49,6 +50,10 @@ export class DashboardComponent {
   handleNavSelect(exchange: string, moverType: string){
     this.exchange = exchange;
     this.moverType = moverType;
+  }
+
+  receiveUpdateDate( item: any){
+    this.mmUpdateDate = item
   }
 
   instrument(pesk: any, symbol: any, name: any) {
