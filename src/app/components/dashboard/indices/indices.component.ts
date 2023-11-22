@@ -7,6 +7,7 @@ import { AppState } from 'src/app/reducers/index.reducer';
 import { InstrumentSearchComponent } from '../../templates/instrument-search/instrument-search.component';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { UpdateMarketData } from 'src/app/reducers/market/market.action';
+import { getMarketData } from 'src/app/reducers/market/market.selector';
 
 @Component({
   selector: 'app-indices',
@@ -31,6 +32,11 @@ export class IndicesComponent {
   }
   
   ngOnInit() {
+    this.store.select(getMarketData).subscribe(
+      (res) => {
+        this.indexInstruments = this.lss.get('indexInstruments')
+      }
+    )
     this.indexInstruments = this.lss.get('indexInstruments')
     // this.apiService.indexInstruments().subscribe((res) => {
     //   this.indexInstruments = res;

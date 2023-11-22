@@ -37,4 +37,18 @@ export class TradingAccountComponent {
     this.lss.set('selTrdAcc', this.selectedTradingAccount);
     this.dataEvent.emit(this.selectedTradingAccount);
   }
+
+  handleGetTradingAccountChanged(){
+    this.apiService.tradingAccounts().subscribe(
+      (res: any) => {
+        this.tradingAccounts = res;
+        var oldSelTradingAccount = this.lss.get('selTrdAcc');
+        if(oldSelTradingAccount == null) {
+          this.selectedTradingAccount = res[0]
+        } else {
+          this.selectedTradingAccount = oldSelTradingAccount
+        }
+      }
+    )
+  }
 }
