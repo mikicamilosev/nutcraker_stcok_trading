@@ -3,6 +3,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
 import { NTVoyagerApiWtp } from 'src/app/services/api.service';
 import { CancelOrderComponent } from '../../templates/cancel-order/cancel-order.component';
+import { LocalStorageService } from 'ngx-localstorage';
 
 @Component({
   selector: 'app-orderbook',
@@ -18,10 +19,16 @@ export class OrderbookComponent {
   constructor(
     private apiService: NTVoyagerApiWtp,
     private notif: ToastrService,
-    private modalService: NgbModal
+    private modalService: NgbModal,
+    private lss: LocalStorageService
   ) {
     this.selAcc = '';
-    this.openOrdersOnly = false;
+    var openOrdersOnly = this.lss.get('trdOrdOpen')
+    if(openOrdersOnly == null){
+      this.openOrdersOnly = false;
+    } else {
+      this.openOrdersOnly = openOrdersOnly;
+    }
   }
 
   ngOnInit(){
@@ -34,6 +41,7 @@ export class OrderbookComponent {
 
   handleOpenOrdersOnly() {
     this.openOrdersOnly = !this.openOrdersOnly
+    this.lss.set('trdOrdOpen', this.openOrdersOnly);
   }
 
   convertType (orderType : any) {
