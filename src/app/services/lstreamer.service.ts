@@ -1,54 +1,136 @@
 import { Injectable } from '@angular/core';
-import { LightstreamerClient } from 'lightstreamer-client-web';
 import { lsClient } from './lightstreamer/lsClient';
-import { Subscription } from 'lightstreamer-client-web/lightstreamer.esm';
+import { ItemUpdate, Subscription } from 'lightstreamer-client-web/lightstreamer.esm';
+import { LocalStorageService } from 'ngx-localstorage';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class LstreamerService {
-  lsService: any;
+  client: any;
 
-  constructor() { 
-    this.lsService = lsClient;
+  constructor(private lss: LocalStorageService) {
+    this.client = lsClient;
   }
 
-  subscribeWatchlist(items: any[], threeLineDepth: any, onItemUpdateFn: any) {
-    const subscription = new Subscription("MERGE", items, this.watchlistFields(threeLineDepth));
-    subscription.setDataAdapter(this.getDataAdapter());
-    subscription.setRequestedSnapshot("yes");
-    subscription.setRequestedMaxFrequency(1);
-    lsClient.subscribe(subscription);
-    subscription.addListener({
-      onItemUpdate: onItemUpdateFn
-    });
+  getFields(str: string): any {
+    var tFlg = this.lss.get('ThreeLineDepth');
+    var res: any = [];
+    switch (str) {
+      case 'watchlist':
+        if (tFlg) {
+          res = [];
+        } else {
+          res = ["L", "H", "BS1", "B1", "A1", "AS1", "LTP", "LTS", "LTT", "Chg", "ChgP", "Cls"];
+        }
+        break;
+      case 'indices':
+        if (tFlg) {
+          res = [];
+        } else {
+          res = [];
+        }
+        break;
+      case 'stockInfo':
+        if (tFlg) {
+          res = [];
+        } else {
+          res = [];
+        }
+        break;
+      case 'marketMover':
+        if (tFlg) {
+          res = [];
+        } else {
+          res = [];
+        }
+        break;
+      case 'intraChart':
+        if (tFlg) {
+          res = [];
+        } else {
+          res = [];
+        }
+        break;
+    }
+    return res;
   }
-  
-  watchlistFields(threeLineDepth: any): any[] {
-    // Implement the logic to generate the watchlist fields based on the `threeLineDepth` parameter
-    // Return the generated watchlist fields as an array
-    if (threeLineDepth) {
-      return ["Symbol", "L", "H", "BS1", "B1", "A1", "AS1", "BS2", "B2", "A2", "AS2", "BS3", "B3", "A3", "AS3", "LTP", "LTS", "LTT", "Chg", "ChgP", "Cls"];
-    } else {
-      return ["Symbol", "L", "H", "BS1", "B1", "A1", "AS1", "LTP", "LTS", "LTT", "Chg", "ChgP", "Cls"];
+
+  getItems(str: any): any {
+    var tFlg = this.lss.get('ThreeLineDepth');
+    var res: any = [];
+    switch (str) {
+      case 'watchlist':
+        if (tFlg) {
+          res = [];
+        } else {
+          res = [];
+        }
+        break;
+      case 'indices':
+        if (tFlg) {
+          res = [];
+        } else {
+          res = [];
+        }
+        break;
+      case 'stockInfo':
+        if (tFlg) {
+          res = [];
+        } else {
+          res = [];
+        }
+        break;
+      case 'marketMover':
+        if (tFlg) {
+          res = [];
+        } else {
+          res = [];
+        }
+        break;
+      case 'intraChart':
+        if (tFlg) {
+          res = [];
+        } else {
+          res = [];
+        }
+        break;
     }
   }
 
-  getDataAdapter () {
-    return "MARKETDATA";
+  subscribeWatchlists(items: any) {
+
   }
 
-  testWatchlist (watchlists: any){
-    var items = ["Symbol", "L", "H", "BS1", "BP1", "AP1", "AS1", "LTP", "LTS", "LTT", "CHG", "CHGP", "CLS"];
-    var watchlist = ["Symbol", "L", "H", "BS1", "B1", "A1", "AS1", "LTP", "LTS", "LTT", "Chg", "ChgP", "Cls"]
-    var sub = new Subscription('MERGE', watchlists, watchlist);
+  subscribeIndices(items: any) {}
+
+  subscribeStockInfo() {}
+
+  subscribeIntradayChart() {}
+
+  subscribeMarketMover() {}
+
+  getSubscription(items: any, fields: any, OnItemUpdateDetail: any) {
+    var sub = new Subscription('MERGE', items, fields);
     sub.setDataAdapter('NTMARKETDATA');
+    sub.setRequestedSnapshot('yes');
+    sub.setRequestedMaxFrequency(1);
     sub.addListener({
-      onItemUpdate: function (params:any) {
-        console.log(params)
-      }
+      onItemUpdate: OnItemUpdateDetail,
     });
-    lsClient.subscribe(sub);
-    lsClient.connect()
+    this.client.subscribe(sub);
+    this.client.connect();
+  }
+
+  getStockItem(update: ItemUpdate, itemPos: number, field: any, instrument: any){
+    for (var f of field) {
+      var val: string = update.getValue(f);
+      if((val !== ' ') && (val !== null)){
+        console.log(val)
+        instrument[f] = val;
+      } else {
+        instrument[f] = '0'
+      }
+    }
   }
 }

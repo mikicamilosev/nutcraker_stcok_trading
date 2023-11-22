@@ -30,7 +30,7 @@ export class WatchlistComponent {
   client: LightstreamerClient;
   // test
   items = ["NUTEX.EQ.Q2Q","NUTEX.EQ.PEC","NUTEX.EQ.UNG","NUTEX.EQ.VBG","NUTEX.EQ.SFC","NUTEX.EQ.HPO","NUTEX.EQ.GDI","NUTEX.EQ.ABC","NUTEX.EQ.HTP","NUTEX.EQ.TWM"];
-  field = ["L", "H", "BS1", "B1", "A1", "AS1", "LTP", "LTS", "LTT", "Chg", "ChgP", "Cls"];
+  field = ["L", "H", "BS1", "B1", "A1", "AS1", "LTP", "LTS", "LTT", "CHG", "CHGP", "Cls"];
 
   constructor(
     private lss: LocalStorageService,
@@ -59,17 +59,19 @@ export class WatchlistComponent {
 
   onItemUpdate(update: ItemUpdate){
     var itemPos = update.getItemPos();
-    var item = this.getStockItem(update, itemPos, this.instruments[itemPos-1]);
-  }
-
-  getStockItem(update: ItemUpdate, itemPos: number, instrument: any){
-    for (var f of this.field) {
-      var val = update.getValue(f);
-      if(val != ''){
-        instrument[f] = val;
+    var that = this;
+    function getStockItem(update: ItemUpdate, itemPos: number, instrument: any){
+      for (var f of that.field) {
+        var val: string = update.getValue(f);
+        if((val !== ' ') && (val !== null)){
+          console.log(val)
+          instrument[f] = val;
+        }
       }
     }
+    getStockItem(update, itemPos, this.instruments[itemPos-1]);
   }
+
 
   ngOnInit() {
     this.store.select(getMarketData).subscribe(
@@ -315,9 +317,9 @@ function instrument(pesk: string, symbol: string, name: string) {
     LTP: '',
     LTS: '',
     LTT: '',
-    Chg: '',
-    ChgP: '',
-    Cls: '',
+    CHG: '',
+    CHGP: '',
+    CLS: '',
     L: '',
     H: '',
     chgColour: 'warning',
