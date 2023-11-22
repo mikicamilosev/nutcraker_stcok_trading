@@ -181,9 +181,6 @@ export class WatchlistComponent {
       this.notif.warning(
         'You currently have reached your watchlist limit of 3. Cannot add more watchlists.',
         'Limit reached!',
-        {
-          positionClass: 'toast-top-right'
-        }
       );
       return ;
     }
@@ -204,9 +201,7 @@ export class WatchlistComponent {
   renameWatchlist() {
     // modal issue newWatchlist
     if(!this.lss.get('watchlist') || this.lss.get('watchlist') == "" || this.lss.get('watchlist') == undefined){
-      this.notif.warning('Please select a watchlist to rename.', 'Rename', {
-        positionClass: 'toast-top-right'
-      })
+      this.notif.warning('Please select a watchlist to rename.', 'Rename')
       return ;
     }
     const modalRef = this.modalService.open(RenameWatchlistNameComponent, { backdrop: 'static', modalDialogClass: 'modal-lg' });
@@ -224,9 +219,7 @@ export class WatchlistComponent {
 
   deleteWatchlist() {
     if(!this.lss.get('watchlist') || this.lss.get('watchlist') == "" || this.lss.get('watchlist') == undefined){
-      this.notif.warning('Please select a watchlist to delete.', 'Warning', {
-        positionClass: 'toast-top-right'
-      })
+      this.notif.warning('Please select a watchlist to delete.', 'Warning')
       return ;
     }
     const modalRef = this.modalService.open(DeleteWatchlistComponent, { backdrop: 'static', modalDialogClass: 'modal-lg' });

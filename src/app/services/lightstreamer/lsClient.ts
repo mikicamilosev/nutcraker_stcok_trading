@@ -4,8 +4,7 @@ declare var $:any;
 
 LightstreamerClient.setLoggerProvider(new ConsoleLoggerProvider(ConsoleLogLevel.WARN));
 
-export const lsClient = new LightstreamerClient("https://push.lightstreamer.com","ISSLIVE");
-lsClient.addListener(new StatusWidget("left", "0px", true));
+export const lsClient = new LightstreamerClient("http://20.108.227.129:8080/","NUTCRACKER");
 lsClient.addListener({
   onStatusChange: function(newStatus) {
     console.log("Client status:" + newStatus);

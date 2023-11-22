@@ -78,7 +78,7 @@ import { NewOrderComponent } from './components/templates/new-order/new-order.co
     BrowserAnimationsModule,
     ToastrModule.forRoot({
       timeOut: 3000,
-      positionClass: 'toast-top-right',
+      positionClass: 'toast-bottom-right',
       preventDuplicates: true,
     }),
     BrowserModule,

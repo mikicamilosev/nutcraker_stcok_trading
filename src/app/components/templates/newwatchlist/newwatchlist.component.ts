@@ -42,7 +42,7 @@ export class NewwatchlistComponent implements OnInit {
     // same name ?
     oldWlLists.forEach((ele: any) => {
       if(ele.name === newName){
-        this.notif.warning("Same Watchlist is already exist!", "Warning", { positionClass : 'toast-top-right'})
+        this.notif.warning("Same Watchlist is already exist!", "Warning")
         return ;
       }
     });
@@ -52,11 +52,11 @@ export class NewwatchlistComponent implements OnInit {
         if(res.isSuccess){
           oldWlLists.push({id: newName, name: newName});
           this.lss.set('watchlists', oldWlLists);
-          this.notif.success(res.message, "Success!", {positionClass: "toast-top-right"});
+          this.notif.success(res.message, "Success!");
           this.store.dispatch(UpdateMarketData({data: "newWl" + ""}))
           this.cancel()
         } else {
-          this.notif.error(res.message, "Error!", {positionClass: "toast-top-right"})
+          this.notif.error(res.message, "Error!")
         }
       },
       (err) => {

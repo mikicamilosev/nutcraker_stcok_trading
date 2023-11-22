@@ -40,7 +40,7 @@ export class DeleteWatchlistComponent {
           })
           this.lss.set('watchlists', newWlLists);
           this.lss.set('watchlist', newWlLists[0]);
-          this.notif.success(res.message, "Success!", { positionClass: "toast-top-right"})
+          this.notif.success(res.message, "Success!")
           this.apiService.instrumentsAll(newWlLists[0].id).subscribe(
             (res) => {
               this.lss.set('instruments', res);

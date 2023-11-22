@@ -43,13 +43,13 @@ export class RenameWatchlistNameComponent {
     var newName: string = this.renameWatchlistForm.get('watchlistName').value
     var watchlist: any = this.lss.get('watchlist');
     if(watchlist.name == newName){
-      this.notif.warning('Input correct name!', 'Warning', {positionClass: 'toast-top-right'});
+      this.notif.warning('Input correct name!', 'Warning');
       return;
     }
     var watchlists: any = this.lss.get('watchlists');
     watchlists.forEach((ele: any) => {
       if(ele.name == newName){
-        this.notif.warning('Same name is already exist!', 'Warning!', { positionClass: 'toast-top-right'})
+        this.notif.warning('Same name is already exist!', 'Warning!')
         return ;
       }
     });
@@ -66,7 +66,7 @@ export class RenameWatchlistNameComponent {
             }
           });
           this.lss.set('watchlists', newWlLists);
-          this.notif.success(res.message, "Success!", { positionClass: 'toast-top-right' })
+          this.notif.success(res.message, "Success!")
           this.store.dispatch(UpdateMarketData({data: "rename" + watchlist.id}))
           this.cancel()
         } else {
