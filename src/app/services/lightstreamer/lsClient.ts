@@ -4,10 +4,9 @@ declare var $:any;
 
 LightstreamerClient.setLoggerProvider(new ConsoleLoggerProvider(ConsoleLogLevel.WARN));
 
-export const lsClient = new LightstreamerClient("http://20.108.227.129:8080/","NUTCRACKER");
+export const lsClient = new LightstreamerClient("http://20.90.66.153:8080","NUTCRACKER");
 lsClient.addListener({
   onStatusChange: function(newStatus) {
     console.log("Client status:" + newStatus);
   }
 });
-lsClient.connect();

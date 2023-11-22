@@ -8,6 +8,7 @@ import { InstrumentSearchComponent } from '../../templates/instrument-search/ins
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { UpdateMarketData } from 'src/app/reducers/market/market.action';
 import { getMarketData } from 'src/app/reducers/market/market.selector';
+import { LstreamerService } from 'src/app/services/lstreamer.service';
 
 @Component({
   selector: 'app-indices',
@@ -26,18 +27,25 @@ export class IndicesComponent {
     private lss: LocalStorageService,
     private apiService: NTVoyagerApiWtp, 
     private store: Store<AppState>,
-    private modalService: NgbModal
+    private modalService: NgbModal,
+    private lsServiceAdt: LstreamerService
   ) {
     this.symbol = ''
   }
   
   ngOnInit() {
+    var threeLineDepth = this.lss.get('ThreeLineDepth')
     this.store.select(getMarketData).subscribe(
       (res) => {
         this.indexInstruments = this.lss.get('indexInstruments')
       }
     )
-    this.indexInstruments = this.lss.get('indexInstruments')
+    this.indexInstruments = this.lss.get('indexInstruments') as any[]
+    // this.lsServiceAdt.subscribeWatchlist(this.indexInstruments, threeLineDepth, function (info: any) {
+    //   if(info !== null){
+    //     console.log(info)
+    //   }
+    // } )
     // this.apiService.indexInstruments().subscribe((res) => {
     //   this.indexInstruments = res;
     //   this.lss.set('indexInstruments', res);      

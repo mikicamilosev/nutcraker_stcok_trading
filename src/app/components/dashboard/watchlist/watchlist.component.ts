@@ -11,6 +11,9 @@ import { DeleteWatchlistComponent } from '../../templates/delete-watchlist/delet
 import { InstrumentSearchComponent } from '../../templates/instrument-search/instrument-search.component';
 import { UpdateMarketData } from 'src/app/reducers/market/market.action';
 import { getMarketData } from 'src/app/reducers/market/market.selector';
+import { LstreamerService } from 'src/app/services/lstreamer.service';
+import { ItemUpdate, LightstreamerClient, Subscription } from 'lightstreamer-client-web/lightstreamer.esm';
+import { lsClient } from 'src/app/services/lightstreamer/lsClient';
 
 @Component({
   selector: 'app-watchlist',
@@ -24,13 +27,18 @@ export class WatchlistComponent {
   symbol: any;
   ThreeLineDepth: any;
   selWlId: any;
+  client: LightstreamerClient;
+  // test
+  items = ["NUTEX.EQ.Q2Q","NUTEX.EQ.PEC","NUTEX.EQ.UNG","NUTEX.EQ.VBG","NUTEX.EQ.SFC","NUTEX.EQ.HPO","NUTEX.EQ.GDI","NUTEX.EQ.ABC","NUTEX.EQ.HTP","NUTEX.EQ.TWM"];
+  field = ["L", "H", "BS1", "B1", "A1", "AS1", "LTP", "LTS", "LTT", "Chg", "ChgP", "Cls"];
 
   constructor(
     private lss: LocalStorageService,
     private apiService: NTVoyagerApiWtp,
     private notif: ToastrService,
     private store: Store,
-    private modalService: NgbModal
+    private modalService: NgbModal,
+    private lsService: LstreamerService
   ) {
     this.symbol = '';
     this.watchlists = this.lss.get<WatchlistDTO[]>('watchlists');
@@ -38,6 +46,26 @@ export class WatchlistComponent {
     this.instruments = this.lss.get('instruments')
     if(this.lss.get('ThreeLineDepth') == null){
       this.lss.set('ThreeLineDepth', false)
+    }
+
+    var sub = new Subscription('MERGE', this.items, this.field);
+    sub.setDataAdapter('NTMARKETDATA');
+    sub.setRequestedSnapshot("yes");
+    sub.setRequestedMaxFrequency(1);
+    sub.addListener(this);
+    this.client = lsClient;
+    this.client.subscribe(sub)
+  }
+
+  onItemUpdate(update: ItemUpdate){
+    var itemPos = update.getItemPos();
+    var item = this.getStockItem(update, itemPos, this.instruments[itemPos-1]);
+  }
+
+  getStockItem(update: ItemUpdate, itemPos: number, instrument: any){
+    for (var f of this.field) {
+      var val = update.getValue(f);
+      instrument[f] = val;
     }
   }
 
@@ -57,9 +85,11 @@ export class WatchlistComponent {
     this.selectedWatchlist = this.lss.get<WatchlistDTO>('watchlist');
     this.selWlId = this.selectedWatchlist.id;
     this.instruments = this.lss.get('instruments')
+    this.client.connect();
   }
-
+  
   ngOnChanges(){
+    console.log(this.watchlists)
   }
 
   toggleDepth() {

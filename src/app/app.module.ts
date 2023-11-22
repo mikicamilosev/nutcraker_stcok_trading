@@ -41,6 +41,7 @@ import { TradingAccountComponent } from './components/templates/trading-account/
 import { PositionSummaryInfoComponent } from './components/templates/position-summary-info/position-summary-info.component';
 import { CancelOrderComponent } from './components/templates/cancel-order/cancel-order.component';
 import { NewOrderComponent } from './components/templates/new-order/new-order.component';
+import { LstreamerService } from './services/lstreamer.service';
 
 @NgModule({
   declarations: [
@@ -101,6 +102,7 @@ import { NewOrderComponent } from './components/templates/new-order/new-order.co
   providers: [
     NTVoyagerApiWtp,
     LocalStorageService,
+    LstreamerService,
   ],
   bootstrap: [AppComponent],
 })

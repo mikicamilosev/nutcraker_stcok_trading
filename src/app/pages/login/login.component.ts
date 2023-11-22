@@ -53,9 +53,18 @@ export class LoginComponent implements OnInit {
               this.lss.set('watchlist', res[0]);
               // get wlInstruments from db
               this.apiservice.instrumentsAll(res[0].id).subscribe(
-                (res1) => {
+                (res1: any) => {
+                  var subWlsList: any = [];
+                  var instruments: any = []
+                  res1.forEach((ele: any) => {
+                    console.log(ele)
+                    subWlsList.push(ele.pesk);
+                    instruments.push(this.instrument(ele.pesk, ele.symbol, ele.name));
+                  })
                   // set wlInstruments by selected watchlist
-                  this.lss.set('instruments', res1);
+                  this.lss.set('instruments', instruments);
+                  // get watchlists for subscription
+                  this.lss.set('subWlList', subWlsList);
                   // get indices instruments from db
                   this.apiservice.indexInstruments().subscribe(
                     (res2) => {
@@ -92,5 +101,35 @@ export class LoginComponent implements OnInit {
         }
       }
     )
+  }
+
+  instrument(pesk: string, symbol: string, name: string) {
+    var res = {
+      pesk: pesk,
+      symbol: symbol,
+      name: name,
+      BS1: '',
+      B1: '',
+      A1: '',
+      AS1: '',
+      BS2: '',
+      B2: '',
+      A2: '',
+      AS2: '',
+      BS3: '',
+      B3: '',
+      A3: '',
+      AS3: '',
+      LTP: '',
+      LTS: '',
+      LTT: '',
+      Chg: '',
+      ChgP: '',
+      Cls: '',
+      L: '',
+      H: '',
+      chgColour: 'warning',
+    };
+    return res;
   }
 }
