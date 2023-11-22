@@ -65,7 +65,9 @@ export class WatchlistComponent {
   getStockItem(update: ItemUpdate, itemPos: number, instrument: any){
     for (var f of this.field) {
       var val = update.getValue(f);
-      instrument[f] = val;
+      if(val != ''){
+        instrument[f] = val;
+      }
     }
   }
 
