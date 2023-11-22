@@ -10,16 +10,19 @@ export class TradebookComponent {
   @Input() updateDate: any;
   @Input() selAcc: any;
   tradesbook: any;
+  isLoading: any;
   constructor(
     private apiService: NTVoyagerApiWtp
   ){
-    this.selAcc = ''
+    this.selAcc = '';
+    this.isLoading = true;
   }
 
   ngOnInit(){
     this.apiService.trades(this.selAcc?.accountNo || 'accoundId').subscribe(
       (res: any) => {
         this.tradesbook = res;
+        this.isLoading = false;
       }
     )
   }

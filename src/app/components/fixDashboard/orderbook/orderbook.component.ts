@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
 import { NTVoyagerApiWtp } from 'src/app/services/api.service';
@@ -11,10 +11,12 @@ import { LocalStorageService } from 'ngx-localstorage';
   styleUrls: ['./orderbook.component.css']
 })
 export class OrderbookComponent {
+  @Output() dataEvent = new EventEmitter<any>()
   @Input() updateDate: any;
   @Input() selAcc: any
   orderbook: any;
   openOrdersOnly: any;
+  isLoading: any;
   
   constructor(
     private apiService: NTVoyagerApiWtp,
@@ -22,6 +24,7 @@ export class OrderbookComponent {
     private modalService: NgbModal,
     private lss: LocalStorageService
   ) {
+    this.isLoading = true;
     this.selAcc = '';
     var openOrdersOnly = this.lss.get('trdOrdOpen')
     if(openOrdersOnly == null){
@@ -34,7 +37,16 @@ export class OrderbookComponent {
   ngOnInit(){
     this.apiService.orders(this.selAcc?.accountNo || 'accoundId').subscribe(
       (res: any) => {
-        this.orderbook = res;
+        if(this.openOrdersOnly){
+          this.orderbook = res.filter(function (ele:any) {
+            console.log(ele.orderStatus)
+            console.log(ele.orderStatus !== 'Expired')
+            return ((ele.orderStatus !== 'Expired') && (ele.orderStatus !== 'Cancelled') && (ele.orderStatus !== 'Rejected'));
+          })
+        } else {
+          this.orderbook = res;
+        }
+        this.isLoading = false;
       }
     )
   }
@@ -42,7 +54,19 @@ export class OrderbookComponent {
   handleOpenOrdersOnly() {
     this.openOrdersOnly = !this.openOrdersOnly
     this.lss.set('trdOrdOpen', this.openOrdersOnly);
-  }
+    this.apiService.orders(this.selAcc?.accountNo || 'accoundId').subscribe(
+      (res: any) => {
+        if(this.openOrdersOnly){
+          this.orderbook = res.filter(function (ele:any) {
+            return ((ele.orderStatus !== 'Expired') && (ele.orderStatus !== 'Cancelled') && (ele.orderStatus !== 'Rejected'));
+          })
+        } else {
+          this.orderbook = res;
+        }
+        this.isLoading = false;
+      }
+    )
+  } 
 
   convertType (orderType : any) {
     switch (orderType) {

@@ -12,17 +12,20 @@ export class PositionsComponent {
   @Input() updateDate: any;
   @Input() selAcc: any;
   positions: any;
+  isLoading: any;
   constructor(
     private apiService: NTVoyagerApiWtp,
     private modalService: NgbModal
   ) {
-    this.selAcc = ''
+    this.selAcc = '';
+    this.isLoading = true;
   }
 
   ngOnInit() {
     this.apiService.positions(this.selAcc?.accountNo || 'accoundId').subscribe(
       (res) => {
         this.positions = res;
+        this.isLoading = false;
       }
     )
   }

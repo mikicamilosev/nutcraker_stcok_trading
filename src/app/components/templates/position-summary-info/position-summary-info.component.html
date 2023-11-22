@@ -4,17 +4,17 @@
 >
   <button class="btn btn-info btn-sm" type="button">
     Exposure (Long)
-    <span class="badge"> longExposure | number:2 </span> (Short)
-    <span class="badge"> shortExposure | number:2 </span>
+    <span class="badge"> {{posSumm?.longExposure | number:"1.2-2" }}</span> (Short)
+    <span class="badge"> {{posSumm?.shortExposure | number:'1.2-2' }}</span>
   </button>
   <button class="btn btn-default btn-sm" type="button">
-    Gearing <span class="badge"> gearing.toFixed(2) </span>
+    Gearing <span class="badge"> {{posSumm?.gearing.toFixed(2)}} </span>
   </button>
   <button class="btn btn-default btn-sm" type="button">
-    Available Cash <span class="badge"> availableCash | number:2 </span>
+    Available Cash <span class="badge"> {{posSumm?.availableCash | number:'1.2-2'}} </span>
   </button>
   <button class="btn btn-default btn-sm" type="button">
-    Portfolio Value <span class="badge"> portfolioValue | number:2 </span>
+    Portfolio Value <span class="badge"> {{posSumm?.portfolioValue | number:'1.2-2'}} </span>
   </button>
   <!-- <button
     class="btn btn-primary btn-sm"

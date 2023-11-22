@@ -13,6 +13,7 @@ export class FixdashboardComponent {
   tableType: any;
   selNav: string;
   updateDate: any;
+  positionSummany: any;
 
   constructor(
     private lss: LocalStorageService,
@@ -32,12 +33,13 @@ export class FixdashboardComponent {
       this.isCollapse = isCollapse
     }
     this.updateDate = new Date()
+    this.positionSummany = null;
   }
 
   ngOnInit(){
     this.apiService.positionSummary('test').subscribe(
       (res) => {
-        console.log(res)
+        this.positionSummany = res;
       }
     )
   }

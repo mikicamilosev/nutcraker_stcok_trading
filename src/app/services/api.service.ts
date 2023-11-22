@@ -1764,13 +1764,11 @@ export class NTVoyagerApiWtp {
       .request('get', url_, options_)
       .pipe(
         _observableMergeMap((response_: any) => {
-          console.log(response_)
           return this.processPositionSummary(response_);
         })
       )
       .pipe(
         _observableCatch((response_: any) => {
-          console.log(response_)
           if (response_ instanceof HttpResponseBase) {
             try {
               return this.processPositionSummary(response_ as any);
@@ -1797,7 +1795,7 @@ export class NTVoyagerApiWtp {
         : (response as any).error instanceof Blob
         ? (response as any).error
         : undefined;
-
+    
     let _headers: any = {};
     if (response.headers) {
       for (let key of response.headers.keys()) {
@@ -1817,7 +1815,7 @@ export class NTVoyagerApiWtp {
             for (let item of resultData200)
               result200!.push(PositionSummary.fromJS(item));
           } else {
-            result200 = <any>null;
+            result200 = resultData200;
           }
           return _observableOf(result200);
         })

@@ -8,6 +8,7 @@ import { NTVoyagerApiWtp } from 'src/app/services/api.service';
   styleUrls: ['./position-summary-info.component.css']
 })
 export class PositionSummaryInfoComponent {
+  @Input() posSumm: any;
   @Input() selAcc: any;
   @Output() dataEvent = new EventEmitter<boolean>();
   isCollapsed: any;
