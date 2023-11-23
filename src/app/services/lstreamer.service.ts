@@ -18,24 +18,24 @@ export class LstreamerService {
     var res: any = [];
     switch (str) {
       case 'watchlist':
-        if (tFlg) {
-          res = [];
-        } else {
-          res = ["L", "H", "BS1", "B1", "A1", "AS1", "LTP", "LTS", "LTT", "Chg", "ChgP", "Cls"];
-        }
+        // if (tFlg) {
+        //   res = ["L", "H", "BS1", "BP1", "AP1", "AS1", "BS2", "BP2", "AP2", "AS2", "BS3", "BP3", "AP3", "AS3", "LTP", "LTS", "LTT", "CHG", "CHGP", "CLS"];;
+        // } else {
+          res = ["L", "H", "BS1", "BP1", "AP1", "AS1", "LTP", "LTS", "LTT", "CHG", "CHGP", "CLS"];
+        // }
         break;
       case 'indices':
-        if (tFlg) {
-          res = [];
-        } else {
-          res = [];
-        }
+          res = ["LTP", "LTT", "CHG", "CHGP", "CLS"];
         break;
       case 'stockInfo':
         if (tFlg) {
-          res = [];
+          res = ["L", "H", "BS1", "BP1", "AP1", "AS1", "BS2", "BP2", "AP2", "AS2", "BS3", "BP3", "AP3", "AS3",
+          "LTP1", "LTS1", "LTT1", "LTP2", "LTS2", "LTT2", "LTP3", "LTS3", "LTT3", "LTP4", "LTS4", "LTT4", "LTP5", "LTS5", "LTT5",
+          "LTP", "LTS", "LTT", "CHG1", "CHG2", "CHG3", "CHG4", "CHG5", "CHG", "CHGP", "CLS", "TVOL", "TVAL", "NTRD", "ST"];;
         } else {
-          res = [];
+          res = ["L", "H", "BS1", "BP1", "AP1", "AS1",
+          "LTP1", "LTS1", "LTT1", "LTP2", "LTS2", "LTT2", "LTP3", "LTS3", "LTT3", "LTP4", "LTS4", "LTT4", "LTP5", "LTS5", "LTT5",
+          "LTP", "LTS", "LTT", "CHG1", "CHG2", "CHG3", "CHG4", "CHG5", "CHG", "CHGP", "CLS", "TVOL", "TVAL", "NTRD", "ST"];
         }
         break;
       case 'marketMover':
@@ -98,8 +98,10 @@ export class LstreamerService {
     }
   }
 
-  subscribeWatchlists(items: any) {
-
+  subscribeWatchlists(datas: any) {
+    var items = this.lss.get('subWlList');
+    var fields = this.getFields('watchlist');
+    this.getSubscription(items, fields, datas);
   }
 
   subscribeIndices(items: any) {}
@@ -110,27 +112,32 @@ export class LstreamerService {
 
   subscribeMarketMover() {}
 
-  getSubscription(items: any, fields: any, OnItemUpdateDetail: any) {
+  getSubscription(items: any, fields: any, datas: any) {
     var sub = new Subscription('MERGE', items, fields);
     sub.setDataAdapter('NTMARKETDATA');
     sub.setRequestedSnapshot('yes');
     sub.setRequestedMaxFrequency(1);
     sub.addListener({
-      onItemUpdate: OnItemUpdateDetail,
+      onItemUpdate: (update) => {this.getStockItem(update, fields, datas)},
     });
     this.client.subscribe(sub);
     this.client.connect();
   }
 
-  getStockItem(update: ItemUpdate, itemPos: number, field: any, instrument: any){
-    for (var f of field) {
-      var val: string = update.getValue(f);
-      if((val !== ' ') && (val !== null)){
+  getStockItem(update: ItemUpdate, field: any, instrument: any){
+    var itemPos = update.getItemPos();
+    function getStockItem(update: ItemUpdate, instrument: any){
+      for (var f of field) {
+        var val: string = update.getValue(f);
         console.log(val)
-        instrument[f] = val;
-      } else {
-        instrument[f] = '0'
+        if((val !== ' ') && (val !== null) && parseFloat(val)){
+          if(f == 'B1'){
+            console.log(val)
+          }
+          instrument[f] = val;
+        }
       }
     }
+    getStockItem(update, instrument[itemPos-1]);
   }
 }

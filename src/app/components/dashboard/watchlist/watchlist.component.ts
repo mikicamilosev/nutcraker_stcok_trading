@@ -30,7 +30,7 @@ export class WatchlistComponent {
   client: LightstreamerClient;
   // test
   items = ["NUTEX.EQ.Q2Q","NUTEX.EQ.PEC","NUTEX.EQ.UNG","NUTEX.EQ.VBG","NUTEX.EQ.SFC","NUTEX.EQ.HPO","NUTEX.EQ.GDI","NUTEX.EQ.ABC","NUTEX.EQ.HTP","NUTEX.EQ.TWM"];
-  field = ["L", "H", "BS1", "B1", "A1", "AS1", "LTP", "LTS", "LTT", "CHG", "CHGP", "Cls"];
+  field = ["L", "H", "BS1", "BP1", "AP1", "AS1", "LTP", "LTS", "LTT", "CHG", "CHGP", "CLS"];
 
   constructor(
     private lss: LocalStorageService,
@@ -46,6 +46,8 @@ export class WatchlistComponent {
     this.instruments = this.lss.get('instruments')
     if(this.lss.get('ThreeLineDepth') == null){
       this.lss.set('ThreeLineDepth', false)
+    } else {
+      this.ThreeLineDepth = this.lss.get('ThreeLineDepth')
     }
 
     var sub = new Subscription('MERGE', this.items, this.field);
@@ -63,8 +65,10 @@ export class WatchlistComponent {
     function getStockItem(update: ItemUpdate, itemPos: number, instrument: any){
       for (var f of that.field) {
         var val: string = update.getValue(f);
-        if((val !== ' ') && (val !== null)){
-          console.log(val)
+        if((val !== ' ') && (val !== null) && parseFloat(val)){
+          if(f == 'B1'){
+            console.log(val)
+          }
           instrument[f] = val;
         }
       }
@@ -97,22 +101,23 @@ export class WatchlistComponent {
   }
 
   toggleDepth() {
-    this.ThreeLineDepth = !this.lss.get('ThreeLineDepth');
-    this.lss.set('ThreeLineDepth', this.ThreeLineDepth);
-    if (this.ThreeLineDepth) {
-      var instruments: any = this.lss.get('instruments');
-      instruments.forEach((ele: any) => {
-        ele.B2 = '';
-        ele.BS2 = '';
-        ele.A2 = '';
-        ele.AS2 = '';
-        ele.B3 = '';
-        ele.BS3 = '';
-        ele.A3 = '';
-        ele.AS3 = '';
-      });
-      this.lss.set('instruments', instruments);
-    }
+    this.notif.warning("ThreeLineDepth is in development!", "Warning!")
+    // this.ThreeLineDepth = !this.lss.get('ThreeLineDepth');
+    // this.lss.set('ThreeLineDepth', this.ThreeLineDepth);
+    // if (this.ThreeLineDepth) {
+    //   var instruments: any = this.lss.get('instruments');
+    //   // instruments.forEach((ele: any) => {
+    //   //   ele.B2 = '';
+    //   //   ele.BS2 = '';
+    //   //   ele.A2 = '';
+    //   //   ele.AS2 = '';
+    //   //   ele.B3 = '';
+    //   //   ele.BS3 = '';
+    //   //   ele.A3 = '';
+    //   //   ele.AS3 = '';
+    //   // });
+    //   this.lss.set('instruments', instruments);
+    // }
     // subscribeData
   }
 
@@ -137,6 +142,7 @@ export class WatchlistComponent {
             this.lss.set('instruments', []);
             this.lss.set('wlSubscriptions', []);
             var temp: any = [];
+            var subTemp: any = [];
             res.forEach((ele: any) => {
               temp.push(
                 instrument(
@@ -144,11 +150,14 @@ export class WatchlistComponent {
                   String(ele.symbol),
                   String(ele.name)
                 )
-              );
-              this.lss.set('instruments', temp);
-              // wlSubscription save
+                );
+              subTemp.push(ele.pesk)
+                // wlSubscription save
             });
+            this.lss.set('subWlList', subTemp)
+            this.lss.set('instruments', temp);
             this.instruments = temp;
+            this.lsService.subscribeWatchlists(this.instruments)
           }
         },
         (err) => [console.log(err)]
@@ -302,26 +311,26 @@ function instrument(pesk: string, symbol: string, name: string) {
     pesk: pesk,
     symbol: symbol,
     name: name,
-    BS1: '',
-    B1: '',
-    A1: '',
-    AS1: '',
-    BS2: '',
-    B2: '',
-    A2: '',
-    AS2: '',
-    BS3: '',
-    B3: '',
-    A3: '',
-    AS3: '',
-    LTP: '',
-    LTS: '',
-    LTT: '',
-    CHG: '',
-    CHGP: '',
-    CLS: '',
-    L: '',
-    H: '',
+    BS1: '0',
+    BP1: '0',
+    AP1: '0',
+    AS1: '0',
+    // BS2: '0',
+    // B2: '0',
+    // A2: '0',
+    // AS2: '0',
+    // BS3: '0',
+    // B3: '0',
+    // A3: '0',
+    // AS3: '0',
+    LTP: '0',
+    LTS: '0',
+    LTT: '00:00:00',
+    CHG: '0',
+    CHGP: '0',
+    CLS: '0',
+    L: '0',
+    H: '0',
     chgColour: 'warning',
   };
   return res;
